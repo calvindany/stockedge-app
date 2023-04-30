@@ -66,3 +66,12 @@ exports.postDeleteBarang = (req, res, next) => {
     res.redirect("/barang");
   });
 };
+
+exports.getOrder = (req, res, next) => {
+  Barang.find().then((barang) => {
+    res.render("admin/order", {
+      route: "/order",
+      barang: barang,
+    });
+  });
+};

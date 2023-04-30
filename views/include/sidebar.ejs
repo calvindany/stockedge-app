@@ -8,7 +8,7 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="/dashboard" class="nav-link text-white active">
+      <a href="/dashboard" class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>">
         <svg class="bi me-2" width="16" height="16">
           <use xlink:href="/dashboard"></use>
         </svg>
@@ -16,7 +16,7 @@
       </a>
     </li>
     <li>
-      <a href="/barang" class="nav-link text-white">
+      <a href="/barang" class="nav-link text-white <%= (route == '/barang') ? 'active' : '' %>">
         <svg class="bi me-2" width="16" height="16">
           <use xlink:href="/barang"></use>
         </svg>
@@ -24,11 +24,11 @@
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link text-white">
-        <svg class="bi me-2" width="16" height="16">
-          <use xlink:href="#grid"></use>
+      <a href="/order" class="nav-link text-white <%= (route == '/order') ? 'active' : '' %>"">
+        <svg class=" bi me-2" width="16" height="16">
+        <use xlink:href="#grid"></use>
         </svg>
-        Products
+        Order
       </a>
     </li>
     <li>
