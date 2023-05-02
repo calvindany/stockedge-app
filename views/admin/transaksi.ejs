@@ -26,17 +26,21 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordion">
                   <div class="accordion-body">
-                    <form>
+                    <form
+                      action="<% if(transaksi) { %>/transaksi/edittransaksi/<%= transaksi._id %><% } else { %>/transaksi/tambahtransaksi <% } %>"
+                      method="POST">
                       <div class="mb-3">
                         <label for="namapembeli" class="form-label">Nama Pembeli</label>
                         <input type="text" class="form-control" id="namapembeli" name="namapembeli"
-                          aria-describedby="pembeliHelp">
+                          aria-describedby="pembeliHelp"
+                          value="<% if(transaksi) { %><%= transaksi.namapembeli %><% } %>">
                         <div id="pembeliHelp" class="form-text">Jika ada ukuran, masukkan didalam field ini. Contoh :
                           Peralon 3"</div>
                       </div>
                       <div class="mb-3">
                         <label for="tanggal" class="form-label">Tanggal</label>
-                        <input type="date" class="form-control" id="tanggal" name="tanggal">
+                        <input type="date" class="form-control" id="tanggal" name="tanggal"
+                          value="<% if(transaksi) { %><%= transaksi.tanggal %><% } %>">
                       </div>
 
                       <hr>
@@ -46,6 +50,7 @@
                           <div class="mb-3">
                             <label for="namabarang" class="form-label">Nama Barang</label>
                             <input type="text" class="form-control" id="namabarang" name="namabarang" disabled>
+                            <input type="hidden" id="idbarang" name="idbarang">
                           </div>
                           <div class="mb-3 d-flex" style="gap:20px">
                             <div class="col-3">
@@ -54,7 +59,8 @@
                             </div>
                             <div>
                               <label for="harga" class="form-label">Harga</label>
-                              <input type="number" class="form-control" id="harga" name="harga" disabled>
+                              <input type="number" class="form-control" id="hargafield" name="hargafield" disabled>
+                              <input type="hidden" id="hargavalue" name="hargavalue" value="">
                             </div>
                           </div>
                           <div class="mb-3 form-check">
@@ -65,7 +71,7 @@
                             <label for="subtotal" class="form-label">Sub Total</label>
                             <input type="number" class="form-control" id="subtotal" name="subtotal" disabled>
                           </div>
-                          <a id="buttontambah" class="btn btn-primary">Tambah</a>
+                          <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
                         </div>
 
                         <div class="right-panel widget-background rounded p-4 col-8">
@@ -93,7 +99,8 @@
                                   <td>
                                     <div class="form-check">
                                       <input class="form-check-input" type="radio" id="checkeditem"
-                                        value="${item.namabarang},${jumlah}" name="idpilihanbarang">
+                                        value="<%= barang[i]._id %>, <%= barang[i].namabarang %>, <%= barang[i].harga %>"
+                                        name="idpilihanbarang">
                                     </div>
                                   </td>
                                 </tr>
@@ -103,22 +110,57 @@
                         </div>
                       </div>
                       <hr>
-                      <div class="widget-background rounded p-4 mb-3">
-                        <table class="hover table table-striped widget-background  display">
-                          <thead>
-                            <tr>
-                              <th>Nama barang</th>
-                              <th>Jumlah</th>
-                              <th>Sub Total</th>
-                              <th>Aksi</th>
-                            </tr>
-                          </thead>
-                          <tbody id="tabelbarangcart">
-                          </tbody>
-                        </table>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                    <div class="widget-background rounded p-4 mb-3">
+                      <table class="hover table table-striped widget-background  display">
+                        <thead>
+                          <tr>
+                            <th>Nama barang</th>
+                            <th>Jumlah</th>
+                            <th>Harga</th>
+                            <th>Sub Total</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tabelbarangcart">
+                          <% if(transaksi) { %>
+                            <% for(let i=0; i < transaksi.barang.length; i++) { %>
+                              <tr>
+                                <td>
+                                  <%= transaksi.barang[i].namabarang %>
+                                </td>
+                                <td>
+                                  <%= transaksi.barang[i].jumlah %>
+                                </td>
+                                <td>
+                                  <%= transaksi.barang[i].harga %>
+                                </td>
+                                <td>
+                                  <%= transaksi.barang[i].subtotal %>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                  <form class="" action="/admin/tambahtransaksi/hapusbarang" method="POST">
+                                    <input name="idbarang" value="<%= transaksi.barang[i]._id %>" type="hidden">
+                                    <input name="idtransaksi" value="<%= transaksi._id %>" type="hidden">
+                                    <button class="btn btn-danger me-2 d-flex" role="button" type="submit">
+                                      <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                  </form>
+                                </td>
+                              </tr>
+                              <% } %>
+                                <% } else { %>
+                                  <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                  <% } %>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -163,5 +205,5 @@
           });
         });
       </script>
-      <script src="js/transaction.js"></script>
+      <script src="/js/transaction.js"></script>
       <%- include('../include/footer') %>

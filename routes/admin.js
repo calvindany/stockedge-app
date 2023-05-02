@@ -12,6 +12,18 @@ router.post("/barang/:idbarang", AdminController.postEditBarang);
 
 router.post("/deletebarang", AdminController.postDeleteBarang);
 
-router.get("/order", AdminController.getOrder);
+router.get("/transaksi", AdminController.getTransaksi);
+
+router.post("/transaksi/tambahtransaksi", AdminController.postTambahTransaksi);
+
+router.get(
+  "/transaksi/edittransaksi/:idtransaksi",
+  AdminController.getEditTransaksi
+);
+
+router.post(
+  "/transaksi/edittransaksi/:idtransaksi",
+  AdminController.postEditTransaksi
+);
 
 module.exports = router;

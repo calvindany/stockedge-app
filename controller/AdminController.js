@@ -1,4 +1,7 @@
+const barang = require("../model/barang");
 const Barang = require("../model/barang");
+const transaction = require("../model/transaction");
+const Transaction = require("../model/transaction");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -67,11 +70,61 @@ exports.postDeleteBarang = (req, res, next) => {
   });
 };
 
-exports.getOrder = (req, res, next) => {
+exports.getTransaksi = (req, res, next) => {
   Barang.find().then((barang) => {
-    res.render("admin/order", {
-      route: "/order",
+    res.render("admin/transaksi", {
+      route: "/transaksi",
       barang: barang,
+      transaksi: null,
     });
   });
+};
+
+exports.postTambahTransaksi = (req, res, next) => {
+  const namapembeli = req.body.namapembeli;
+  const tanggal = req.body.tanggal;
+  const idbarangpilihan = req.body.idbarang;
+  const jumlah = req.body.jumlah;
+  const harga = req.body.hargavalue;
+
+  const newTransaction = new Transaction({
+    namapembeli: namapembeli,
+    tanggal: tanggal,
+  });
+  newTransaction.tambahBarang({ idbarangpilihan, jumlah, harga });
+
+  return res.redirect("/transaksi/edittransaksi/" + newTransaction._id);
+};
+
+exports.getEditTransaksi = (req, res, next) => {
+  const idtransaksi = req.params.idtransaksi;
+  Transaction.findOne({ _id: idtransaksi }).then((transaksi) => {
+    Barang.find().then((barang) => {
+      res.render("admin/transaksi", {
+        route: "/transasi",
+        transaksi: transaksi,
+        barang: barang,
+      });
+    });
+  });
+};
+
+exports.postEditTransaksi = (req, res, next) => {
+  const idtransaksi = req.params.idtransaksi;
+
+  const namapembeli = req.body.namapembeli;
+  const tanggal = req.body.tanggal;
+  const idbarangpilihan = req.body.idbarang;
+  const jumlah = req.body.jumlah;
+  const harga = req.body.hargavalue;
+
+  Transaction.findOne({ _id: idtransaksi })
+    .then((transaksi) => {
+      transaksi.namapembeli = namapembeli;
+      transaksi.tanggal = tanggal;
+      return transaksi.tambahBarang({ idbarangpilihan, jumlah, harga });
+    })
+    .then(() => {
+      return res.redirect("/transaksi/edittransaksi/" + idtransaksi);
+    });
 };
