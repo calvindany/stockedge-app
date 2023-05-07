@@ -1,0 +1,5 @@
+To do :
+- Get data dari database untuk halaman transaksi
+- Tambah fitur delete cart di edit transaksi
+- Fix bug ketika simpan barang, harus refresh dulu supaya bisa muncul
+- Tambah margin bawah form tambah/ edit transaksi

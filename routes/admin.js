@@ -18,8 +18,8 @@ router.get("/transaksi/tambah", AdminController.getTambahTransaksi);
 
 router.post("/transaksi/tambah", AdminController.postTambahTransaksi);
 
-router.get("/transaksi/edittransaksi/:idtransaksi", AdminController.getEditTransaksi);
+router.get("/transaksi/edit/:idtransaksi", AdminController.getEditTransaksi);
 
-router.post("/transaksi/edittransaksi/:idtransaksi", AdminController.postEditTransaksi);
+router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
 
 module.exports = router;
