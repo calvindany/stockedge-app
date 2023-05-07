@@ -71,9 +71,15 @@ exports.postDeleteBarang = (req, res, next) => {
 };
 
 exports.getTransaksi = (req, res, next) => {
+  res.render('admin/transaksi', {
+    route: '/transaksi'
+  });
+}
+
+exports.getTambahTransaksi = (req, res, next) => {
   Barang.find().then((barang) => {
-    res.render("admin/transaksi", {
-      route: "/transaksi",
+    res.render("admin/tambahtransaksi", {
+      route: "/transaksi/tambah",
       barang: barang,
       transaksi: null,
     });
@@ -93,7 +99,7 @@ exports.postTambahTransaksi = (req, res, next) => {
   });
   newTransaction.tambahBarang({ idbarangpilihan, jumlah, harga });
 
-  return res.redirect("/transaksi/edittransaksi/" + newTransaction._id);
+  return res.redirect("/transaksi/edit/" + newTransaction._id);
 };
 
 exports.getEditTransaksi = (req, res, next) => {
@@ -101,7 +107,7 @@ exports.getEditTransaksi = (req, res, next) => {
   Transaction.findOne({ _id: idtransaksi }).then((transaksi) => {
     Barang.find().then((barang) => {
       res.render("admin/transaksi", {
-        route: "/transasi",
+        route: "/transaksi",
         transaksi: transaksi,
         barang: barang,
       });
@@ -125,6 +131,6 @@ exports.postEditTransaksi = (req, res, next) => {
       return transaksi.tambahBarang({ idbarangpilihan, jumlah, harga });
     })
     .then(() => {
-      return res.redirect("/transaksi/edittransaksi/" + idtransaksi);
+      return res.redirect("/transaksi/edit/" + idtransaksi);
     });
 };

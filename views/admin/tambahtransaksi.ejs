@@ -1,0 +1,179 @@
+<%- include('../include/header') %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  </head>
+
+  <body class="d-flex">
+    <%- include('../include/sidebar') %>
+      <div class="" style="background-color: #F5F7FB; width: 100%;">
+        <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
+          style="background-color:#FFFFFF;">
+          <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
+        </header>
+        <main class="d-flex flex-column align-items-center">
+          <div class="d-flex align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <h4>Tambah Transaksi</h4>
+          </div>
+          <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <div class="border rounded-3 p-4" style="background-color: white;">
+              <form
+                action="<% if(transaksi) { %>/transaksi/edittransaksi/<%= transaksi._id %><% } else { %>/transaksi/tambahtransaksi <% } %>"
+                method="POST">
+                <div class="mb-3">
+                  <label for="namapembeli" class="form-label">Nama Pembeli</label>
+                  <input type="text" class="form-control" id="namapembeli" name="namapembeli"
+                    aria-describedby="pembeliHelp"
+                    value="<% if(transaksi) { %><%= transaksi.namapembeli %><% } %>">
+                  <div id="pembeliHelp" class="form-text">Jika ada ukuran, masukkan didalam field ini. Contoh :
+                    Peralon 3"</div>
+                </div>
+                <div class="mb-3">
+                  <label for="tanggal" class="form-label">Tanggal</label>
+                  <input type="date" class="form-control" id="tanggal" name="tanggal"
+                    value="<% if(transaksi) { %><%= transaksi.tanggal %><% } %>">
+                </div>
+  
+                <hr>
+                <div class="mb-3 d-flex justify-content-between">
+  
+                  <div class="left-panel col-3">
+                    <div class="mb-3">
+                      <label for="namabarang" class="form-label">Nama Barang</label>
+                      <input type="text" class="form-control" id="namabarang" name="namabarang" disabled>
+                      <input type="hidden" id="idbarang" name="idbarang">
+                    </div>
+                    <div class="mb-3 d-flex" style="gap:20px">
+                      <div class="col-3">
+                        <label for="jumlah" class="form-label">Jumlah</label>
+                        <input type="number" class="form-control" id="jumlah" name="jumlah">
+                      </div>
+                      <div>
+                        <label for="harga" class="form-label">Harga</label>
+                        <input type="number" class="form-control" id="hargafield" name="hargafield" disabled>
+                        <input type="hidden" id="hargavalue" name="hargavalue" value="">
+                      </div>
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="editharga">
+                      <label class="form-check-label" for="editharga">Harga Khusus?</label>
+                    </div>
+                    <div class="mb-3">
+                      <label for="subtotal" class="form-label">Sub Total</label>
+                      <input type="number" class="form-control" id="subtotal" name="subtotal" disabled>
+                    </div>
+                    <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
+                  </div>
+  
+                  <div class="right-panel widget-background rounded p-4 col-8">
+                    <table class="hover table table-striped widget-background display">
+                      <thead>
+                        <tr>
+                          <th>Nama barang</th>
+                          <th>Stok</th>
+                          <th>Harga</th>
+                          <th>Pilih</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabelbarang">
+                        <% for(let i=0; i < barang.length; i++) { %>
+                          <tr>
+                            <td>
+                              <%= barang[i].namabarang %>
+                            </td>
+                            <td>
+                              <%= barang[i].stok %>
+                            </td>
+                            <td>
+                              <%= barang[i].harga %>
+                            </td>
+                            <td>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" id="checkeditem"
+                                  value="<%= barang[i]._id %>, <%= barang[i].namabarang %>, <%= barang[i].harga %>"
+                                  name="idpilihanbarang">
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr>
+              </form>
+              <div class="widget-background rounded p-4 mb-3">
+                <table class="hover table table-striped widget-background  display">
+                  <thead>
+                    <tr>
+                      <th>Nama barang</th>
+                      <th>Jumlah</th>
+                      <th>Harga</th>
+                      <th>Sub Total</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelbarangcart">
+                    <% if(transaksi) { %>
+                      <% for(let i=0; i < transaksi.barang.length; i++) { %>
+                        <tr>
+                          <td>
+                            <%= transaksi.barang[i].namabarang %>
+                          </td>
+                          <td>
+                            <%= transaksi.barang[i].jumlah %>
+                          </td>
+                          <td>
+                            <%= transaksi.barang[i].harga %>
+                          </td>
+                          <td>
+                            <%= transaksi.barang[i].subtotal %>
+                          </td>
+                          <td class="d-flex justify-content-center">
+                            <form class="" action="" method="POST">
+                              <input name="idbarang" value="<%= transaksi.barang[i]._id %>" type="hidden">
+                              <input name="idtransaksi" value="<%= transaksi._id %>" type="hidden">
+                              <button class="btn btn-danger me-2 d-flex" role="button" type="submit">
+                                <i class="bi bi-trash-fill"></i>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                        <% } %>
+                          <% } else { %>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('table.display').DataTable();
+        });
+
+        $('select').ready(function () {
+          $('select').toggleClass('selected');
+        });
+      </script>
+      <script>
+        $(document).ready(function () {
+          $("#caribarang").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tabelbarang tr").filter(function () {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+          });
+        });
+      </script>
+      <script src="/js/transaction.js"></script>
+      <%- include('../include/footer') %>
