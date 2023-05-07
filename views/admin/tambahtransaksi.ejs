@@ -16,15 +16,14 @@
             <h4>Tambah Transaksi</h4>
           </div>
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
-            <div class="border rounded-3 p-4" style="background-color: white;">
+            <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
-                action="<% if(transaksi) { %>/transaksi/edittransaksi/<%= transaksi._id %><% } else { %>/transaksi/tambahtransaksi <% } %>"
+                action="<% if(transaksi) { %>/transaksi/edit/<%= transaksi._id %><% } else { %>/transaksi/tambah <% } %>"
                 method="POST">
                 <div class="mb-3">
                   <label for="namapembeli" class="form-label">Nama Pembeli</label>
                   <input type="text" class="form-control" id="namapembeli" name="namapembeli"
-                    aria-describedby="pembeliHelp"
-                    value="<% if(transaksi) { %><%= transaksi.namapembeli %><% } %>">
+                    aria-describedby="pembeliHelp" value="<% if(transaksi) { %><%= transaksi.namapembeli %><% } %>">
                   <div id="pembeliHelp" class="form-text">Jika ada ukuran, masukkan didalam field ini. Contoh :
                     Peralon 3"</div>
                 </div>
@@ -33,10 +32,10 @@
                   <input type="date" class="form-control" id="tanggal" name="tanggal"
                     value="<% if(transaksi) { %><%= transaksi.tanggal %><% } %>">
                 </div>
-  
+
                 <hr>
                 <div class="mb-3 d-flex justify-content-between">
-  
+
                   <div class="left-panel col-3">
                     <div class="mb-3">
                       <label for="namabarang" class="form-label">Nama Barang</label>
@@ -64,7 +63,7 @@
                     </div>
                     <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
                   </div>
-  
+
                   <div class="right-panel widget-background rounded p-4 col-8">
                     <table class="hover table table-striped widget-background display">
                       <thead>
@@ -130,11 +129,11 @@
                             <%= transaksi.barang[i].subtotal %>
                           </td>
                           <td class="d-flex justify-content-center">
-                            <form class="" action="" method="POST">
+                            <form class="" action="/transaksi/edit/hapusbarang" method="POST">
                               <input name="idbarang" value="<%= transaksi.barang[i]._id %>" type="hidden">
                               <input name="idtransaksi" value="<%= transaksi._id %>" type="hidden">
                               <button class="btn btn-danger me-2 d-flex" role="button" type="submit">
-                                <i class="bi bi-trash-fill"></i>
+                                <i class="bi bi-trash-fill"></i> Hapus
                               </button>
                             </form>
                           </td>
@@ -149,8 +148,15 @@
                               <td></td>
                             </tr>
                             <% } %>
+
                   </tbody>
                 </table>
+                <div class="mt-4 d-flex justify-content-end">
+                  <p class="display-6">
+                    Total : <%= transaksi.total %>
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>

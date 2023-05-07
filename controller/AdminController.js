@@ -1,7 +1,5 @@
-const barang = require("../model/barang");
 const Barang = require("../model/barang");
-const transaction = require("../model/transaction");
-const Transaction = require("../model/transaction");
+const Transaksi = require("../model/transaction");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -71,10 +69,15 @@ exports.postDeleteBarang = (req, res, next) => {
 };
 
 exports.getTransaksi = (req, res, next) => {
-  res.render('admin/transaksi', {
-    route: '/transaksi'
-  });
-}
+  Transaksi.find()
+    .then((transaksi) => {
+      res.render("admin/transaksi", {
+        route: "/transaksi",
+        transaksi: transaksi,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 exports.getTambahTransaksi = (req, res, next) => {
   Barang.find().then((barang) => {
@@ -93,20 +96,20 @@ exports.postTambahTransaksi = (req, res, next) => {
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
 
-  const newTransaction = new Transaction({
+  const transaksibaru = new Transaksi({
     namapembeli: namapembeli,
     tanggal: tanggal,
   });
-  newTransaction.tambahBarang({ idbarangpilihan, jumlah, harga });
+  transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga });
 
-  return res.redirect("/transaksi/edit/" + newTransaction._id);
+  return res.redirect("/transaksi/edit/" + transaksibaru._id);
 };
 
 exports.getEditTransaksi = (req, res, next) => {
   const idtransaksi = req.params.idtransaksi;
-  Transaction.findOne({ _id: idtransaksi }).then((transaksi) => {
+  Transaksi.findOne({ _id: idtransaksi }).then((transaksi) => {
     Barang.find().then((barang) => {
-      res.render("admin/transaksi", {
+      res.render("admin/tambahtransaksi", {
         route: "/transaksi",
         transaksi: transaksi,
         barang: barang,
@@ -124,7 +127,7 @@ exports.postEditTransaksi = (req, res, next) => {
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
 
-  Transaction.findOne({ _id: idtransaksi })
+  Transaksi.findOne({ _id: idtransaksi })
     .then((transaksi) => {
       transaksi.namapembeli = namapembeli;
       transaksi.tanggal = tanggal;
@@ -133,4 +136,28 @@ exports.postEditTransaksi = (req, res, next) => {
     .then(() => {
       return res.redirect("/transaksi/edit/" + idtransaksi);
     });
+};
+
+exports.postHapusBarangdiCart = (req, res, next) => {
+  const idbarang = req.body.idbarang;
+  const idtransaksi = req.body.idtransaksi;
+
+  Transaksi.findOne({ _id: idtransaksi })
+    .then((transaksi) => {
+      return transaksi.hapusBarang(idbarang);
+    })
+    .then((result) => {
+      return res.redirect("/transaksi/edit/" + idtransaksi);
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postHapusTransaksi = (req, res, next) => {
+  const idtransaksi = req.body.idtransaksi;
+  Transaksi.findOneAndDelete({ _id: idtransaksi })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/transaksi");
+    })
+    .catch((err) => console.log(err));
 };

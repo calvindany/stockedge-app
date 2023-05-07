@@ -5,6 +5,15 @@ const Schema = mongoose.Schema;
 const Barang = require("./barang");
 const barang = require("./barang");
 
+const hitungtotal = (barang) => {
+  let total = 0;
+  barang.forEach((barang) => {
+    total += barang.subtotal;
+  });
+
+  return total;
+};
+
 const transaksiSchema = new Schema(
   {
     namapembeli: {
@@ -66,15 +75,25 @@ transaksiSchema.methods.tambahBarang = function (selectedbarang) {
         parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga);
     }
 
-    this.total = 0;
-
-    for (let i = 0; i < perbaruibarang.length; i++) {
-      this.total += perbaruibarang[i].subtotal;
-    }
-
     this.barang = perbaruibarang;
+
+    this.total = hitungtotal(this.barang);
+
     this.save();
   });
+};
+
+transaksiSchema.methods.hapusBarang = function (idbarang) {
+  let barangtemp = [...this.barang];
+
+  let newbarang = barangtemp.filter((barang) => {
+    return barang._id != idbarang;
+  });
+
+  this.barang = newbarang;
+  this.total = hitungtotal(this.barang);
+
+  return this.save();
 };
 
 module.exports = mongoose.model("transaksi", transaksiSchema);

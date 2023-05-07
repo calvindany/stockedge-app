@@ -6,15 +6,17 @@
 
   <body class="d-flex">
     <%- include('../include/sidebar') %>
-    <div class="" style="background-color: #F5F7FB; width: 100%;">
+      <div class="" style="background-color: #F5F7FB; width: 100%;">
         <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
           style="background-color:#FFFFFF;">
           <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
         </header>
         <main class="d-flex flex-column align-items-center">
-          <div class="d-flex align-items-center justify-content-between my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+          <div class="d-flex align-items-center justify-content-between my-4 w-100"
+            style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Transaction</h4>
-            <a class="btn btn-primary p-2 bg-primary px-2" href="/transaksi/tambah"><i class="bi bi-plus-lg"></i> Tambah Transaksi</a>
+            <a class="btn btn-primary p-2 bg-primary px-2" href="/transaksi/tambah"><i class="bi bi-plus-lg"></i> Tambah
+              Transaksi</a>
           </div>
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="widget-background rounded p-4">
@@ -30,13 +32,40 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% for(let i=0; i < transaksi.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= transaksi[i]._id %>
+                      </td>
+                      <td>
+                        <%= transaksi[i].namapembeli %>
+                      </td>
+                      <td>
+                        <%= transaksi[i].tanggal %>
+                      </td>
+                      <td>
+                        <%= transaksi[i].total %>
+                      </td>
+                      <td>
+                        <%= transaksi[i].status %>
+                      </td>
+                      <td class="d-flex" style="gap: 20px;">
+                        <a class="btn btn-primary" href="/transaksi/edit/<%= transaksi[i]._id %>"><i
+                            class="bi bi-pencil-square"></i> Edit</a>
+                        <form action="/transaksi/hapus" method="POST">
+                          <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
+                          <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %>
                 </tbody>
               </table>
             </div>
           </div>
         </main>
       </div>
-    <script>
+      <script>
         $(document).ready(function () {
           $('table.display').DataTable();
         });
