@@ -96,7 +96,6 @@ exports.postTambahTransaksi = (req, res, next) => {
   const idbarangpilihan = req.body.idbarang;
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
-  // console.log(status);
 
   const transaksibaru = new Transaksi({
     namapembeli: namapembeli,
@@ -159,7 +158,6 @@ exports.postHapusTransaksi = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
   Transaksi.findOneAndDelete({ _id: idtransaksi })
     .then((result) => {
-      console.log(result);
       res.redirect("/transaksi");
     })
     .catch((err) => console.log(err));

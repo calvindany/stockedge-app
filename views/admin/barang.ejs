@@ -17,8 +17,8 @@
             <h4>Barang</h4>
           </div>
 
-          <div class="form w-100 my-4" style="padding-left: 3vh; padding-right: 3vh;">
-            <div class="accordion" id="accordion">
+          <div class="w-100 my-4 d-flex justify-content-end bg-warning" style="padding-left: 3vh; padding-right: 3vh;">
+            <!-- <div class="accordion" id="accordion">
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
@@ -53,12 +53,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+            <a class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i>Tambah Barang</a>
           </div>
 
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
-            <div class="widget-background rounded p-4">
-              <table id="example" class="hover widget-background shadow" style="width:100%;">
+            <div class="rounded p-4 shadow">
+              <table id="example" class="hover" style="width:100%;">
                 <thead>
                   <tr>
                     <th>Id</th>
@@ -112,10 +113,6 @@
       <script>
         $(document).ready(function () {
           $('#example').DataTable();
-        });
-
-        $('select').ready(function () {
-          $('select').toggleClass('selected');
         });
       </script>
       <script>
