@@ -32,6 +32,17 @@
                   <input type="date" class="form-control" id="tanggal" name="tanggal"
                     value="<% if(transaksi) { %><%= transaksi.tanggal %><% } %>">
                 </div>
+                <div class="mb-3">
+                  <label for="tanggal" class="form-label">Status Transaksi</label>
+                  <br>
+                  <select name="status" id="" class="form-select" aria-label="Default select example">
+                    <option value='null' selected>Pilih status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Belum Bayar">Belum Bayar</option>
+                    <option value="Lunas">Lunas</option>
+                    <option value="Selesai">Selesai</option>
+                  </select>
+                </div>
 
                 <hr>
                 <div class="mb-3 d-flex justify-content-between">
@@ -39,17 +50,17 @@
                   <div class="left-panel col-3">
                     <div class="mb-3">
                       <label for="namabarang" class="form-label">Nama Barang</label>
-                      <input type="text" class="form-control" id="namabarang" name="namabarang" disabled>
-                      <input type="hidden" id="idbarang" name="idbarang">
+                      <input type="text" class="form-control" id="namabarang" name="namabarang" disabled required>
+                      <input type="hidden" id="idbarang" name="idbarang" required>
                     </div>
                     <div class="mb-3 d-flex" style="gap:20px">
                       <div class="col-3">
                         <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah">
+                        <input type="number" class="form-control" id="jumlah" name="jumlah" required>
                       </div>
                       <div>
                         <label for="harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="hargafield" name="hargafield" disabled>
+                        <input type="number" class="form-control" id="hargafield" name="hargafield" disabled required>
                         <input type="hidden" id="hargavalue" name="hargavalue" value="">
                       </div>
                     </div>
@@ -59,7 +70,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="subtotal" class="form-label">Sub Total</label>
-                      <input type="number" class="form-control" id="subtotal" name="subtotal" disabled>
+                      <input type="number" class="form-control" id="subtotal" name="subtotal" disabled required>
                     </div>
                     <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
                   </div>
@@ -159,6 +170,7 @@
 
         $('select').ready(function () {
           $('select').toggleClass('selected');
+          $('option').toggleClass('unselected');
         });
       </script>
       <script>

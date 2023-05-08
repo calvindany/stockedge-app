@@ -10,3 +10,6 @@ table th, table td {
 .selected {
     color: white;
 }
+.unselected {
+    color: black;
+}

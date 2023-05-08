@@ -92,13 +92,16 @@ exports.getTambahTransaksi = (req, res, next) => {
 exports.postTambahTransaksi = (req, res, next) => {
   const namapembeli = req.body.namapembeli;
   const tanggal = req.body.tanggal;
+  const status = req.body.status == "null" ? "Draft" : req.body.status;
   const idbarangpilihan = req.body.idbarang;
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
+  // console.log(status);
 
   const transaksibaru = new Transaksi({
     namapembeli: namapembeli,
     tanggal: tanggal,
+    status: status,
   });
   transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga });
 

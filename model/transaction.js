@@ -24,6 +24,10 @@ const transaksiSchema = new Schema(
       type: String,
       require: true,
     },
+    status: {
+      type: String,
+      require: true,
+    },
     barang: [
       {
         idbarang: {
@@ -52,35 +56,37 @@ const transaksiSchema = new Schema(
 
 transaksiSchema.methods.tambahBarang = function (selectedbarang) {
   let perbaruibarang = [...this.barang];
-
-  Barang.findOne({ _id: selectedbarang.idbarangpilihan }).then((barang) => {
-    const isExisted = perbaruibarang.filter((barang) => {
-      barang === selectedbarang.idbarangpilihan;
-    });
-
-    if (isExisted < 1) {
-      perbaruibarang.push({
-        idbarang: barang._id,
-        namabarang: barang.namabarang,
-        jumlah: selectedbarang.jumlah,
-        harga: selectedbarang.harga,
-        subtotal:
-          parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga),
+  // console.log(selectedbarang);
+  Barang.findOne({ _id: selectedbarang.idbarangpilihan })
+    .then((barang) => {
+      const isExisted = perbaruibarang.filter((barang) => {
+        barang === selectedbarang.idbarangpilihan;
       });
-    } else {
-      const index = perbaruibarang.findIndex({ idbarang: barang._id });
-      perbaruibarang[index].jumlah += selectedbarang.jumlah;
-      perbaruibarang[index].harga = selectedbarang.harga;
-      perbaruibarang[index].subtotal =
-        parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga);
-    }
 
-    this.barang = perbaruibarang;
+      if (isExisted < 1) {
+        perbaruibarang.push({
+          idbarang: barang._id,
+          namabarang: barang.namabarang,
+          jumlah: selectedbarang.jumlah,
+          harga: selectedbarang.harga,
+          subtotal:
+            parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga),
+        });
+      } else {
+        const index = perbaruibarang.findIndex({ idbarang: barang._id });
+        perbaruibarang[index].jumlah += selectedbarang.jumlah;
+        perbaruibarang[index].harga = selectedbarang.harga;
+        perbaruibarang[index].subtotal =
+          parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga);
+      }
 
-    this.total = hitungtotal(this.barang);
+      this.barang = perbaruibarang;
 
-    this.save();
-  });
+      this.total = hitungtotal(this.barang);
+
+      this.save();
+    })
+    .catch((err) => console.log(err));
 };
 
 transaksiSchema.methods.hapusBarang = function (idbarang) {
