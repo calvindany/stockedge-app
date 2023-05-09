@@ -1,4 +1,7 @@
 <%- include('../include/header') %>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   </head>
 
   <body class="d-flex">
@@ -61,16 +64,16 @@
               </div>
             </div>
 
-            <div class="d-flex align-items-center widget-background p-3 rounded w-100">
+            <div class="d-flex align-items-center p-3 border rounded w-100" style="background-color: white;">
               <canvas id="myChart"></canvas>
             </div>
           </div>
 
-          <div class="d-flex flex-column my-4 p-4 w-100"
+          <div class="d-flex flex-column my-4 w-100"
             style="padding-left: 3vh !important; padding-right: 3vh !important;">
-            <div class="widget-background rounded p-4">
-              <h4 style="opacity: 70%;">Order Terbaru</h4>
-              <table class="table">
+            <h4 style="opacity: 70%;" class="mb-4">Order Terbaru</h4>
+            <div class="shadow rounded p-4" style="background-color: white;">
+              <table id="example" class="hover display" style="width:100%">
                 <thead>
                   <tr>
                     <th scope="col">Nama</th>
@@ -111,7 +114,12 @@
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
       <!-- Script JavaScript untuk membuat Chart -->
       <script src="js/dashboard-create-chart.js"></script>
+
+      <script>
+        $(document).ready(function () {
+          $('table.display').DataTable();
+        });
+      </script>
       <%- include('../include/footer') %>

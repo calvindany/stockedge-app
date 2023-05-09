@@ -13,12 +13,14 @@
         </header>
 
         <main class="d-flex flex-column align-items-center">
-          <div class="d-flex align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+          <div class="d-flex justify-content-between align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Barang</h4>
+            <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"><i class="bi bi-plus-lg"></i>Tambah Barang</button>
           </div>
 
-          <div class="w-100 my-4 d-flex justify-content-end bg-warning" style="padding-left: 3vh; padding-right: 3vh;">
-            <!-- <div class="accordion" id="accordion">
+          <!-- <div class="w-100 my-4 d-flex justify-content-end" style="padding-left: 3vh; padding-right: 3vh;">
+            <div class="accordion" id="accordion">
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
@@ -53,9 +55,8 @@
                   </div>
                 </div>
               </div>
-            </div> -->
-            <a class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i>Tambah Barang</a>
-          </div>
+            </div>
+          </div> -->
 
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="rounded p-4 shadow">
@@ -116,7 +117,7 @@
         });
       </script>
       <script>
-        function addDataToModal(idbarang, namabarang, stok, harga, modal) {
+        function editDataToModal(idbarang, namabarang, stok, harga, modal) {
           const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = idbarang;
           const newnamabarang = document.getElementsByName('newnamabarang')[0].value = namabarang;
           const newstok = document.getElementsByName('newstok')[0].value = stok;

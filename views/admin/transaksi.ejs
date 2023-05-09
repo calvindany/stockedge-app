@@ -15,12 +15,12 @@
           <div class="d-flex align-items-center justify-content-between my-4 w-100"
             style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Transaction</h4>
-            <a class="btn btn-outline-primary p-2 px-2" href="/transaksi/tambah"><i class="bi bi-plus-lg"></i> Tambah
+            <a class="btn btn-outline-primary px-3" href="/transaksi/tambah"><i class="bi bi-plus-lg"></i> Tambah
               Transaksi</a>
           </div>
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
-            <div class="widget-background rounded p-4">
-              <table id="example" class="hover widget-background display" style="width:100%">
+            <div class="rounded shadow p-4">
+              <table id="example" class="hover display" style="width:100%">
                 <thead>
                   <tr>
                     <th>Id</th>
@@ -70,9 +70,9 @@
           $('table.display').DataTable();
         });
 
-        $('select').ready(function () {
-          $('select').toggleClass('selected');
-        });
+        // $('select').ready(function () {
+        //   $('select').toggleClass('selected');
+        // });
       </script>
       <script>
         $(document).ready(function () {

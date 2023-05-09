@@ -28,15 +28,15 @@ const chart = new Chart(ctx, {
     scales: {
       y: {
         ticks: {
-          color: "white",
+          // color: "white",
         },
         beginAtZero: true,
       },
-      x: {
-        ticks: {
-          color: "white",
-        },
-      },
+      // x: {
+      //   ticks: {
+      //     color: "white",
+      //   },
+      // },
     },
     plugins: {
       title: {
