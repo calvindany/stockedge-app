@@ -11,3 +11,7 @@
     width: 50%;
     border-bottom: 1px solid skyblue;
 }
+
+.image-about-me{
+    max-width: 100%;
+}
