@@ -10,7 +10,9 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
 
-const AuthRouter = require("./routes/auth");
+const AuthRoutes = require("./routes/auth");
+
+const UserRoutes = require("./routes/user");
 
 const app = express();
 
@@ -47,8 +49,9 @@ app.use((req, res, next) => {
     });
 });
 
+app.use("/", UserRoutes);
 app.use("/", AdminRoutes);
-app.use("/auth", AuthRouter);
+app.use("/auth", AuthRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)
