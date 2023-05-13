@@ -15,3 +15,14 @@
 .image-about-me{
     max-width: 100%;
 }
+
+.kategori-card{
+    cursor: pointer;
+    display: block;
+}
+
+.kategori-card:hover{
+    cursor: pointer;
+    position: relative;
+    transform: scale(1.5);
+}
