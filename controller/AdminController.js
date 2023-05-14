@@ -6,7 +6,7 @@ exports.getDashboard = (req, res, next) => {
   if (req.admin) {
     isAdmin = true;
   }
-  res.render("admin/dashboard", {
+  res.render("admin/dashboard/dashboard", {
     route: "/dashboard",
     isAdmin: isAdmin,
   });
@@ -15,7 +15,7 @@ exports.getDashboard = (req, res, next) => {
 exports.getBarang = (req, res, next) => {
   Barang.find()
     .then((barang) => {
-      res.render("admin/barang", {
+      res.render("admin/barang/barang", {
         title: "Inventaris Barang",
         route: "/barang",
         barang: barang,
@@ -71,7 +71,7 @@ exports.postDeleteBarang = (req, res, next) => {
 exports.getTransaksi = (req, res, next) => {
   Transaksi.find()
     .then((transaksi) => {
-      res.render("admin/transaksi", {
+      res.render("admin/transaksi/transaksi", {
         route: "/transaksi",
         transaksi: transaksi,
       });
@@ -81,7 +81,7 @@ exports.getTransaksi = (req, res, next) => {
 
 exports.getTambahTransaksi = (req, res, next) => {
   Barang.find().then((barang) => {
-    res.render("admin/tambahtransaksi", {
+    res.render("admin/transaksi/tambahtransaksi", {
       route: "/transaksi/tambah",
       barang: barang,
       transaksi: null,
@@ -111,7 +111,7 @@ exports.getEditTransaksi = (req, res, next) => {
   const idtransaksi = req.params.idtransaksi;
   Transaksi.findOne({ _id: idtransaksi }).then((transaksi) => {
     Barang.find().then((barang) => {
-      res.render("admin/tambahtransaksi", {
+      res.render("admin/transaksi/tambahtransaksi", {
         route: "/transaksi",
         transaksi: transaksi,
         barang: barang,
