@@ -18,11 +18,11 @@
 
 .kategori-card{
     cursor: pointer;
-    display: block;
+    transition: transform .2s;
+    text-decoration: none;
 }
 
 .kategori-card:hover{
-    cursor: pointer;
-    position: relative;
-    transform: scale(1.5);
+    transform: scale(1.2);
+    z-index: 99;
 }

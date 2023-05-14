@@ -1,6 +1,9 @@
 <%- include('include/header') %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/plugins/jquery-smartwizard-master/dist/css/smart_wizard_all.min.css">
 <link rel="stylesheet" href="/css/landing.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/plugins/jquery-smartwizard-master/dist/js/jquery.smartWizard.min.js"></script>
 </head>
 <body>
     <%- include('include/navigation') %>
@@ -53,29 +56,27 @@
             <p class="fs-4">KATEGORI BARANG</p>
           </div>
           <div class="list-kategori d-flex justify-content-start my-4" style="gap: 20px;">
-            <a href="#" class="kategori-card">
-              <div class="card d-flex flex-column justify-content-between text-center" style="width: 10rem;">
-                <img src="/asset/kategori-pipa.jpg" class="card-img-top" alt="..." height="90%">
-                <p class="card-title mt-2">Pipa PVC</p>
-              </div>
-            </a>
-            <div class="card d-flex flex-column justify-content-between text-center" style="width: 10rem;">
+            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+              <img src="/asset/kategori-pipa.jpg" class="card-img-top" alt="..." height="90%">
+              <p class="card-title mt-2">Pipa PVC</p>
+            </div>
+            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
               <div class="d-flex align-items-center" style="height: 90%">
                 <img src="/asset/kategori-kelistrikan.jpg" class="card-img-top" alt="...">
               </div>
               <p class="card-title mt-2">Kelistrikan</p>
             </div>
-            <div class="card d-flex flex-column justify-content-between text-center" style="width: 10rem;">
+            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
               <div class="d-flex align-items-center" style="height: 90%">
                 <img src="/asset/kategori-bahanbangunan.jpg" class="card-img-top" alt="...">
               </div>
               <p class="card-title mt-2">Bahan Bangunan</p>
             </div>
-            <div class="card d-flex flex-column justify-content-between text-center" style="width: 10rem;">
+            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
               <div class="d-flex align-items-center" style="height: 90%">
                 <img src="/asset/kategori-alatbangunan.png" class="card-img-top" alt="...">
               </div>
-              <p class="card-title mt-2">Bahan Bangunan</p>
+              <p class="card-title mt-2">Alat Bangunan</p>
             </div>
           </div>
         </div>
@@ -84,30 +85,71 @@
       
       <div class="tentang-kami w-100 mt-4">
         <div class="container">
-          <div class="d-flex justify-content-end border-half">
+          <div class="d-flex border-half">
             <p class="fs-4 ">TENTANG KAMI</p>
           </div>
           <div class="content d-flex my-4 align-items-center justify-content-between">
-            <div class="text-center col-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
-            </div>
             <div class="col-5">
               <img src="/asset/image-landing.png" class="image-about-me">
+            </div>
+            <div class="text-center col-6">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
             </div>
           </div>
         </div>
       </div>
       <div class="tata-cara-pemesanan w-100 mt-4">
         <div class="container">
-          <div class="d-flex justify-content-end border-half">
-            <p class="fs-4 ">TENTANG KAMI</p>
+          <div class="d-flex border-half">
+            <p class="fs-4 ">TATA CARA PEMESANAN</p>
           </div>
-          <div class="content d-flex my-4 align-items-center justify-content-between">
-            <div class="text-center col-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
+          <!-- SmartWizard html -->
+          <div id="smartwizard">
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#step-1">
+                    <div class="num">1</div>
+                    
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#step-2">
+                    <span class="num">2</span>
+                    Step Title
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#step-3">
+                    <span class="num">3</span>
+                    Step Title
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="#step-4">
+                    <span class="num">4</span>
+                    Step Title
+                  </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                    Step content
+                </div>
+                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                    Step content
+                </div>
+                <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                    Step content
+                </div>
+                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                    Step content
+                </div>
             </div>
-            <div class="col-5">
-              <img src="/asset/image-landing.png" class="image-about-me">
+
+            <!-- Include optional progressbar HTML -->
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
         </div>
@@ -122,5 +164,12 @@
           </div>
         </div>
       </div>
-      
+
+
+<script>
+  $(function() {
+    // SmartWizard initialize
+    $('#smartwizard').smartWizard();
+});
+</script>
           <%- include('include/footer') %>
