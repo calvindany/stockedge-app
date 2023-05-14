@@ -1,0 +1,125 @@
+<%- include('../include/header') %>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  </head>
+
+  <body class="d-flex">
+    <%- include('../include/sidebar') %>
+      <div class="" style="background-color: #F5F7FB; width: 100%;">
+        <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
+          style="background-color:#FFFFFF;">
+          <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
+        </header>
+
+        <main class="d-flex flex-column align-items-center">
+          <div class="d-flex align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <h4>Dashboard</h4>
+          </div>
+
+          <div class="d-flex justify-content-between w-100" style="padding-left: 3vh; padding-right: 3vh; gap: 25px">
+            <div class="d-flex flex-column w-100 justify-content-between">
+              <div class="line1 mb-4">
+                <div class="card widget-background py-3">
+                  <div class="card-body d-flex justify-content-between">
+                    <div class="content col-6">
+                      <p class="card-title text-bold" style="font-size: 12pt; font-weight: bold; opacity: 40%;">Total
+                        Income 2023</p>
+                      <p class="card-text" style="font-size: 20pt; font-weight: 500;">Rp. 1.000.000</p>
+                      <p class="card-text"><span class="p-1 rounded" style="background-color: #69ca69;">+25%</span> dari
+                        tahun lalu</p>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <img src="asset/widget-income.png" alt="" class="col-8">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="line2 d-flex flex-row justify-content-between">
+                <div class="card widget-background col-6 py-3">
+                  <div class="card-body d-flex">
+                    <div class="content col-8">
+                      <h5 class="card-title" style="opacity: 40%;">Income Hari Ini</h5>
+                      <p class="card-text">Rp. 2.000.000</p>
+                      <p class="card-text"><span class="p-1 rounded" style="background-color: #e06969;">-25%</span> dari
+                        tahun lalu</p>
+                    </div>
+                    <!-- <div class="d-flex align-items-center justify-content-center">
+                      <img src="asset/widget-income2.png" alt="" class="col-12">
+
+                    </div> -->
+                  </div>
+                </div>
+                <div class="card widget-background col-5">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="content col-5">
+                      <h5 class="card-title" style="opacity: 40%;">Worker</h5>
+                      <p class="card-text display-4" style="font-weight: 400  ;">2</p>
+                    </div>
+                    <!-- <div class="d-flex align-items-center justify-content-end">
+                      <img src="asset/widget-worker.png" alt="" class="col-8">
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center p-3 border rounded w-100" style="background-color: white;">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column my-4 w-100"
+            style="padding-left: 3vh !important; padding-right: 3vh !important;">
+            <h4 style="opacity: 70%;" class="mb-4">Order Terbaru</h4>
+            <div class="shadow rounded p-4" style="background-color: white;">
+              <table id="example" class="hover display" style="width:100%">
+                <thead>
+                  <tr>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Total Belanja</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row" class="align-middle">Calvin</td>
+                    <td class="align-middle">Rp. 1000000</td>
+                    <td class="align-middle"><span class="bg-success p-1 rounded-3"
+                        style="font-size: 15px;">Success</span>
+                    </td>
+                    <td><button class="btn btn-primary">Detail</button></td>
+                  </tr>
+                  <tr>
+                    <td scope="row" class="align-middle">Andika</td>
+                    <td class="align-middle">Rp. 1000000</td>
+                    <td class="align-middle"><span class="bg-primary p-1 rounded-3" style="font-size: 15px;">In
+                        Progress</span></td>
+                    <td><button class="btn btn-primary">Detail</button></td>
+                  </tr>
+                  <tr>
+                    <td scope="row" class="align-middle">Ansell</td>
+                    <td class="align-middle">Rp. 1000000</td>
+                    <td class="align-middle"><span class="bg-warning p-1 rounded-3"
+                        style="font-size: 15px;">Pending</span>
+                    </td>
+                    <td><button class="btn btn-primary">Detail</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <!-- Script JavaScript untuk membuat Chart -->
+      <script src="js/dashboard-create-chart.js"></script>
+
+      <script>
+        $(document).ready(function () {
+          $('table.display').DataTable();
+        });
+      </script>
+      <%- include('../include/footer') %>
