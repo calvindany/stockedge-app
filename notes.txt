@@ -1,7 +1,3 @@
 To do :
-- Get data dari database untuk halaman transaksi v
-- Tambah fitur delete cart di edit transaksi v
-- Fix bug ketika simpan barang, harus refresh dulu supaya bisa muncul
-- Tambah margin bawah form tambah/ edit transaksi v
-- Setiap form bikin required supaya ga error pas input
-- Kecilin field tanggal di form transaksi
+- Cek model kategori masih berantakan
+- Ubah sidebar jadi dropdown menu

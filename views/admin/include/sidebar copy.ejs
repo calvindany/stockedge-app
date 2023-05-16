@@ -8,26 +8,20 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="/dashboard" class="nav-link text-white d-flex justify-content-between <%= (route == '/dashboard') ? 'active' : '' %>">
+      <a href="/dashboard" class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>">
+        <svg class="bi me-2" width="16" height="16">
+          <use xlink:href="/dashboard"></use>
+        </svg>
         Dashboard
-        <a href="" class="btn"><i class="bi bi-caret-down"></i></a>
       </a>
     </li>
-    <li class="d-flex justify-content-between pe-4">
+    <li>
       <a href="/barang" class="nav-link text-white <%= (route == '/barang') ? 'active' : '' %>">
         <svg class="bi me-2" width="16" height="16">
           <use xlink:href="/barang"></use>
         </svg>
         Barang
       </a>
-      <a type="button" data-bs-toggle="dropdown" aria-expanded="false" class="d-flex align-items-center">
-        <i class="bi bi-caret-down"></i>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
     </li>
     <li>
       <a href="/transaksi" class="nav-link text-white <%= (route == '/transaksi') ? 'active' : '' %>"">
