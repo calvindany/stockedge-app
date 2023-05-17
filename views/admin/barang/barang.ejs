@@ -15,48 +15,10 @@
         <main class="d-flex flex-column align-items-center">
           <div class="d-flex justify-content-between align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Barang</h4>
+            
             <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
-            data-bs-target="#exampleModal"><i class="bi bi-plus-lg"></i>Tambah Barang</button>
+            data-bs-target="#exampleModal" onclick="tambahData()"><i class="bi bi-plus-lg"></i>Tambah Barang</button>
           </div>
-
-          <!-- <div class="w-100 my-4 d-flex justify-content-end" style="padding-left: 3vh; padding-right: 3vh;">
-            <div class="accordion" id="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Tambah Barang Baru
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                  <div class="accordion-body">
-                    <form method="POST" action="/barang">
-                      <div class="mb-3">
-                        <label for="namabarang" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="namabarang" name="namabarang"
-                          aria-describedby="barangHelp">
-                        <div id="barangHelp" class="form-text">Jika ada ukuran, masukkan didalam field ini. Contoh :
-                          Peralon 3"</div>
-                      </div>
-                      <div class="mb-3">
-                        <label for="stok" class="form-label">Stok</label>
-                        <input type="number" class="form-control" id="stok" name="stok">
-                      </div>
-                      <div class="mb-3">
-                        <label for="harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="harga" name="harga">
-                      </div>
-                      <div class="mb-3">
-                        <label for="modal" class="form-label">Modal</label>
-                        <input type="number" class="form-control" id="modal" name="modal">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
 
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="rounded p-4 shadow">
@@ -93,7 +55,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="addDataToModal(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
+                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                         <%- include('include/modal-form') %>
@@ -117,14 +79,23 @@
         });
       </script>
       <script>
-        function editDataToModal(idbarang, namabarang, stok, harga, modal) {
+        function editData(idbarang, namabarang, stok, harga, modal) {
           const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = idbarang;
-          const newnamabarang = document.getElementsByName('newnamabarang')[0].value = namabarang;
-          const newstok = document.getElementsByName('newstok')[0].value = stok;
-          const newharga = document.getElementsByName('newharga')[0].value = harga;
-          const newmodal = document.getElementsByName('newmodal')[0].value = modal;
+          const newnamabarang = document.getElementsByName('namabarang')[0].value = namabarang;
+          const newstok = document.getElementsByName('stok')[0].value = stok;
+          const newharga = document.getElementsByName('harga')[0].value = harga;
+          const newmodal = document.getElementsByName('modal')[0].value = modal;
 
-          const formedit = document.getElementsByTagName('form')[1].setAttribute('action', '/barang/' + idbarang);
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang/' + idbarang);
+        }
+        function tambahData() {
+          const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = '';
+          const newnamabarang = document.getElementsByName('namabarang')[0].value = '';
+          const newstok = document.getElementsByName('stok')[0].value = '';
+          const newharga = document.getElementsByName('harga')[0].value = '';
+          const newmodal = document.getElementsByName('modal')[0].value = '';
+
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang');
         }
       </script>
       <%- include('../include/footer') %>

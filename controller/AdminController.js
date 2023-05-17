@@ -44,10 +44,10 @@ exports.postBarang = (req, res, next) => {
 
 exports.postEditBarang = (req, res, next) => {
   const idupdatedbarang = req.body.idupdatedbarang;
-  const newnamabarang = req.body.newnamabarang;
-  const newstok = req.body.newstok;
-  const newharga = req.body.newharga;
-  const newmodal = req.body.newmodal;
+  const newnamabarang = req.body.namabarang;
+  const newstok = req.body.stok;
+  const newharga = req.body.harga;
+  const newmodal = req.body.modal;
 
   Barang.findOne({ _id: idupdatedbarang }).then((barang) => {
     barang.namabarang = newnamabarang;

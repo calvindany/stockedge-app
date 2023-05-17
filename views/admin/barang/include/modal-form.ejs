@@ -1,5 +1,5 @@
 <!-- Modal for edit data -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static"
   style="color: black;">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -8,30 +8,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="">
+        <form method="POST" action="/barang" name="modal-form">
           <div class="mb-3">
             <label for="namabarang" class="form-label">Nama Barang</label>
-            <input type="text" class="form-control" id="namabarang" name="newnamabarang" aria-describedby="barangHelp">
+            <input type="text" class="form-control" id="namabarang" name="namabarang" aria-describedby="barangHelp">
             <div id="barangHelp" class="form-text">Jika ada ukuran, masukkan didalam field ini. Contoh :
               Peralon 3"</div>
           </div>
           <div class="mb-3">
             <label for="stok" class="form-label">Stok</label>
-            <input type="number" class="form-control" id="stok" name="newstok">
+            <input type="number" class="form-control" id="stok" name="stok">
           </div>
           <div class="mb-3">
             <label for="harga" class="form-label">Harga</label>
-            <input type="number" class="form-control" id="harga" name="newharga">
+            <input type="number" class="form-control" id="harga" name="harga">
           </div>
           <div class="mb-3">
             <label for="modal" class="form-label">Modal</label>
-            <input type="number" class="form-control" id="modal" name="newmodal">
+            <input type="number" class="form-control" id="modal" name="modal">
           </div>
           <input type="hidden" name="idupdatedbarang">
           <div class="modal-footer">
             <!-- Gunakan button ini jika dibutuhkan -->
             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </form>
       </div>

@@ -1,0 +1,44 @@
+<!-- Modal for edit data -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  style="color: black"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="">
+          <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <input
+              type="text"
+              class="form-control"
+              id="kategori"
+              name="kategori"
+            />
+          </div>
+          <input type="hidden" name="idkategori" />
+          <div class="modal-footer">
+            <!-- Gunakan button ini jika dibutuhkan -->
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            <button type="submit" class="btn btn-primary">
+              Simpan Perubahan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
