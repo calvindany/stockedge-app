@@ -1,5 +1,6 @@
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
+const Kategori = require("../model/kategori");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -162,3 +163,15 @@ exports.postHapusTransaksi = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.getKategoriBarang = (req, res, next) => {
+  Kategori.find()
+  .then( kategori => {
+    res.render('admin/kategori/kategoribarang', {
+      kategori: kategori,
+    })
+  })
+  .catch( err => {
+    console.log(err);
+  })
+}

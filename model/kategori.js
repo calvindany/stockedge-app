@@ -9,7 +9,7 @@ const kategoriSchema = new Schema(
       require: true,
     },
   },
-  { collection: "barang" }
+  { collection: "kategori" }
 );
 
-module.exports = mongoose.model("barang", kategoriSchema);
+module.exports = mongoose.model("kategori", kategoriSchema);

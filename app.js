@@ -55,7 +55,7 @@ app.use("/", AdminRoutes);
 app.use("/auth", AuthRoutes);
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI_DEV)
   .then(() => {
     AdminModel.find().then((admin) => {
       if (admin.length < 1) {
