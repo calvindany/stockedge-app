@@ -169,6 +169,7 @@ exports.getKategoriBarang = (req, res, next) => {
   .then( kategori => {
     res.render('admin/kategori/kategoribarang', {
       kategori: kategori,
+      route: '/kategori'
     })
   })
   .catch( err => {

@@ -3,6 +3,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
   </head>
+
   <body class="d-flex">
     <%- include('../include/sidebar') %>
       <div class="" style="background-color: #F5F7FB; width: 100%;">
@@ -13,17 +14,19 @@
 
         <main class="d-flex flex-column align-items-center">
           <div class="d-flex justify-content-between align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
-            <h4>kategori</h4>
+            <h4>Barang</h4>
+            
             <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
-            data-bs-target="#exampleModal"><i class="bi bi-plus-lg"></i>Tambah kategori</button>
+            data-bs-target="#exampleModal" onclick="tambahData()"><i class="bi bi-plus-lg"></i>Tambah Barang</button>
           </div>
+
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="rounded p-4 shadow">
               <table id="example" class="hover" style="width:100%;">
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Kategori</th>
+                    <th>Nama Barang</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -34,18 +37,18 @@
                         <%= kategori[i]._id %>
                       </td>
                       <td>
-                        <%= kategori[i].namakategori %>
+                        <%= kategori[i].kategori %>
                       </td>
                       <td class="d-flex" style="gap: 20px;">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`)">
+                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                         <%- include('include/modal-form') %>
-                          <form action="/deletekategori" method="POST">
-                            <input type="hidden" value="<%= kategori[i]._id %>" name="idkategorifordeleted">
+                          <form action="/deletebarang" method="POST">
+                            <input type="hidden" value="<%= barang[i]._id %>" name="idbarangfordeleted">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                           </form>
                       </td>
