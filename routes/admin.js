@@ -30,6 +30,7 @@ router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
 router.post("/transaksi/hapus", AdminController.postHapusTransaksi);
 
 router.get("/kategori", AdminController.getKategoriBarang);
+router.get("/kategori", AdminController.getKategoriBarang);
 
 router.post("/kategori", AdminController.postKategoriBarang);
 
