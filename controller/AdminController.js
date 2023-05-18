@@ -169,9 +169,30 @@ exports.getKategoriBarang = (req, res, next) => {
   .then( kategori => {
     res.render('admin/kategori/kategoribarang', {
       kategori: kategori,
+      route: '/kategori'
     })
   })
   .catch( err => {
     console.log(err);
   })
+}
+
+exports.postKategoriBarang = (req, res, next) => {
+  const kategori = req.body.kategori
+  console.log(kategori);
+  const kategoribaru = new Kategori({
+    kategori: kategori,
+  })
+  
+  return kategoribaru.save()
+  .then( result => res.redirect('/kategori') )
+  .catch( err => console.log(err) );
+}
+
+exports.postHapusKategoriBarang = (req, res, next) => {
+  const kategori = req.body.idkategorifordeleted
+  
+  Kategori.findByIdAndDelete(kategori)
+  .then( result => res.redirect('/kategori'))
+  .catch( err => console.log(err) );
 }

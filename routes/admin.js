@@ -29,6 +29,10 @@ router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
 
 router.post("/transaksi/hapus", AdminController.postHapusTransaksi);
 
-router.post("/kategori", AdminController.getKategoriBarang);
+router.get("/kategori", AdminController.getKategoriBarang);
+
+router.post("/kategori", AdminController.postKategoriBarang);
+
+router.post("/deletekategori", AdminController.postHapusKategoriBarang);
 
 module.exports = router;

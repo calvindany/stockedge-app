@@ -14,6 +14,7 @@
         <main class="d-flex flex-column align-items-center">
           <div class="d-flex justify-content-between align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <h4>kategori</h4>
+            <%- include('include/modal-form') %>
             <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
             data-bs-target="#exampleModal"><i class="bi bi-plus-lg"></i>Tambah kategori</button>
           </div>
@@ -34,7 +35,7 @@
                         <%= kategori[i]._id %>
                       </td>
                       <td>
-                        <%= kategori[i].namakategori %>
+                        <%= kategori[i].kategori %>
                       </td>
                       <td class="d-flex" style="gap: 20px;">
                         <!-- Button trigger modal -->
@@ -43,7 +44,6 @@
                           onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
-                        <%- include('include/modal-form') %>
                           <form action="/deletekategori" method="POST">
                             <input type="hidden" value="<%= kategori[i]._id %>" name="idkategorifordeleted">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
