@@ -26,7 +26,7 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nama Barang</th>
+                    <th>Kategori Barang</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -38,13 +38,12 @@
                       </td>
                       <td>
                         <%= kategori[i].kategori %>
-                        <%= kategori[i].kategori %>
                       </td>
                       <td class="d-flex" style="gap: 20px;">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
+                          onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                           <form action="/deletekategori" method="POST">

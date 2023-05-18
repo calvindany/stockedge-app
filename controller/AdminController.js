@@ -179,7 +179,6 @@ exports.getKategoriBarang = (req, res, next) => {
 
 exports.postKategoriBarang = (req, res, next) => {
   const kategori = req.body.kategori
-  console.log(kategori);
   const kategoribaru = new Kategori({
     kategori: kategori,
   })

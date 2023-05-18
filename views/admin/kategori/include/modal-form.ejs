@@ -20,32 +20,15 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="/kategori">
-        <form method="POST" action="/barang" name="modal-form">
+        <form method="POST" action="/kategori" name="modal-form">
           <div class="mb-3">
-            <label for="namabarang" class="form-label">Nama Barang</label>
+            <label for="kategori" class="form-label">Nama Kategori</label>
             <input
               type="text"
               class="form-control"
-              id="namabarang"
-              name="namabarang"
-              aria-describedby="barangHelp"
+              id="kategori"
+              name="kategori"
             />
-            <div id="barangHelp" class="form-text">
-              Jika ada ukuran, masukkan didalam field ini. Contoh : Peralon 3"
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="stok" class="form-label">Stok</label>
-            <input type="number" class="form-control" id="stok" name="stok" />
-          </div>
-          <div class="mb-3">
-            <label for="harga" class="form-label">Harga</label>
-            <input type="number" class="form-control" id="harga" name="harga" />
-          </div>
-          <div class="mb-3">
-            <label for="modal" class="form-label">Modal</label>
-            <input type="number" class="form-control" id="modal" name="modal" />
           </div>
           <input type="hidden" name="idupdatedbarang" />
           <div class="modal-footer">
