@@ -66,23 +66,17 @@
         });
       </script>
       <script>
-        function editData(idbarang, namabarang, stok, harga, modal) {
-          const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = idbarang;
-          const newnamabarang = document.getElementsByName('namabarang')[0].value = namabarang;
-          const newstok = document.getElementsByName('stok')[0].value = stok;
-          const newharga = document.getElementsByName('harga')[0].value = harga;
-          const newmodal = document.getElementsByName('modal')[0].value = modal;
+        function editData(idkategori, kategori) {
+          const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = idkategori;
+          const newnamabarang = document.getElementsByName('kategori')[0].value = kategori;
 
-          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang/' + idbarang);
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/' + idkategori);
         }
         function tambahData() {
-          const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = '';
-          const newnamabarang = document.getElementsByName('namabarang')[0].value = '';
-          const newstok = document.getElementsByName('stok')[0].value = '';
-          const newharga = document.getElementsByName('harga')[0].value = '';
-          const newmodal = document.getElementsByName('modal')[0].value = '';
+          const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = '';
+          const newnamabarang = document.getElementsByName('kategori')[0].value = '';
 
-          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang');
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori');
         }
       </script>
       <%- include('../include/footer') %>

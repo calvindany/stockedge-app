@@ -178,13 +178,26 @@ exports.getKategoriBarang = (req, res, next) => {
 }
 
 exports.postKategoriBarang = (req, res, next) => {
-  const kategori = req.body.kategori
+  const kategori = req.body.kategori;
   const kategoribaru = new Kategori({
     kategori: kategori,
   })
   
-  return kategoribaru.save()
-  .then( result => res.redirect('/kategori') )
+  kategoribaru.save()
+
+  return res.redirect('/kategori')
+}
+
+exports.postEditKategoriBarang = (req, res, next) => {
+  const idkategori = req.params.idkategori;
+  const kategori = req.body.kategori;
+
+  Kategori.findOne({ _id: idkategori })
+  .then( kategori => {
+    kategori.kategori = kategori;
+
+    return kategori.save();
+  })
   .catch( err => console.log(err) );
 }
 
