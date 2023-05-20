@@ -16,8 +16,11 @@
           <div class="d-flex justify-content-between align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <h4>kategori</h4>
             <%- include('include/modal-form') %>
-            <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
-            data-bs-target="#exampleModal" onclick="tambahData()"><i class="bi bi-plus-lg"></i>Tambah Barang</button>
+            <div class="d-flex" style="gap: 10px;">
+              <a class="btn btn-primary px-3" href="/kategori"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
+              <button class="btn btn-outline-primary px-3" data-bs-toggle="modal"
+              data-bs-target="#exampleModal" onclick="tambahData()"><i class="bi bi-plus-lg"></i>Tambah Kategori</button>
+            </div>
           </div>
 
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">

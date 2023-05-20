@@ -1,6 +1,7 @@
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
+const Karyawan = require("../model/karyawan");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -217,11 +218,38 @@ exports.postHapusKategoriBarang = (req, res, next) => {
 }
 
 exports.getKaryawan = (req, res, next) => {
-  res.render('admin/karyawan/karyawan', {
-    route : '/karyawan'
-  });
+  Karyawan.find()
+  .then ( karyawan => {
+    res.render('admin/karyawan/karyawan', {
+      karyawan: karyawan,
+      route : '/karyawan'
+    });
+  })
+  .catch( err => console.log(err) );
 }
 
-exports.postKaryawan = (req, res, next) => {
+exports.getTambahKaryawan = (req, res, next) => {
+    res.render('admin/karyawan/tambahkaryawan', {
+      route: '/karyawan'
+    })
+}
+
+exports.postTambahKaryawan = (req, res, next) => {
+  const nama = req.body.namakaryawan;
+  const ktp = req.body.noktp;
+  const alamat = req.body.alamat;
+  const gaji = req.body.gaji;
+  const status = req.body.status;
   
+  const karyawan = new Karyawan({
+    nama: nama,
+    nomorktp: ktp,
+    alamat: alamat,
+    gaji: gaji,
+    status: status,
+  })
+
+  karyawan.save();
+
+  return res.redirect('/karyawan')
 }

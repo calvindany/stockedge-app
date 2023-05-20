@@ -15,8 +15,11 @@
           <div class="d-flex align-items-center justify-content-between my-4 w-100"
             style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Data Karyawan</h4>
-            <a class="btn btn-outline-primary px-3" href="#"><i class="bi bi-plus-lg"></i> Tambah
-              Karyawan</a>
+            <div class="d-flex" style="gap: 10px;">
+              <a class="btn btn-primary px-3" href="/karyawan"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
+              <a class="btn btn-outline-primary px-3" href="/tambahkaryawan"><i class="bi bi-plus-lg"></i> Tambah
+                Karyawan</a>
+            </div>
           </div>
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="rounded shadow p-4">
@@ -24,8 +27,8 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nomor KTP</th>
                     <th>Nama</th>
+                    <th>Nomor KTP</th>
                     <th>Alamat</th>
                     <th>Gaji</th>
                     <th>Status</th>
@@ -33,7 +36,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  
+                  <% for(let i = 0; i < karyawan.length; i++ ) { %>
+                    <tr>
+                      <td><%= karyawan[i]._id %></td>
+                      <td><%= karyawan[i].nama %></td>
+                      <td><%= karyawan[i].nomorktp %></td>
+                      <td><%= karyawan[i].alamat %></td>
+                      <td><%= karyawan[i].gaji %></td>
+                      <td><%= karyawan[i].status %></td>
+                      <td class="d-flex" style="gap: 20px;">
+                        <a class="btn btn-primary" href="/karyawan/edit/<%= karyawan[i]._id %>"><i
+                            class="bi bi-pencil-square"></i> Edit</a>
+                      </td>
+                    </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>
