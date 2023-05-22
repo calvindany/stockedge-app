@@ -16,9 +16,30 @@
             style="padding-left: 3vh; padding-right: 3vh;">
             <h4>Daftar Keuangan</h4>
             <div class="d-flex" style="gap: 10px;">
-              <a class="btn btn-primary px-3" href=""><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
-              <a class="btn btn-outline-primary px-3" href=""><i class="bi bi-plus-lg"></i> Tambah Daftar Keuangan</a>
+              <a class="btn btn-primary px-3" href="/daftarkeuangan"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
+              <a class="btn btn-outline-primary px-3" href="/tambahdaftarkeuangan"><i class="bi bi-plus-lg"></i> Tambah Daftar Keuangan</a>
               </div>
+          </div>
+          <div class="w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <form action="" class="mb-3">
+              <div class="row align-items-center">
+                <div class="col-12">
+                  <label for="caritanggal" class="col-form-label">Tanggal</label>
+                </div>
+                <div class="col-auto">
+                  <input type="month" id="caritanggalmulai" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <i class="bi bi-dash-lg"></i>
+                </div>
+                <div class="col-auto">
+                  <input type="month" id="caritanggalakhir" class="form-control">
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
+                </div>
+              </div>
+            </form>
           </div>
           <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="rounded shadow p-4">
@@ -34,6 +55,23 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% for (let i = 0; i < keuangan.length; i++ ) { %>
+                    <tr>
+                      <td><%= keuangan[i]._id %></td>
+                      <td><%= keuangan[i].tanggal %></td>
+                      <td><%= keuangan[i].tipe %></td>
+                      <td><%= keuangan[i].keterangan %></td>
+                      <td><%= (keuangan[i].tipe == 'Masuk') ? '+' : '-' %> <%= keuangan[i].nominal %></td>
+                      <td class="d-flex" style="gap: 20px;">
+                        <a class="btn btn-primary" href=""><i
+                            class="bi bi-pencil-square"></i> Edit</a>
+                        <form action="" method="POST">
+                          <input type="hidden" name="idtransaksi" value="">
+                          <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>

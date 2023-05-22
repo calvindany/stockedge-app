@@ -2,6 +2,7 @@ const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
 const Karyawan = require("../model/karyawan");
+const Keuangan = require("../model/keuangan");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -255,7 +256,35 @@ exports.postTambahKaryawan = (req, res, next) => {
 }
 
 exports.getLaporanKeuangan = (req, res, next) => {
-  res.render('admin/laporan/daftarkeuangan', {
-    route: '/laporan'
+  Keuangan.find()
+  .then( keuangan => {
+    res.render('admin/laporan/daftarkeuangan', {
+      route: '/laporan',
+      keuangan: keuangan
+    })
   })
+  .catch( err => console.log(err) );
+}
+
+exports.getTambahDaftarKeuangan = (req, res, next) => {
+  res.render('admin/laporan/tambahdaftarkeuangan',{
+    route: 'laporan',
+  })
+}
+
+exports.postTambahDatfarKeuangan = (req, res, next) => {
+  const tanggal = req.body.tanggal;
+  const tipe = req.body.tipe;
+  const keterangan = req.body.keterangan;
+  const nominal  = req.body.nominal;
+
+  const keuanganbaru = new Keuangan({
+    tanggal: tanggal,
+    tipe: tipe,
+    keterangan: keterangan,
+    nominal: nominal,
+  })
+
+  keuanganbaru.save();
+  return res.redirect('/daftarkeuangan');
 }

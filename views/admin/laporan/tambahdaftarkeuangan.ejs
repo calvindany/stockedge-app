@@ -1,0 +1,75 @@
+<%- include('../include/header') %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  </head>
+
+  <body class="d-flex">
+    <%- include('../include/sidebar') %>
+      <div class="" style="background-color: #F5F7FB; width: 100%;">
+        <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
+          style="background-color:#FFFFFF;">
+          <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
+        </header>
+        <main class="d-flex flex-column align-items-center">
+          <div class="d-flex align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <h4>Tambah Karyawan</h4>
+          </div>
+          <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
+            <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
+              <form
+                action="/tambahdaftarkeuangan"
+                method="POST">
+                <div class="mb-3">
+                  <label for="tanggal" class="form-label">Tanggal</label>
+                  <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="tipe" class="form-label">Tipe</label>
+                    <br>
+                    <select name="tipe" id="" class="form-select" aria-label="Default select example" name="tipe">
+                      <option value='null' selected>Pilih...</option>
+                      <option value="Masuk">Masuk</option>
+                      <option value="Keluar">Keluar</option>
+                    </select>
+                  </div>
+                <div class="mb-3">
+                  <label for="keterangan" class="form-label">Keterangan</label>
+                  <textarea class="form-control" id="keterangan" rows="3" name="keterangan"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                  <label for="nominal" class="form-label">Nominal</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                    <input type="number" class="form-control" name="nominal" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+              </div>
+          </div>
+        </main>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('table.display').DataTable();
+        });
+
+        $('select').ready(function () {
+          $('select').toggleClass('selected');
+          $('option').toggleClass('unselected');
+        });
+      </script>
+      <script>
+        $(document).ready(function () {
+          $("#caribarang").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tabelbarang tr").filter(function () {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+          });
+        });
+      </script>
+      <script src="/js/transaction.js"></script>
+      <%- include('../include/footer') %>
