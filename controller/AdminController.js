@@ -256,14 +256,29 @@ exports.postTambahKaryawan = (req, res, next) => {
 }
 
 exports.getLaporanKeuangan = (req, res, next) => {
-  Keuangan.find()
-  .then( keuangan => {
-    res.render('admin/laporan/daftarkeuangan', {
-      route: '/laporan',
-      keuangan: keuangan
+  const bulanmulai = req.query.bulanmulai + '-01'
+  const bulanselesai = req.query.bulanselesai + '-31'
+  if(req.query.bulanmulai && req.query.bulanselesai){
+    Keuangan.find({tanggal: {$gte: bulanmulai, $lte: bulanselesai}})
+    .then( keuangan => {
+      res.render('admin/laporan/daftarkeuangan', {
+        route: '/laporan',
+        keuangan: keuangan,
+        bulanmulai: req.query.bulanmulai,
+        bulanselesai: req.query.bulanselesai,
+      })
     })
-  })
-  .catch( err => console.log(err) );
+    .catch( err => console.log(err) );
+  } else {
+    Keuangan.find()
+    .then( keuangan => {
+      res.render('admin/laporan/daftarkeuangan', {
+        route: '/laporan',
+        keuangan: keuangan
+      })
+    })
+    .catch( err => console.log(err) );
+  }
 }
 
 exports.getTambahDaftarKeuangan = (req, res, next) => {
