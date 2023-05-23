@@ -18,30 +18,43 @@
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
-                action="/tambahdaftarkeuangan"
+                action="<% if(keuangan) { %>/daftarkeuangan/tambah<% } else { %>/daftarkeuangan/edit/<%= keuangan._id %><% } %> "
                 method="POST">
                 <div class="mb-3">
                   <label for="tanggal" class="form-label">Tanggal</label>
-                  <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                  <input type="date" class="form-control" id="tanggal" name="tanggal" value="<%= (keuangan) ? keuangan.tanggal : '' %>">
                 </div>
                 <div class="mb-3">
                     <label for="tipe" class="form-label">Tipe</label>
                     <br>
                     <select name="tipe" id="" class="form-select" aria-label="Default select example" name="tipe">
-                      <option value='null' selected>Pilih...</option>
-                      <option value="Masuk">Masuk</option>
-                      <option value="Keluar">Keluar</option>
+                      
+                      <% if(keuangan) { %>
+                        <% if(keuangan.tipe == "Masuk") { %>
+                          <option value='null'>Pilih...</option>
+                          <option value="Masuk" selected>Masuk</option>
+                          <option value="Keluar">Keluar</option>
+                        <% } else { %>
+                          <option value='null'>Pilih...</option>
+                          <option value="Masuk">Masuk</option>
+                          <option value="Keluar" selected>Keluar</option>
+                        <% } %>
+                      <% } else { %>
+                        <option value='null' selected>Pilih...</option>
+                        <option value="Masuk" >Masuk</option>
+                        <option value="Keluar">Keluar</option>
+                      <% } %>
                     </select>
                   </div>
                 <div class="mb-3">
                   <label for="keterangan" class="form-label">Keterangan</label>
-                  <textarea class="form-control" id="keterangan" rows="3" name="keterangan"></textarea>
+                  <textarea class="form-control" id="keterangan" rows="3" name="keterangan"><%= (keuangan) ? keuangan.keterangan : '' %></textarea>
                 </div>
                 <div class="input-group mb-3">
                   <label for="nominal" class="form-label">Nominal</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Rp.</span>
-                    <input type="number" class="form-control" name="nominal" aria-label="Username" aria-describedby="basic-addon1">
+                    <input type="number" class="form-control" name="nominal" aria-label="Username" aria-describedby="basic-addon1" value="<%= (keuangan) ? keuangan.nominal : '' %>">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">

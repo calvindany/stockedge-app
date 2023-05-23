@@ -45,8 +45,14 @@ router.post("/tambahkaryawan", AdminController.postTambahKaryawan);
 
 router.get("/daftarkeuangan", AdminController.getLaporanKeuangan);
 
-router.get("/tambahdaftarkeuangan", AdminController.getTambahDaftarKeuangan);
+router.get("/daftarkeuangan/tambah", AdminController.getTambahDaftarKeuangan);
 
-router.post("/tambahdaftarkeuangan", AdminController.postTambahDatfarKeuangan);
+router.post("/daftarkeuangan/tambah", AdminController.postTambahDatfarKeuangan);
+
+router.get("/daftarkeuangan/edit/:iddaftar", AdminController.getEditDaftarKeuangan);
+
+router.post("/daftarkeuangan/edit/:iddaftar", AdminController.postEditDaftarKeuangan);
+
+router.post("/daftarkeuangan/hapus", AdminController.postHapusDaftarKeuangan);
 
 module.exports = router;

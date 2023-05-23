@@ -258,7 +258,7 @@ exports.postTambahKaryawan = (req, res, next) => {
 exports.getLaporanKeuangan = (req, res, next) => {
   const bulanmulai = req.query.bulanmulai + '-01'
   const bulanselesai = req.query.bulanselesai + '-31'
-  if(req.query.bulanmulai && req.query.bulanselesai){
+  if(req.query.bulanmulai || req.query.bulanselesai){
     Keuangan.find({tanggal: {$gte: bulanmulai, $lte: bulanselesai}})
     .then( keuangan => {
       res.render('admin/laporan/daftarkeuangan', {
@@ -274,7 +274,9 @@ exports.getLaporanKeuangan = (req, res, next) => {
     .then( keuangan => {
       res.render('admin/laporan/daftarkeuangan', {
         route: '/laporan',
-        keuangan: keuangan
+        keuangan: keuangan,
+        bulanmulai: null,
+        bulanselesai: null,
       })
     })
     .catch( err => console.log(err) );
@@ -284,6 +286,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
 exports.getTambahDaftarKeuangan = (req, res, next) => {
   res.render('admin/laporan/tambahdaftarkeuangan',{
     route: 'laporan',
+    keuangan: null,
   })
 }
 
@@ -302,4 +305,47 @@ exports.postTambahDatfarKeuangan = (req, res, next) => {
 
   keuanganbaru.save();
   return res.redirect('/daftarkeuangan');
+}
+
+exports.getEditDaftarKeuangan = (req, res, next) => {
+  const iddaftar = req.params.iddaftar;
+  Keuangan.findOne({ _id: iddaftar})
+  .then( keuangan => {
+    res.render('admin/laporan/tambahdaftarkeuangan', {
+      route: '/daftarkeuangan',
+      keuangan: keuangan,
+    });
+  })
+}
+
+exports.postEditDaftarKeuangan = (req, res, next) => {
+  const iddaftar = req.params.iddaftar;
+  const tanggal = req.body.tanggal;
+  const tipe = req.body.tipe;
+  const keterangan = req.body.keterangan;
+  const nominal = req.body.nominal;
+
+  Keuangan.findOne({ _id: iddaftar })
+  .then(keuangan => {
+    keuangan.tanggal = tanggal;
+    keuangan.tipe = tipe;
+    keuangan.keterangan = keterangan;
+    keuangan.nominal = nominal;
+
+    return keuangan.save();
+  })
+  .then( res => {
+    return res.redirect('/daftarbarang');
+  })
+  .catch( err => console.log(err) );
+
+}
+
+exports.postHapusDaftarKeuangan = (req, res, next) => {
+  const iddaftarkeuangan = req.body.iddaftarkeuangan;
+  Keuangan.findByIdAndDelete(iddaftarkeuangan)
+  .then( result => {
+    return res.redirect('/daftarkeuangan');
+  })
+  .catch( err => console.log(err) );
 }

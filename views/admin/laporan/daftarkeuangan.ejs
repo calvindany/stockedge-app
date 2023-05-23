@@ -17,7 +17,7 @@
             <h4>Daftar Keuangan</h4>
             <div class="d-flex" style="gap: 10px;">
               <a class="btn btn-primary px-3" href="/daftarkeuangan"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
-              <a class="btn btn-outline-primary px-3" href="/tambahdaftarkeuangan"><i class="bi bi-plus-lg"></i> Tambah Daftar Keuangan</a>
+              <a class="btn btn-outline-primary px-3" href="/daftarkeuangan/tambah"><i class="bi bi-plus-lg"></i> Tambah Daftar Keuangan</a>
               </div>
           </div>
           <div class="w-100" style="padding-left: 3vh; padding-right: 3vh;">
@@ -63,10 +63,10 @@
                       <td><%= keuangan[i].keterangan %></td>
                       <td><%= (keuangan[i].tipe == 'Masuk') ? '+' : '-' %> <%= keuangan[i].nominal %></td>
                       <td class="d-flex" style="gap: 20px;">
-                        <a class="btn btn-primary" href=""><i
+                        <a class="btn btn-primary" href="/daftarkeuangan/edit/<%= keuangan[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>
-                        <form action="" method="POST">
-                          <input type="hidden" name="idtransaksi" value="">
+                        <form action="/daftarkeuangan/hapus" method="POST">
+                          <input type="hidden" name="iddaftarkeuangan" value="<%= keuangan[i]._id %>">
                           <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                         </form>
                       </td>

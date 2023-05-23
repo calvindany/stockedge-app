@@ -1,11 +1,6 @@
 To do :
-- Cek model kategori masih berantakan
-- Ubah sidebar jadi dropdown menu
-https://www.youtube.com/watch?v=-1kFtO3XZdc&t=368s
-https://drive.google.com/file/d/1yZ9t5gCyr2emDnq6IlmZPcnaS7mOS424/view
-
 - Ide fitur baru : 
  Get data, oper ke landing
- Tambah karyawan
+ Tambah karyawan v
  Pencatatan pengeluaran operasional toko
  Pemasukan per periode (hari, bulan, tahun)
