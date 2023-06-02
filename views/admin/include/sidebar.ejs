@@ -56,6 +56,15 @@
     </li>
     <li class="nav-item mb-3">
       <a
+      href="/masukbarang"
+      class="nav-link text-white <%= (route == '/masukbarang') ? 'active' : '' %>"
+      >
+      <i class="bi bi-arrow-down"></i>
+      Masuk Barang
+    </a>
+    </li>
+    <li class="nav-item mb-3">
+      <a
       href="/karyawan"
       class="nav-link text-white <%= (route == '/karyawan') ? 'active' : '' %>"
       >
@@ -65,7 +74,7 @@
     </li>
     <li class="nav-item mb-3">
       <a
-        class="nav-link text-white d-flex justify-content-between <%= (route == '/barang' || route == '/kategori') ? 'active' : '' %> mb-1"
+        class="nav-link text-white d-flex justify-content-between <%= (route == '/laporan' || route == '/daftar') ? 'active' : '' %> mb-1"
         data-bs-toggle="collapse"
         href="#collapse2"
         role="button"
@@ -79,9 +88,9 @@
         </div>
         <i class="text-end bi bi-chevron-down dropdown-arrow"></i>
       </a>
-      <div class="collapse rounded-bottom <%= (route === '' || route === '') ? 'show' : '' %>" id="collapse2">
+      <div class="collapse rounded-bottom <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse2">
         <ul class="list-group list-group-flush rounded">
-          <a href="/daftarkeuangan" class="list-group-item dropdown-item-custom <%= (route === '') ? 'active' : '' %>">Pengeluaran & Pemasukan</a>
+          <a href="/daftarkeuangan" class="list-group-item dropdown-item-custom <%= (route === '/daftar') ? 'active' : '' %>">Pengeluaran & Pemasukan</a>
           <a href="#" class="list-group-item dropdown-item-custom <%= (route === '') ? 'active' : '' %>">Pemasukan</a>
         </ul>
       </div>

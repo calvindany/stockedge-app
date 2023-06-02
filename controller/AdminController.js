@@ -305,7 +305,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
     Keuangan.find({tanggal: {$gte: bulanmulai, $lte: bulanselesai}})
     .then( keuangan => {
       res.render('admin/laporan/daftarkeuangan', {
-        route: '/laporan',
+        route: '/daftar',
         keuangan: keuangan,
         bulanmulai: req.query.bulanmulai,
         bulanselesai: req.query.bulanselesai,
@@ -316,7 +316,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
     Keuangan.find()
     .then( keuangan => {
       res.render('admin/laporan/daftarkeuangan', {
-        route: '/laporan',
+        route: '/daftar',
         keuangan: keuangan,
         bulanmulai: null,
         bulanselesai: null,

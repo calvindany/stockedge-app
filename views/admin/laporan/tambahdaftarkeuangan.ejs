@@ -17,7 +17,6 @@
           </div>
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
-              <%= keuangan %>
               <form
                 action="<% if (keuangan) { %>/daftarkeuangan/edit/<% } else { %>/daftarkeuangan/tambah<%= keuangan._id %><% } %> "
                 method="POST">

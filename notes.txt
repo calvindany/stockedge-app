@@ -1,6 +1,4 @@
 To do :
 - Ide fitur baru : 
  Get data, oper ke landing
- Tambah karyawan v
- Pencatatan pengeluaran operasional toko v
  Pemasukan per periode (hari, bulan, tahun)
