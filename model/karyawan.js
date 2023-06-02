@@ -43,7 +43,13 @@ karyawanSchema.methods.cekGajiBulanIni = function () {
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  if(this.riwayatgaji.includes({bulan: month, tahun: year})){
+  // if(this.riwayatgaji.includes({bulan: month, tahun: year})){
+  //   return true;
+  // }
+
+  const alreadypaid = this.riwayatgaji.filter( riwayatgaji => { return riwayatgaji.bulan == month && riwayatgaji.tahun == year });
+
+  if(alreadypaid.length > 0){
     return true;
   }
 

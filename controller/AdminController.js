@@ -273,10 +273,10 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
 
   Karyawan.findOne({ _id: idkaryawan })
   .then( karyawan => {
-    // (karyawan.cekGajiBulanIni())
+    // return karyawan.cekGajiBulanIni()
     if(!karyawan.cekGajiBulanIni()){      
       const keuangan = new Keuangan({
-        tanggal: date.getDate() + '-' + date.getMonth() + '-' + + date.getFullYear(),
+        tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
         tipe: 'Keluar',
         keterangan: 'Bayar gaji ' + karyawan.nama + ' bulan ' + bulan[parseInt(date.getMonth()) - 1] + ' ' + date.getFullYear(),
         nominal: karyawan.gaji,
