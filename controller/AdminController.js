@@ -157,6 +157,23 @@ exports.postEditTransaksi = (req, res, next) => {
     });
 };
 
+exports.getMasukBarang = (req, res, next) => {
+  res.render('admin/transaksi/masukbarang', {
+    route: '/masukbarang'
+  });
+}
+
+exports.getTambahMasukBarang = (req, res, next) => {
+  Barang.find().select('namabarang')
+  .then( barang => {
+    res.render('admin/transaksi/tambahmasukbarang', {
+      route: 'masukbarang',
+      transaksi: null,
+      barang: barang,
+    })
+  })
+}
+
 exports.postHapusBarangdiCart = (req, res, next) => {
   const idbarang = req.body.idbarang;
   const idtransaksi = req.body.idtransaksi;

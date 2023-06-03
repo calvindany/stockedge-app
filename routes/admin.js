@@ -26,6 +26,10 @@ router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
 
 router.post("/transaksi/hapus", AdminController.postHapusTransaksi);
 
+router.get("/transaksi/masukbarang", AdminController.getMasukBarang);
+
+router.get("/transaksi/masukbarang/tambah", AdminController.getTambahMasukBarang);
+
 router.get("/kategori", AdminController.getKategoriBarang);
 
 router.post("/kategori", AdminController.postKategoriBarang);
@@ -53,5 +57,5 @@ router.get("/daftarkeuangan/edit/:iddaftar", AdminController.getEditDaftarKeuang
 router.post("/daftarkeuangan/edit/:iddaftar", AdminController.postEditDaftarKeuangan);
 
 router.post("/daftarkeuangan/hapus", AdminController.postHapusDaftarKeuangan);
-
+ 
 module.exports = router;

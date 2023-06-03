@@ -1,0 +1,61 @@
+<%- include('../include/header') %>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  </head>
+
+  <body class="d-flex">
+    <%- include('../include/sidebar') %>
+      <div class="" style="background-color: #F5F7FB; width: 100%;">
+        <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
+          style="background-color:#FFFFFF;">
+          <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
+        </header>
+        <main class="d-flex flex-column align-items-center">
+          <div class="d-flex align-items-center justify-content-between my-4 w-100"
+            style="padding-left: 3vh; padding-right: 3vh;">
+            <h4>Daftar Barang Masuk</h4>
+            <div class="d-flex" style="gap: 10px;">
+              <a class="btn btn-primary px-3" href="/transaksi/masukbarang"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
+              <a class="btn btn-outline-primary px-3" href="/transaksi/masukbarang/tambah"><i class="bi bi-plus-lg"></i> Tambah
+                Barang</a>
+              </div>
+          </div>
+          <div class="table" style="padding-left: 3vh; padding-right: 3vh;">
+            <div class="rounded shadow p-4" style="background-color: white;">
+              <table id="example" class="hover display" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nama Pembeli</th>
+                    <th>Tanggal Beli</th>
+                    <th>Total Beli</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+      <script>
+        $(document).ready(function () {
+          $('table.display').DataTable();
+        });
+      </script>
+      <script>
+        $(document).ready(function () {
+          $("#caribarang").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tabelbarang tr").filter(function () {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+          });
+        });
+      </script>
+      <%- include('../include/footer') %>
+  </body>
