@@ -3,6 +3,9 @@ const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
 const Karyawan = require("../model/karyawan");
 const Keuangan = require("../model/keuangan");
+const BarangMasuk = require('../model/barangmasuk');
+const barang = require("../model/barang");
+const keuangan = require("../model/keuangan");
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -157,23 +160,6 @@ exports.postEditTransaksi = (req, res, next) => {
     });
 };
 
-exports.getMasukBarang = (req, res, next) => {
-  res.render('admin/transaksi/masukbarang', {
-    route: '/masukbarang'
-  });
-}
-
-exports.getTambahMasukBarang = (req, res, next) => {
-  Barang.find()
-  .then( barang => {
-    res.render('admin/transaksi/tambahmasukbarang', {
-      route: 'masukbarang',
-      transaksi: null,
-      barang: barang,
-    })
-  })
-}
-
 exports.postHapusBarangdiCart = (req, res, next) => {
   const idbarang = req.body.idbarang;
   const idtransaksi = req.body.idtransaksi;
@@ -195,6 +181,126 @@ exports.postHapusTransaksi = (req, res, next) => {
       res.redirect("/transaksi");
     })
     .catch((err) => console.log(err));
+};
+
+exports.getMasukBarang = (req, res, next) => {
+  BarangMasuk.find()
+  .then( barangmasuk => {
+    res.render('admin/transaksi/masukbarang', {
+      route: '/masukbarang',
+      barangmasuk: barangmasuk,
+    });
+  })
+}
+
+exports.getTambahMasukBarang = (req, res, next) => {
+  Barang.find()
+  .then( barang => {
+    res.render('admin/transaksi/tambahmasukbarang', {
+      route: 'masukbarang',
+      barangmasuk: null,
+      barang: barang,
+    })
+  })
+  .catch( err => console.log(err));
+}
+
+exports.postTambahMasukBarang = (req, res, next) => {
+  const namasupplier = req.body.namasupplier;
+  const tanggal = req.body.tanggal;
+  const status = req.body.status == "null" ? "Draft" : req.body.status;
+  const idbarangpilihan = req.body.idbarang;
+  const jumlah = req.body.jumlah;
+  const harga = req.body.hargavalue;
+
+  const barangmasukbaru = new BarangMasuk({
+    namasupplier: namasupplier,
+    tanggal: tanggal,
+    status: status,
+  })
+
+  barangmasukbaru.tambahBarang({ idbarangpilihan, jumlah, harga });
+
+  return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+};
+
+exports.getEditMasukBarang = (req, res, next) => {
+  const idbarangmasuk = req.params.idbarangmasuk;
+  BarangMasuk.findOne({ _id: idbarangmasuk }).then((barangmasuk) => {
+    Barang.find().then((barang) => {
+      res.render("admin/transaksi/tambahmasukbarang", {
+        route: "/barangmasuk",
+        barangmasuk: barangmasuk,
+        barang: barang,
+      });
+    });
+  });
+};
+
+exports.postEditMasukBarang = async (req, res, next) => {
+  const idbarangmasuk = req.params.idbarangmasuk;
+
+  const namasupplier = req.body.namasupplier;
+  const tanggal = req.body.tanggal;
+  const idbarangpilihan = req.body.idbarang;
+  const jumlah = req.body.jumlah;
+  const harga = req.body.hargavalue;
+
+  BarangMasuk.findOne({ _id: idbarangmasuk })
+    .then((barangmasuk) => {
+      barangmasuk.namasupplier = namasupplier;
+      barangmasuk.tanggal = tanggal;
+      barangmasuk.tambahBarang({ idbarangpilihan, jumlah, harga });
+    })
+    .then(() => {
+      return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk);
+    });
+};
+
+exports.postHapusBarangdiCartMasukBarang = (req, res, next) => {
+  const idbarang = req.body.idbarang;
+  const idbarangmasuk = req.body.idbarangmasuk;
+
+  BarangMasuk.findOne({ _id: idbarangmasuk })
+    .then((barangmasuk) => {
+      return barangmasuk.hapusBarang(idbarang);
+    })
+    .then((result) => {
+      return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk);
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postHapusMasukBarang = (req, res, next) => {
+  const idbarangmasuk = req.body.idbarangmasuk;
+  BarangMasuk.findOneAndDelete({ _id: idbarangmasuk })
+    .then((result) => {
+      res.redirect("/transaksi/masukbarang");
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postBayarMasukBarang = (req, res, next) => {
+  const idbarangmasuk = req.body.idbarangmasuk;
+  const date = new Date();
+
+  BarangMasuk.findOne({_id: idbarangmasuk})
+  .then( barangmasuk => {
+    barangmasuk.status = 'Lunas';
+
+    const keuanganbaru = new Keuangan({
+      tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+      tipe: 'Keluar',
+      keterangan: 'Pesan barang dari supplier ' + barangmasuk.namasupplier,
+      nominal: barangmasuk.total,
+    })
+
+    barangmasuk.save();
+    keuanganbaru.save();
+
+    return res.redirect('/transaksi/masukbarang')
+  })
+  .catch(err => console.log(err));
 };
 
 exports.getKategoriBarang = (req, res, next) => {

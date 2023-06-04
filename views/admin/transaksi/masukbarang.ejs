@@ -27,15 +27,45 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nama Pembeli</th>
-                    <th>Tanggal Beli</th>
+                    <th>Nama Suplier</th>
+                    <th>Tanggal Transaksi</th>
                     <th>Total Beli</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-
+                  <% for(let i=0; i < barangmasuk.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= barangmasuk[i]._id %>
+                      </td>
+                      <td>
+                        <%= barangmasuk[i].namasupplier %>
+                      </td>
+                      <td>
+                        <%= barangmasuk[i].tanggal %>
+                      </td>
+                      <td>
+                        <%= barangmasuk[i].total %>
+                      </td>
+                      <td>
+                        <%= barangmasuk[i].status %>
+                      </td>
+                      <td class="d-flex" style="gap: 20px;">
+                        <a class="btn btn-primary" href="/transaksi/masukbarang/edit/<%= barangmasuk[i]._id %>"><i
+                          class="bi bi-pencil-square"></i> Edit</a>
+                        <form action="/transaksi/masukbarang/bayar" method="POST">
+                          <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
+                          <button class="btn btn-success <%= (barangmasuk[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Bayar</button>
+                        </form>
+                        <form action="/transaksi/masukbarang/hapus" method="POST">
+                          <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
+                          <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% } %>
                 </tbody>
               </table>
             </div>

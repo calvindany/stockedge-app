@@ -30,6 +30,18 @@ router.get("/transaksi/masukbarang", AdminController.getMasukBarang);
 
 router.get("/transaksi/masukbarang/tambah", AdminController.getTambahMasukBarang);
 
+router.post("/transaksi/masukbarang/tambah", AdminController.postTambahMasukBarang);
+
+router.post("/transaksi/masukbarang/edit/hapusbarang", AdminController.postHapusBarangdiCartMasukBarang);
+
+router.get("/transaksi/masukbarang/edit/:idbarangmasuk", AdminController.getEditMasukBarang);
+
+router.post("/transaksi/masukbarang/edit/:idbarangmasuk", AdminController.postEditMasukBarang);
+
+router.post("/transaksi/masukbarang/bayar", AdminController.postBayarMasukBarang);
+
+router.post("/transaksi/masukbarang/hapus", AdminController.postHapusMasukBarang);
+
 router.get("/kategori", AdminController.getKategoriBarang);
 
 router.post("/kategori", AdminController.postKategoriBarang);

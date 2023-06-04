@@ -18,18 +18,18 @@
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
-                action="<% if(transaksi) { %>/transaksi/edit/<%= transaksi._id %><% } else { %>/transaksi/tambah <% } %>"
+                action="<% if(barangmasuk) { %>/transaksi/masukbarang/edit/<%= barangmasuk._id %><% } else { %>/transaksi/masukbarang/tambah <% } %>"
                 method="POST">
                 <div class="mb-3">
                   <label for="namasupplier" class="form-label">Nama Supplier</label>
                   <input type="text" class="form-control" id="namasupplier" name="namasupplier"
-                    aria-describedby="pembeliHelp" value="<% if(transaksi) { %><%= transaksi.namapembeli %><% } %>">
+                    aria-describedby="pembeliHelp" value="<% if(barangmasuk) { %><%= barangmasuk.namasupplier %><% } %>">
                   <div id="pembeliHelp" class="form-text">Sementara masukan nama supplier secara manual</div>
                 </div>
                 <div class="mb-3">
                   <label for="tanggal" class="form-label">Tanggal</label>
                   <input type="date" class="form-control" id="tanggal" name="tanggal"
-                    value="<% if(transaksi) { %><%= transaksi.tanggal %><% } %>">
+                    value="<% if(barangmasuk) { %><%= barangmasuk.tanggal %><% } %>">
                 </div>
                 <div class="mb-3">
                   <label for="tanggal" class="form-label">Status Transaksi</label>
@@ -121,25 +121,25 @@
                     </tr>
                   </thead>
                   <tbody id="tabelbarangcart">
-                    <% if(transaksi) { %>
-                      <% for(let i=0; i < transaksi.barang.length; i++) { %>
+                    <% if(barangmasuk) { %>
+                      <% for(let i=0; i < barangmasuk.barang.length; i++) { %>
                         <tr>
                           <td>
-                            <%= transaksi.barang[i].namabarang %>
+                            <%= barangmasuk.barang[i].namabarang %>
                           </td>
                           <td>
-                            <%= transaksi.barang[i].jumlah %>
+                            <%= barangmasuk.barang[i].jumlah %>
                           </td>
                           <td>
-                            <%= transaksi.barang[i].harga %>
+                            <%= barangmasuk.barang[i].harga %>
                           </td>
                           <td>
-                            <%= transaksi.barang[i].subtotal %>
+                            <%= barangmasuk.barang[i].subtotal %>
                           </td>
                           <td class="d-flex justify-content-center">
-                            <form class="" action="/transaksi/edit/hapusbarang" method="POST">
-                              <input name="idbarang" value="<%= transaksi.barang[i]._id %>" type="hidden">
-                              <input name="idtransaksi" value="<%= transaksi._id %>" type="hidden">
+                            <form class="" action="/transaksi/masukbarang/edit/hapusbarang" method="POST">
+                              <input name="idbarang" value="<%= barangmasuk.barang[i]._id %>" type="hidden">
+                              <input name="idbarangmasuk" value="<%= barangmasuk._id %>" type="hidden">
                               <button class="btn btn-danger me-2 d-flex" role="button" type="submit">
                                 <i class="bi bi-trash-fill"></i> Hapus
                               </button>
@@ -151,7 +151,7 @@
                 </table>
                 <div class="mt-4 d-flex justify-content-end">
                   <p class="display-6">
-                    Total : Rp. <%= (transaksi) ? transaksi.total : "0" %>
+                    Total : Rp. <%= (barangmasuk) ? barangmasuk.total : "0" %>
                   </p>
                 </div>
 
