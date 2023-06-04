@@ -164,7 +164,7 @@ exports.getMasukBarang = (req, res, next) => {
 }
 
 exports.getTambahMasukBarang = (req, res, next) => {
-  Barang.find().select('namabarang')
+  Barang.find()
   .then( barang => {
     res.render('admin/transaksi/tambahmasukbarang', {
       route: 'masukbarang',
