@@ -36,7 +36,7 @@
           <i class="bi bi-bricks"></i>
           Inventori
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow"></i>
+        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse rounded-bottom <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
         <ul class="list-group list-group-flush rounded">
@@ -53,13 +53,13 @@
         role="button"
         aria-expanded="false"
         aria-controls="collapseExample"
-        onclick="rotateArrow(0)"
+        onclick="rotateArrow(1)"
       > 
         <div class="">
           <i class="bi bi-bag"></i>
           Transaksi
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow"></i>
+        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse rounded-bottom <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
         <ul class="list-group list-group-flush rounded">
@@ -85,13 +85,13 @@
         role="button"
         aria-expanded="false"
         aria-controls="collapseExample"
-        onclick="rotateArrow(1)"
+        onclick="rotateArrow(2)"
       > 
         <div class="">
           <i class="bi bi-file-earmark-check"></i>
           Laporan Keuangan
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow"></i>
+        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse rounded-bottom <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
         <ul class="list-group list-group-flush rounded">

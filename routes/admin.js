@@ -24,6 +24,8 @@ router.get("/transaksi/edit/:idtransaksi", AdminController.getEditTransaksi);
 
 router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
 
+router.post("/transaksi/bayar", AdminController.postBayarOrderMasuk);
+
 router.post("/transaksi/hapus", AdminController.postHapusTransaksi);
 
 router.get("/transaksi/masukbarang", AdminController.getMasukBarang);

@@ -174,6 +174,29 @@ exports.postHapusBarangdiCart = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+exports.postBayarOrderMasuk = (req, res, next) => {
+  const idtransaksi = req.body.idtransaksi;
+  const date = new Date();
+
+  Transaksi.findOne({_id: idtransaksi})
+  .then( transaksi => {
+    transaksi.status = 'Lunas';
+
+    const keuanganbaru = new Keuangan({
+      tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+      tipe: 'Masuk',
+      keterangan: 'Order barang dari ' + transaksi.namapembeli,
+      nominal: transaksi.total,
+    })
+
+    transaksi.save();
+    keuanganbaru.save();
+
+    return res.redirect('/transaksi')
+  })
+  .catch(err => console.log(err));
+};
+
 exports.postHapusTransaksi = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
   Transaksi.findOneAndDelete({ _id: idtransaksi })
