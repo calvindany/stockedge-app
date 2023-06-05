@@ -374,7 +374,7 @@ exports.getKategoriBarang = (req, res, next) => {
   })
 }
 
-exports.postKategoriBarang = (req, res, next) => {
+exports.postTambahKategoriBarang = (req, res, next) => {
   const kategori = req.body.kategori;
   let image;
 

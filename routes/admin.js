@@ -46,9 +46,9 @@ router.post("/transaksi/masukbarang/hapus", AdminController.postHapusMasukBarang
 
 router.get("/kategori", AdminController.getKategoriBarang);
 
-router.post("/kategori", AdminController.postKategoriBarang);
+router.post("/kategori/tambah", AdminController.postTambahKategoriBarang);
 
-router.post("/kategori/:idkategori", AdminController.postEditKategoriBarang);
+router.post("/kategori/edit/:idkategori", AdminController.postEditKategoriBarang);
 
 router.post("/deletekategori", AdminController.postHapusKategoriBarang);
 

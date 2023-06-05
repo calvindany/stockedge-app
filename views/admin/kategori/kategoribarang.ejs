@@ -73,13 +73,13 @@
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = idkategori;
           const newnamabarang = document.getElementsByName('kategori')[0].value = kategori;
 
-          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/' + idkategori);
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/edit/' + idkategori);
         }
         function tambahData() {
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = '';
           const newnamabarang = document.getElementsByName('kategori')[0].value = '';
 
-          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori');
+          const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/tambah');
         }
       </script>
       <%- include('../include/footer') %>
