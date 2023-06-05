@@ -376,8 +376,15 @@ exports.getKategoriBarang = (req, res, next) => {
 
 exports.postKategoriBarang = (req, res, next) => {
   const kategori = req.body.kategori;
+  let image;
+
+  if(req.file){
+    image = req.file.filename;
+  }
+
   const kategoribaru = new Kategori({
     kategori: kategori,
+    image: image,
   })
   
   kategoribaru.save()
@@ -387,22 +394,50 @@ exports.postKategoriBarang = (req, res, next) => {
 
 exports.postEditKategoriBarang = (req, res, next) => {
   const idkategori = req.params.idkategori;
-  const kategori = req.body.kategori;
+  const namakategori = req.body.kategori;
+  let image;
+
+  if(req.file){
+    image = req.file.filename;
+  }
 
   Kategori.findOne({ _id: idkategori })
   .then( kategori => {
-    kategori.kategori = kategori;
+    kategori.kategori = namakategori;
 
-    return kategori.save();
+    if (fs.existsSync(path.join(__dirname, '../public/images/') + kategori.image) && image) {
+      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
+      kategori.image = image;
+    } else if (image) {
+      kategori.image = image;
+    } else if (kategori.image){
+      kategori.image = kategori.image;
+    } else {
+      kategori.image = 'null';
+    }
+
+    kategori.save();
+    return res.redirect("/kategori");
   })
   .catch( err => console.log(err) );
 }
 
 exports.postHapusKategoriBarang = (req, res, next) => {
-  const kategori = req.body.idkategorifordeleted
-  
-  Kategori.findByIdAndDelete(kategori)
-  .then( result => res.redirect('/kategori'))
+  const idkategori = req.body.idkategorifordeleted
+  Kategori.findOne({ _id: idkategori })
+  .then( kategori => {
+    try {
+      if (fs.existsSync(path.join(__dirname, '../public/images/') + kategori.image)) {
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
+        return Kategori.findOneAndDelete({ _id: idkategori })
+      }
+    } catch (err) {
+      return res.redirect("/kategori");
+    }
+  })
+  .then( result => {
+    return res.redirect("/kategori");
+  })
   .catch( err => console.log(err) );
 }
 

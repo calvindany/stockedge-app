@@ -8,6 +8,9 @@ const kategoriSchema = new Schema(
       type: String,
       require: true,
     },
+    image: {
+      type: String,
+    }
   },
   { collection: "kategori" }
 );

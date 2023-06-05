@@ -20,7 +20,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="/kategori" name="modal-form">
+        <form method="POST" action="/kategori" name="modal-form" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="kategori" class="form-label">Nama Kategori</label>
             <input
@@ -29,6 +29,13 @@
               id="kategori"
               name="kategori"
             />
+          </div>
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Gambar</label>
+            <input class="form-control" type="file" id="formFile" name="image" aria-describedby="gambarHelp">
+            <div id="gambarHelp" class="form-text">
+              Jika tidak ingin mengupdate gambar, biarkan kosong saja
+            </div>
           </div>
           <input type="hidden" name="idupdatedkategori" />
           <div class="modal-footer">
