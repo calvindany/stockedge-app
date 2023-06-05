@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const Multer = require('multer');
 
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
@@ -13,6 +14,7 @@ const AdminModel = require("./model/admin");
 const AuthRoutes = require("./routes/auth");
 
 const UserRoutes = require("./routes/user");
+const multer = require("multer");
 
 const app = express();
 
@@ -21,11 +23,22 @@ const app = express();
 //   collection: "userSession",
 // });
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+})
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ storage: fileStorage }).single('image'))
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, '/public/images')));
 
 // app.use(
 //   session({

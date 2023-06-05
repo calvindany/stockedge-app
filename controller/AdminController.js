@@ -1,11 +1,13 @@
+const fs = require('fs');
+const path = require('path')
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
 const Karyawan = require("../model/karyawan");
 const Keuangan = require("../model/keuangan");
 const BarangMasuk = require('../model/barangmasuk');
-const barang = require("../model/barang");
-const keuangan = require("../model/keuangan");
+
+const fileHelper = require('../util/fileDelete');
 
 exports.getDashboard = (req, res, next) => {
   let isAdmin = false;
@@ -45,6 +47,11 @@ exports.postBarang = (req, res, next) => {
   const stok = req.body.stok;
   const harga = req.body.harga;
   const modal = req.body.modal;
+  let image;
+
+  if(req.file){
+    image = req.file.filename;
+  }
 
   const newbarang = new Barang({
     namabarang: namabarang,
@@ -52,6 +59,7 @@ exports.postBarang = (req, res, next) => {
     stok: stok,
     harga: harga,
     modal: modal,
+    image: image,
   });
 
   newbarang.save();
@@ -65,12 +73,28 @@ exports.postEditBarang = (req, res, next) => {
   const newstok = req.body.stok;
   const newharga = req.body.harga;
   const newmodal = req.body.modal;
+  let image;
+
+  if(req.file){
+    image = req.file.filename;
+  }
 
   Barang.findOne({ _id: idupdatedbarang }).then((barang) => {
     barang.namabarang = newnamabarang;
     barang.stok = newstok;
     barang.harga = newharga;
     barang.modal = newmodal;
+
+    if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image) && image) {
+      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+      barang.image = image;
+    } else if (image) {
+      barang.image = image;
+    } else if (barang.image){
+      barang.image = barang.image;
+    } else {
+      barang.image = 'null';
+    }
 
     barang.save();
 
@@ -80,8 +104,19 @@ exports.postEditBarang = (req, res, next) => {
 
 exports.postDeleteBarang = (req, res, next) => {
   const idbarang = req.body.idbarangfordeleted;
-  Barang.findOneAndDelete({ _id: idbarang }).then((result) => {
-    res.redirect("/barang");
+  Barang.findOne({ _id: idbarang })
+  .then( barang => {
+    try {
+      if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image)) {
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+        return Barang.findOneAndDelete({ _id: idbarang })
+      }
+    } catch (err) {
+      return res.redirect("/barang");
+    }
+  })
+  .then((result) => {
+    return res.redirect("/barang");
   })
   .catch( err => {
     console.log(err);

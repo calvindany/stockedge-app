@@ -24,6 +24,9 @@ const barangSchema = new Schema(
       type: Number,
       require: true,
     },
+    image: {
+      type: String,
+    }
   },
   { collection: "barang" }
 );
