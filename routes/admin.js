@@ -54,11 +54,15 @@ router.post("/deletekategori", AdminController.postHapusKategoriBarang);
 
 router.get("/karyawan", AdminController.getKaryawan);
 
+router.get("/karyawan/tambah", AdminController.getTambahKaryawan);
+
+router.post("/karyawan/tambah", AdminController.postTambahKaryawan);
+
+router.get("/karyawan/edit/:idkaryawan", AdminController.getEditKaryawan);
+
+router.post("/karyawan/edit/:idkaryawan", AdminController.postEditKaryawan);
+
 router.post("/karyawan/gaji/:idkaryawan", AdminController.postBayarGajiKaryawan);
-
-router.get("/tambahkaryawan", AdminController.getTambahKaryawan);
-
-router.post("/tambahkaryawan", AdminController.postTambahKaryawan);
 
 router.get("/daftarkeuangan", AdminController.getLaporanKeuangan);
 

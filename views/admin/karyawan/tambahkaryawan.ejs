@@ -18,26 +18,25 @@
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
-                action="/tambahkaryawan"
+                action="<% if (karyawan) { %>/karyawan/edit/<%= karyawan._id %><% } else { %>/karyawan/tambah<% } %>"
                 method="POST">
                 <div class="mb-3">
                   <label for="namakaryawan" class="form-label">Nama Karyawan</label>
-                  <input type="text" class="form-control" id="namakaryawan" name="namakaryawan"
-                    aria-describedby="karyawanHelp" value="">
+                  <input type="text" class="form-control" id="namakaryawan" name="namakaryawan" value="<%= (karyawan) ? karyawan.nama : '' %>">
                 </div>
                 <div class="mb-3">
                   <label for="noktp" class="form-label">Nomor KTP</label>
                   <input type="text" class="form-control" id="noktp" name="noktp"
-                    value="">
+                    value="<%= (karyawan) ? karyawan.nomorktp : '' %>">
                 </div>
                 <div class="mb-3">
                   <label for="alamat" class="form-label">Alamat</label>
-                  <textarea class="form-control" id="alamat" rows="3" name="alamat"></textarea>
+                  <textarea class="form-control" id="alamat" rows="3" name="alamat"><%= (karyawan) ? karyawan.alamat : '' %></textarea>
                 </div>
                 <div class="mb-3">
                   <label for="gaji" class="form-label">Gaji</label>
                   <input type="number" class="form-control" id="gaji" name="gaji"
-                    value="">
+                    value="<%= (karyawan) ? karyawan.gaji : '' %>">
                 </div>
                 <div class="mb-3">
                   <label for="status" class="form-label">Status</label>
@@ -56,6 +55,8 @@
         </main>
       </div>
       <script>
+        const select = document.getElementsByName('status')[0].value = "<%= (karyawan) ? karyawan.status : '' %>";
+
         $(document).ready(function () {
           $('table.display').DataTable();
         });
@@ -75,5 +76,4 @@
           });
         });
       </script>
-      <script src="/js/transaction.js"></script>
       <%- include('../include/footer') %>

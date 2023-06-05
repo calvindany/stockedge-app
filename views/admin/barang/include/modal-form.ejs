@@ -36,7 +36,7 @@
           </div>
           <div class="mb-3">
             <label for="kategori" class="form-label">Kategori Barang</label>
-            <select class="form-select" aria-label="Default select example" name="kategori">
+            <select class="form-select" aria-label="Default select example" name="kategori" id="kategori">
               <option selected>Pilih...</option>
               <% for(let i = 0; i < kategori.length; i++) { %>
                 <option value="<%= kategori[i].kategori %>"><%= kategori[i].kategori %></option>

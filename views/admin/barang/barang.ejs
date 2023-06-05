@@ -62,7 +62,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
+                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].kategori %>`, `<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                           <form action="/deletebarang" method="POST">
@@ -85,9 +85,10 @@
         });
       </script>
       <script>
-        function editData(idbarang, namabarang, stok, harga, modal) {
+        function editData(idbarang, namabarang, kategori, stok, harga, modal) {
           const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = idbarang;
           const newnamabarang = document.getElementsByName('namabarang')[0].value = namabarang;
+          const newkategori = document.getElementsByName('kategori')[0].value = kategori;
           const newstok = document.getElementsByName('stok')[0].value = stok;
           const newharga = document.getElementsByName('harga')[0].value = harga;
           const newmodal = document.getElementsByName('modal')[0].value = modal;

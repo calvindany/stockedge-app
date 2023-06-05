@@ -454,7 +454,8 @@ exports.getKaryawan = (req, res, next) => {
 
 exports.getTambahKaryawan = (req, res, next) => {
     res.render('admin/karyawan/tambahkaryawan', {
-      route: '/karyawan'
+      route: '/karyawan',
+      karyawan: null,
     })
 }
 
@@ -478,6 +479,42 @@ exports.postTambahKaryawan = (req, res, next) => {
   return res.redirect('/karyawan')
 }
 
+exports.getEditKaryawan = (req, res, next) => {
+  const idkaryawan = req.params.idkaryawan;
+
+  Karyawan.findOne({ _id: idkaryawan })
+  .then( karyawan => {
+    return res.render('admin/karyawan/tambahkaryawan', {
+      route: '/karyawan',
+      karyawan: karyawan,
+    })
+  })
+}
+
+exports.postEditKaryawan = (req, res, next) => {
+  const idkaryawan = req.params.idkaryawan;
+  const nama = req.body.namakaryawan;
+  const ktp = req.body.noktp;
+  const alamat = req.body.alamat;
+  const gaji = req.body.gaji;
+  const status = req.body.status;
+
+  Karyawan.findOne({ _id: idkaryawan })
+  .then( karyawan => {
+    karyawan.nama = nama;
+    karyawan.nomorktp = ktp;
+    karyawan.alamat = alamat;
+    karyawan.gaji = gaji;
+    karyawan.status = status;
+
+    return karyawan.save();
+  })
+  .then( result => {
+    return res.redirect('/karyawan');
+  })
+  .catch(err => console.log(err));
+}
+
 exports.postBayarGajiKaryawan = (req, res, next) => {
   const idkaryawan = req.params.idkaryawan;
   
@@ -489,7 +526,6 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
 
   Karyawan.findOne({ _id: idkaryawan })
   .then( karyawan => {
-    // return karyawan.cekGajiBulanIni()
     if(!karyawan.cekGajiBulanIni()){      
       const keuangan = new Keuangan({
         tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
