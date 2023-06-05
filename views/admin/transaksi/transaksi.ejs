@@ -55,10 +55,10 @@
                       <td class="d-flex" style="gap: 20px;">
                         <a class="btn btn-primary" href="/transaksi/edit/<%= transaksi[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>
-                          <form action="/transaksi/bayar" method="POST">
-                            <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
-                            <button class="btn btn-success <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>
-                          </form>
+                        <form action="/transaksi/bayar" method="POST">
+                          <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
+                          <button class="btn btn-success <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>
+                        </form>
                         <form action="/transaksi/hapus" method="POST">
                           <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
                           <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>

@@ -2,3 +2,6 @@ To do :
 - Ide fitur baru : 
  Get data, oper ke landing
  Pemasukan per periode (hari, bulan, tahun)
+
+- Improvement on dashboard page
+ Adding getKeuntunganHariIni dan getKeuntunganTahunIni

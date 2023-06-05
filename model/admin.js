@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Transaksi = require('../model/transaction');
 
 const Schema = mongoose.Schema;
 
@@ -12,5 +13,9 @@ const adminSchema = new Schema({
     require: true,
   },
 });
+
+// adminSchema.methods.getKeuntunganHariIni = function (date){
+//   Transaksi.find({ tanggal: { $gte: date, $lt: date} })
+// }
 
 module.exports = mongoose.model("admin", adminSchema);

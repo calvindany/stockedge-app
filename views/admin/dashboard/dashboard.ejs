@@ -76,8 +76,8 @@
               <table id="example" class="hover display" style="width:100%">
                 <thead>
                   <tr>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Total Belanja</th>
+                    <th scope="col">Nama Pembeli</th>
+                    <th scope="col">Total Beli</th>
                     <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                   </tr>
@@ -87,10 +87,16 @@
                     <tr>
                       <td scope="row" class="align-middle"><%= transaksi[i].namapembeli %></td>
                       <td class="align-middle">Rp. <%= transaksi[i].total %></td>
-                      <td class="align-middle"><span class="<%= (transaksi[i].status == 'Success') ? 'bg-success' : (transaksi[i].status == 'Belum Bayar') ? 'bg-danger' : 'bg-secondary' %> p-1 rounded-3"
+                      <td class="align-middle"><span class="<%= (transaksi[i].status == 'Lunas') ? 'bg-success' : (transaksi[i].status == 'Belum Bayar') ? 'bg-danger' : 'bg-secondary' %> p-1 rounded-3"
                           style="font-size: 15px; color: white;"><%= transaksi[i].status %></span>
                       </td>
-                      <td><button class="btn btn-primary">Detail</button></td>
+                      <td class="d-flex" style="gap: 20px;">
+                        <button class="btn btn-primary">Detail</button>
+                        <form action="/transaksi/bayar" method="POST">
+                          <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
+                          <button class="btn btn-success <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>
+                        </form>
+                      </td>
                     </tr>
                   <% } %>
                 </tbody>
