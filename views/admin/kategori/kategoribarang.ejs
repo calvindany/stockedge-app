@@ -49,7 +49,7 @@
                           onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
-                          <form action="/deletekategori" method="POST">
+                          <form action="/kategori/delete" method="POST">
                             <input type="hidden" value="<%= kategori[i]._id %>" name="idkategorifordeleted">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                           </form>

@@ -50,7 +50,7 @@ router.post("/kategori/tambah", AdminController.postTambahKategoriBarang);
 
 router.post("/kategori/edit/:idkategori", AdminController.postEditKategoriBarang);
 
-router.post("/deletekategori", AdminController.postHapusKategoriBarang);
+router.post("/kategori/delete", AdminController.postHapusKategoriBarang);
 
 router.get("/karyawan", AdminController.getKaryawan);
 
