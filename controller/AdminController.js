@@ -17,7 +17,7 @@ exports.getDashboard = (req, res, next) => {
   Transaksi.find()
   .limit(5)
   .then( transaksi => {
-    res.render("admin/dashboard/dashboard", {
+    res.render("admin/dashboard/dashboard2", {
       route: "/dashboard",
       transaksi: transaksi,
     });
