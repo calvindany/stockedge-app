@@ -1,23 +1,8 @@
-/* .widget-background {
-    background-color: #2D353C !important;
-    color: white !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-table th, table td {
-    color: white !important;
-} */
-.dropdown-item-custom {
-    transition: ease 0.5s;
-}
-
-.dropdown-item-custom a{
-    color: #212529 !important;
-    text-decoration: none;
-}
-
-.dropdown-item-custom:hover {
-    background-color: #272b2e;
-    color: white;
+body {
+    font-family: 'Roboto', serif !important;
 }
 
 .selected {
@@ -27,14 +12,7 @@ table th, table td {
     color: black;
 }
 
-.dropdown-arrow {
-    transition:.5s;
-}
-
-.collapse-icon-rotate {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
+.page-title{
+    color: #343A40;
+    font-weight: 1000 !important;
 }

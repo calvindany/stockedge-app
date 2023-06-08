@@ -1,11 +1,5 @@
-<div
-  class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark min-vh-100"
-  style="width: 280px"
->
-  <a
-    href="/"
-    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-  >
+<div class="d-flex flex-column flex-shrink-0 p-3 min-vh-100 custom-sidebar" style="width: 280px">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
     <svg class="bi me-2" width="40" height="32">
       <use xlink:href="#bootstrap"></use>
     </svg>
@@ -14,10 +8,7 @@
   <hr />
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item mb-3">
-      <a
-        href="/dashboard"
-        class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>"
-      >
+      <a href="/dashboard" class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>">
         <i class="bi bi-speedometer2"></i>
         Dashboard
       </a>
@@ -38,10 +29,14 @@
         </div>
         <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
-      <div class="collapse rounded-bottom <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
-        <ul class="list-group list-group-flush rounded">
-          <a href="/barang" class="list-group-item dropdown-item-custom <%= (route === '/barang') ? 'active' : '' %>">List Barang</a>
-          <a href="/kategori" class="list-group-item dropdown-item-custom <%= (route === '/kategori') ? 'active' : '' %>">Kategori Barang</a>
+      <div class="collapse <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
+        <ul class="list-group list-group-flush">
+          <a href="/barang" class="list-group-item rounded mb-1 <%= (route === '/barang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> List Barang
+          </a>
+          <a href="/kategori" class="list-group-item rounded mb-1 <%= (route === '/kategori') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> Kategori Barang
+          </a>
         </ul>
       </div>
     </li>
@@ -61,10 +56,14 @@
         </div>
         <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
-      <div class="collapse rounded-bottom <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
-        <ul class="list-group list-group-flush rounded">
-          <a href="/transaksi" class="list-group-item dropdown-item-custom <%= (route === '/transaksi') ? 'active' : '' %>">Order</a>
-          <a href="/transaksi/masukbarang" class="list-group-item dropdown-item-custom <%= (route === '/masukbarang') ? 'active' : '' %>">Barang Masuk</a>
+      <div class="collapse <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
+        <ul class="list-group list-group-flush">
+          <a href="/transaksi" class="list-group-item rounded mb-1 <%= (route === '/transaksi') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> Order
+          </a>
+          <a href="/transaksi/masukbarang" class="list-group-item rounded mb-1 <%= (route === '/masukbarang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> Barang Masuk
+          </a>
         </ul>
       </div>
     </li>
@@ -93,10 +92,14 @@
         </div>
         <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
-      <div class="collapse rounded-bottom <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
-        <ul class="list-group list-group-flush rounded">
-          <a href="/daftarkeuangan" class="list-group-item dropdown-item-custom <%= (route === '/daftar') ? 'active' : '' %>">Pengeluaran & Pemasukan</a>
-          <a href="#" class="list-group-item dropdown-item-custom <%= (route === '') ? 'active' : '' %>">Pemasukan</a>
+      <div class="collapse <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
+        <ul class="list-group list-group-flush">
+          <a href="/daftarkeuangan" class="list-group-item rounded mb-1 <%= (route === '/daftar') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> Keuangan
+          </a>
+          <a href="#" class="list-group-item dropdown-item-custom rounded mb-1 <%= (route === '') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+            <i class="bi bi-circle"></i> Pemasukan
+          </a>
         </ul>
       </div>
     </li>
