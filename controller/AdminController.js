@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path')
+const Admin = require('../model/admin')
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
@@ -10,17 +11,29 @@ const BarangMasuk = require('../model/barangmasuk');
 const fileHelper = require('../util/fileDelete');
 
 exports.getDashboard = (req, res, next) => {
-  let isAdmin = false;
-  // if (req.admin) {
-  //   isAdmin = true;
-  // }
+  const date = new Date();
+  let keuntunganHarian = {};
   Transaksi.find()
   .limit(5)
   .then( transaksi => {
-    res.render("admin/dashboard/dashboard2", {
-      route: "/dashboard",
-      transaksi: transaksi,
-    });
+    Admin.findOne({ _id: '646462085f335228b519600b' })
+    .then( admin => {
+      admin.getKeuntunganHariIni(date)
+      .then( keuntungan => {
+        return keuntunganHarian = keuntungan;
+      })
+      .then( result => {
+        console.log(keuntunganHarian)
+        res.render("admin/dashboard/dashboard2", {
+          route: "/dashboard",
+          transaksi: transaksi,
+          keuntunganHarian: keuntunganHarian,
+        });
+      })
+    })
+  })
+  .catch( err => {
+    console.log(err);
   })
 };
 
@@ -218,7 +231,7 @@ exports.postBayarOrderMasuk = (req, res, next) => {
     transaksi.status = 'Lunas';
 
     const keuanganbaru = new Keuangan({
-      tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+      tanggal: date,
       tipe: 'Masuk',
       keterangan: 'Order barang dari ' + transaksi.namapembeli,
       nominal: transaksi.total,
@@ -340,14 +353,13 @@ exports.postHapusMasukBarang = (req, res, next) => {
 
 exports.postBayarMasukBarang = (req, res, next) => {
   const idbarangmasuk = req.body.idbarangmasuk;
-  const date = new Date();
 
   BarangMasuk.findOne({_id: idbarangmasuk})
   .then( barangmasuk => {
     barangmasuk.status = 'Lunas';
 
     const keuanganbaru = new Keuangan({
-      tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+      tanggal: barangmasuk.tanggal,
       tipe: 'Keluar',
       keterangan: 'Pesan barang dari supplier ' + barangmasuk.namasupplier,
       nominal: barangmasuk.total,
@@ -519,8 +531,7 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
   const idkaryawan = req.params.idkaryawan;
   
   const date = new Date();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+  const stringBuildDate = date.toISOString().split('T')[0];
 
   const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'Oktober', 'November', 'Desember'];
 
@@ -528,7 +539,7 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
   .then( karyawan => {
     if(!karyawan.cekGajiBulanIni()){      
       const keuangan = new Keuangan({
-        tanggal: date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate(),
+        tanggal: stringBuildDate,
         tipe: 'Keluar',
         keterangan: 'Bayar gaji ' + karyawan.nama + ' bulan ' + bulan[parseInt(date.getMonth()) - 1] + ' ' + date.getFullYear(),
         nominal: karyawan.gaji,

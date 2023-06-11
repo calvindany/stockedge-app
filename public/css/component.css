@@ -56,7 +56,8 @@ header .current-date{
   font-weight: 500;
 }
 .calendar{
-  padding: 20px;
+  /* background-color: blue !important; */
+  padding-right: 40px;
 }
 .calendar ul{
   display: flex;
