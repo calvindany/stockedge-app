@@ -23,7 +23,7 @@ exports.getDashboard = (req, res, next) => {
         return keuntunganHarian = keuntungan;
       })
       .then( result => {
-        console.log(keuntunganHarian)
+        // console.log(keuntunganHarian)
         res.render("admin/dashboard/dashboard2", {
           route: "/dashboard",
           transaksi: transaksi,

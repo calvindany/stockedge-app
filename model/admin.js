@@ -45,14 +45,14 @@ adminSchema.methods.getKeuntunganHariIni = function (today){
       })
 
       const selisih = hariIni - hariKemarin;
-      const persentasiKeuntungan = (selisih / hariKemarin) * 100;
+      const persentasiKeuntungan = Math.floor((selisih / hariKemarin) * 100);
 
       result = {
         hariIni : hariIni, 
         hariKemarin: hariKemarin, 
         persentasi: persentasiKeuntungan
       }
-
+      console.log(hariIni, ' ', hariKemarin);
       resolve(result);
     })
     .catch( err => {
@@ -62,37 +62,37 @@ adminSchema.methods.getKeuntunganHariIni = function (today){
   });
 }
 
-adminSchema.methods.getKeuntunganTahunIni = function (today){
+adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
   return new Promise((resolve, reject) => {
     let result = {};
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getFullYear() - 1);
+    const tahunKemarin = new Date();
+    tahunKemarin.setDate(tahunKemarin.getFullYear() - 1);
 
-    const stringBuildYesterday = yesterday.toISOString().split('T')[0];
-    const stringBuildToday = today.toISOString().split('T')[0];;
+    const stringBuildTahunKemarin = `${tahunKemarin.toISOString().split('T')[0].split('-')[2]}-01-01`;
+    const stringBuildTahunIni = `${tahunIni.toISOString().split('T')[0].split('-')[2]}-01-01`;
 
-    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday } }).select('tanggal tipe nominal')
+    Keuangan.find({ tanggal: { $gte: stringBuildTahunKemarin, $lte: stringBuildToday } }).select('tanggal tipe nominal')
     .then( keuangan => {
-      let hariIni = 0;
-      let hariKemarin = 0;
+      let tahunIni = 0;
+      let tahunKemarin = 0;
 
       keuangan.map( keuangan => {
-        if(keuangan.tanggal >= stringBuildYesterday && keuangan.tanggal < stringBuildToday){
+        if(keuangan.tanggal >= stringBuildTahunKemarin && keuangan.tanggal < stringBuildTahunIni){
           if(keuangan.tipe == 'Masuk'){
-            hariKemarin += keuangan.nominal;
+            tahunKemarin += keuangan.nominal;
           } else {
-            hariKemarin -= keuangan.nominal;
+            tahunKemarin -= keuangan.nominal;
           }
         } else {
           if(keuangan.tipe == 'Masuk'){
-            hariIni += keuangan.nominal;
+            tahunIni += keuangan.nominal;
           } else {
-            hariIni -= keuangan.nominal;
+            tahunIni -= keuangan.nominal;
           }
         }
       })
 
-      const selisih = hariIni - hariKemarin;
+      const selisih = tahunIni - tahunKemarin;
       const persentasiKeuntungan = (selisih / hariKemarin) * 100;
 
       result = {
