@@ -50,43 +50,53 @@ const transaksiSchema = new Schema(
     total: {
       type: Number,
     },
+    pendapatan: {
+      type: Number,
+    },
   },
   { collection: "transaksi" }
 );
 
 transaksiSchema.methods.tambahBarang = function (selectedbarang) {
   let perbaruibarang = [...this.barang];
-  // console.log(selectedbarang);
-  Barang.findOne({ _id: selectedbarang.idbarangpilihan })
-    .then((barang) => {
-      const isExisted = perbaruibarang.filter((barang) => {
-        barang === selectedbarang.idbarangpilihan;
-      });
 
-      if (isExisted < 1) {
-        perbaruibarang.push({
-          idbarang: barang._id,
-          namabarang: barang.namabarang,
-          jumlah: selectedbarang.jumlah,
-          harga: selectedbarang.harga,
-          subtotal:
-            parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga),
+  return new Promise((resolve, reject) => {
+    Barang.findOne({ _id: selectedbarang.idbarangpilihan })
+      .then((barang) => {
+        const isExisted = perbaruibarang.filter((barang) => {
+          barang === selectedbarang.idbarangpilihan;
         });
-      } else {
-        const index = perbaruibarang.findIndex({ idbarang: barang._id });
-        perbaruibarang[index].jumlah += selectedbarang.jumlah;
-        perbaruibarang[index].harga = selectedbarang.harga;
-        perbaruibarang[index].subtotal =
-          parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga);
-      }
 
-      this.barang = perbaruibarang;
+        if (isExisted < 1) {
+          perbaruibarang.push({
+            idbarang: barang._id,
+            namabarang: barang.namabarang,
+            jumlah: selectedbarang.jumlah,
+            harga: selectedbarang.harga,
+            subtotal:
+              parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga),
+          });
+        } else {
+          const index = perbaruibarang.findIndex({ idbarang: barang._id });
+          perbaruibarang[index].jumlah += selectedbarang.jumlah;
+          perbaruibarang[index].harga = selectedbarang.harga;
+          perbaruibarang[index].subtotal =
+            parseInt(selectedbarang.jumlah) * parseInt(selectedbarang.harga);
+        }
 
-      this.total = hitungtotal(this.barang);
+        this.barang = perbaruibarang;
 
-      this.save();
-    })
-    .catch((err) => console.log(err));
+        this.total = hitungtotal(this.barang);
+
+        this.save();
+        
+        resolve(true)
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+      });
+  })
 };
 
 transaksiSchema.methods.hapusBarang = function (idbarang) {
@@ -101,5 +111,35 @@ transaksiSchema.methods.hapusBarang = function (idbarang) {
 
   return this.save();
 };
+
+transaksiSchema.methods.hitungKeuntungan = function () {
+  return new Promise((resolve, reject) => {
+    let barangtemp = [...this.barang];
+    
+    Barang.find().select(' modal ')
+    .then( barang => { 
+      let totalPendapatan = 0;
+      console.log('barangYangDibeli');
+      barangtemp.map( barangYangDibeli => { 
+        const findBarang = barang.filter( (barang) => {
+          return barangYangDibeli.idbarang == barang._id;
+        })
+        console.log(findBarang);
+        if(findBarang.length > 0){
+          totalPendapatan += (barangYangDibeli.harga - barang.modal) * barangYangDibeli.jumlah;
+
+          this.totalPendapatan = totalPendapatan;
+        }
+      })
+      
+      this.save();
+      resolve(this.totalPendapatan)
+    })
+    .catch( err => {
+      reject(err);
+      console.log(err);
+    }); 
+  });
+}
 
 module.exports = mongoose.model("transaksi", transaksiSchema);

@@ -170,9 +170,15 @@ exports.postTambahTransaksi = (req, res, next) => {
     tanggal: tanggal,
     status: status,
   });
-  transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga });
-
-  return res.redirect("/transaksi/edit/" + transaksibaru._id);
+  transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga })
+  .then( result => {
+    return transaksibaru.hitungKeuntungan();
+  })
+  .then( result => {
+    console.log(result)
+    return res.redirect("/transaksi/edit/" + transaksibaru._id);
+  })
+  .catch( err => console.log(err) )
 };
 
 exports.getEditTransaksi = (req, res, next) => {
