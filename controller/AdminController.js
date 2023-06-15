@@ -170,6 +170,7 @@ exports.postTambahTransaksi = (req, res, next) => {
     tanggal: tanggal,
     status: status,
   });
+
   transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga })
   .then( result => {
     return transaksibaru.hitungKeuntungan();
@@ -207,11 +208,16 @@ exports.postEditTransaksi = (req, res, next) => {
     .then((transaksi) => {
       transaksi.namapembeli = namapembeli;
       transaksi.tanggal = tanggal;
-      return transaksi.tambahBarang({ idbarangpilihan, jumlah, harga });
+      transaksi.tambahBarang({ idbarangpilihan, jumlah, harga })
+      .then( () => {
+        return transaksi.hitungKeuntungan();
+      })
+      .catch( err => { console.log(err) })
     })
     .then(() => {
       return res.redirect("/transaksi/edit/" + idtransaksi);
-    });
+    })
+    .catch( err => { console.log(err) });
 };
 
 exports.postHapusBarangdiCart = (req, res, next) => {
@@ -228,14 +234,14 @@ exports.postHapusBarangdiCart = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postBayarOrderMasuk = (req, res, next) => {
+exports.postLunasOrderMasuk = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
   const date = new Date();
 
   Transaksi.findOne({_id: idtransaksi})
   .then( transaksi => {
     transaksi.status = 'Lunas';
-
+    
     const keuanganbaru = new Keuangan({
       tanggal: date,
       tipe: 'Masuk',

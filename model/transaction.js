@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Barang = require("./barang");
-const barang = require("./barang");
 
 const hitungtotal = (barang) => {
   let total = 0;
@@ -85,10 +84,7 @@ transaksiSchema.methods.tambahBarang = function (selectedbarang) {
         }
 
         this.barang = perbaruibarang;
-
         this.total = hitungtotal(this.barang);
-
-        this.save();
         
         resolve(true)
       })
@@ -118,22 +114,21 @@ transaksiSchema.methods.hitungKeuntungan = function () {
     
     Barang.find().select(' modal ')
     .then( barang => { 
+      console.log(barang);
       let totalPendapatan = 0;
-      console.log('barangYangDibeli');
       barangtemp.map( barangYangDibeli => { 
-        const findBarang = barang.filter( (barang) => {
-          return barangYangDibeli.idbarang == barang._id;
+        const findBarang = [...barang].filter( (barang1) => {
+          return barangYangDibeli.idbarang == barang1._id;
         })
         console.log(findBarang);
         if(findBarang.length > 0){
-          totalPendapatan += (barangYangDibeli.harga - barang.modal) * barangYangDibeli.jumlah;
-
-          this.totalPendapatan = totalPendapatan;
+          totalPendapatan += (barangYangDibeli.harga - findBarang[0].modal) * barangYangDibeli.jumlah;
         }
       })
+      this.pendapatan = totalPendapatan;
       
       this.save();
-      resolve(this.totalPendapatan)
+      resolve(true)
     })
     .catch( err => {
       reject(err);
