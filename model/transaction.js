@@ -114,13 +114,11 @@ transaksiSchema.methods.hitungKeuntungan = function () {
     
     Barang.find().select(' modal ')
     .then( barang => { 
-      console.log(barang);
       let totalPendapatan = 0;
       barangtemp.map( barangYangDibeli => { 
         const findBarang = [...barang].filter( (barang1) => {
           return barangYangDibeli.idbarang == barang1._id;
         })
-        console.log(findBarang);
         if(findBarang.length > 0){
           totalPendapatan += (barangYangDibeli.harga - findBarang[0].modal) * barangYangDibeli.jumlah;
         }

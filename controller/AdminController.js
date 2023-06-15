@@ -237,16 +237,16 @@ exports.postHapusBarangdiCart = (req, res, next) => {
 exports.postLunasOrderMasuk = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
   const date = new Date();
-
   Transaksi.findOne({_id: idtransaksi})
   .then( transaksi => {
     transaksi.status = 'Lunas';
     
     const keuanganbaru = new Keuangan({
-      tanggal: date,
+      tanggal: transaksi.tanggal,
       tipe: 'Masuk',
       keterangan: 'Order barang dari ' + transaksi.namapembeli,
       nominal: transaksi.total,
+      pendapatan: transaksi.pendapatan,
     })
 
     transaksi.save();

@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 const daftarKeuanganSchema = new Schema(
   {
+    idtransaksi: {
+      type: String
+    },
     tanggal: {
       type: String,
       require: true,
