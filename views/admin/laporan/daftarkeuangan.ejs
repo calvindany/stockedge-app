@@ -61,7 +61,7 @@
                       <td><%= keuangan[i].tanggal %></td>
                       <td><%= keuangan[i].tipe %></td>
                       <td><%= keuangan[i].keterangan %></td>
-                      <td><%= (keuangan[i].tipe == 'Masuk') ? '+' : '-' %> <%= keuangan[i].nominal %></td>
+                      <td>Rp. <%= keuangan[i].nominal %></td>
                       <td class="d-flex" style="gap: 20px;">
                         <a class="btn btn-primary" href="/daftarkeuangan/edit/<%= keuangan[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>

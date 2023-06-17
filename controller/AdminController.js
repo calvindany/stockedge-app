@@ -176,7 +176,6 @@ exports.postTambahTransaksi = (req, res, next) => {
     return transaksibaru.hitungKeuntungan();
   })
   .then( result => {
-    console.log(result)
     return res.redirect("/transaksi/edit/" + transaksibaru._id);
   })
   .catch( err => console.log(err) )
