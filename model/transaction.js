@@ -63,7 +63,7 @@ transaksiSchema.methods.tambahBarang = function (selectedbarang) {
     Barang.findOne({ _id: selectedbarang.idbarangpilihan })
       .then((barang) => {
         const isExisted = perbaruibarang.filter((barang) => {
-          barang === selectedbarang.idbarangpilihan;
+          barang.idbarang === selectedbarang.idbarangpilihan;
         });
 
         if (isExisted < 1) {

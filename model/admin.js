@@ -52,7 +52,7 @@ adminSchema.methods.getKeuntunganHariIni = function (today){
         hariKemarin: hariKemarin, 
         persentasi: persentasiKeuntungan
       }
-      console.log(hariIni, ' ', hariKemarin);
+      // console.log(hariIni, ' ', hariKemarin);
       resolve(result);
     })
     .catch( err => {

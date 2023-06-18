@@ -162,6 +162,7 @@ exports.postTambahTransaksi = (req, res, next) => {
   const tanggal = req.body.tanggal;
   const status = req.body.status == "null" ? "Draft" : req.body.status;
   const idbarangpilihan = req.body.idbarang;
+  const namabarang = req.body.namabarang;
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
 
@@ -171,8 +172,16 @@ exports.postTambahTransaksi = (req, res, next) => {
     status: status,
   });
 
-  transaksibaru.tambahBarang({ idbarangpilihan, jumlah, harga })
+  transaksibaru.tambahBarang({ idbarangpilihan, namabarang, jumlah, harga })
   .then( result => {
+    Barang.findOne({ _id: idbarangpilihan })
+    .then(barang => {
+      barang.stok -= jumlah;
+
+      barang.save();
+    })
+    .catch( err => console.log(err) );
+    
     return transaksibaru.hitungKeuntungan();
   })
   .then( result => {
@@ -209,6 +218,14 @@ exports.postEditTransaksi = (req, res, next) => {
       transaksi.tanggal = tanggal;
       transaksi.tambahBarang({ idbarangpilihan, jumlah, harga })
       .then( () => {
+        Barang.findOne({ _id: idbarang })
+        .then(barang => {
+          barang.stok -= jumlah;
+
+          barang.save();
+        })
+        .catch( err => console.log(err) );
+
         return transaksi.hitungKeuntungan();
       })
       .catch( err => { console.log(err) })
