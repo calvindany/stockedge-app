@@ -12,6 +12,23 @@ const adminSchema = new Schema({
     type: String,
     require: true,
   },
+  riwayatKeuangan: [
+    {
+      tahun: {
+        type: String
+      },
+      bulan: [
+        {
+          namabulan: {
+            type: String,
+          },
+          keuntungan: {
+            type: Number,
+          },
+        }
+      ]
+    }
+  ]
 });
 
 adminSchema.methods.getKeuntunganHariIni = function (today){
@@ -23,36 +40,77 @@ adminSchema.methods.getKeuntunganHariIni = function (today){
     const stringBuildYesterday = yesterday.toISOString().split('T')[0];
     const stringBuildToday = today.toISOString().split('T')[0];;
 
-    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday } }).select('tanggal tipe nominal')
+    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday }, tipe: 'Masuk' }).select('tanggal nominal')
     .then( keuangan => {
       let hariIni = 0;
       let hariKemarin = 0;
 
       keuangan.map( keuangan => {
         if(keuangan.tanggal >= stringBuildYesterday && keuangan.tanggal < stringBuildToday){
-          if(keuangan.tipe == 'Masuk'){
-            hariKemarin += keuangan.nominal;
-          } else {
-            hariKemarin -= keuangan.nominal;
-          }
+          hariKemarin += keuangan.nominal;
         } else {
-          if(keuangan.tipe == 'Masuk'){
-            hariIni += keuangan.nominal;
-          } else {
-            hariIni -= keuangan.nominal;
-          }
+          hariIni += keuangan.nominal;
         }
       })
 
       const selisih = hariIni - hariKemarin;
-      const persentasiKeuntungan = Math.floor((selisih / hariKemarin) * 100);
+      let persentasiKeuntungan;
+      if( hariKemarin == 0 || Math.floor((selisih / hariKemarin) * 100) >= 100){
+        persentasiKeuntungan = 100;
+      } else {
+        persentasiKeuntungan = Math.floor((selisih / hariKemarin) * 100);
+      }
 
       result = {
         hariIni : hariIni, 
         hariKemarin: hariKemarin, 
         persentasi: persentasiKeuntungan
       }
-      // console.log(hariIni, ' ', hariKemarin);
+      // console.log(stringBuildToday, hariIni, ' ', stringBuildYesterday, hariKemarin);
+      resolve(result);
+    })
+    .catch( err => {
+      reject(err);
+      console.log(err);
+    })
+  });
+}
+adminSchema.methods.getKeluaranHariIni = function (today){
+  return new Promise((resolve, reject) => {
+    let result = {};
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const stringBuildYesterday = yesterday.toISOString().split('T')[0];
+    const stringBuildToday = today.toISOString().split('T')[0];;
+
+    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday }, tipe: 'Keluar' }).select('tanggal nominal')
+    .then( keuangan => {
+      let hariIni = 0;
+      let hariKemarin = 0;
+
+      keuangan.map( keuangan => {
+        if(keuangan.tanggal >= stringBuildYesterday && keuangan.tanggal < stringBuildToday){
+          hariKemarin += keuangan.nominal;
+        } else {
+          hariIni += keuangan.nominal;
+        }
+      })
+
+      const selisih = hariIni - hariKemarin;
+      let persentasiKeluaran;
+      if( hariKemarin == 0 || Math.floor((selisih / hariKemarin) * 100) >= 100){
+        persentasiKeluaran = 100;
+      } else {
+        persentasiKeluaran = Math.floor((selisih / hariKemarin) * 100);
+      }
+
+      result = {
+        hariIni : hariIni, 
+        hariKemarin: hariKemarin, 
+        persentasi: persentasiKeluaran
+      }
+      // console.log(stringBuildToday, hariIni, ' ', stringBuildYesterday, hariKemarin);
       resolve(result);
     })
     .catch( err => {

@@ -13,6 +13,7 @@ const fileHelper = require('../util/fileDelete');
 exports.getDashboard = (req, res, next) => {
   const date = new Date();
   let keuntunganHarian = {};
+  let keluaranHarian = {};
   Transaksi.find()
   .limit(5)
   .then( transaksi => {
@@ -20,7 +21,11 @@ exports.getDashboard = (req, res, next) => {
     .then( admin => {
       admin.getKeuntunganHariIni(date)
       .then( keuntungan => {
-        return keuntunganHarian = keuntungan;
+        keuntunganHarian = keuntungan;
+        return admin.getKeluaranHariIni(date)
+      })
+      .then( keluaran => {
+        return keluaranHarian = keluaran;
       })
       .then( result => {
         // console.log(keuntunganHarian)
@@ -28,6 +33,7 @@ exports.getDashboard = (req, res, next) => {
           route: "/dashboard",
           transaksi: transaksi,
           keuntunganHarian: keuntunganHarian,
+          keluaranHarian: keluaranHarian
         });
       })
     })
@@ -347,7 +353,8 @@ exports.getEditMasukBarang = (req, res, next) => {
         barangmasuk: barangmasuk,
         barang: barang,
       });
-    });
+    })
+    .catch( err => console.log(err) );
   });
 };
 

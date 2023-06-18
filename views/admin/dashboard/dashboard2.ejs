@@ -25,28 +25,22 @@
                 <div class="card-body d-flex justify-content-between">
                   <div class="content">
                     <p class="card-title text-bold" style="font-size: 12pt; font-weight: bold; opacity: 40%;">Total
-                    Pendapatan 2023</p>
-                    <p class="card-text" style="font-size: 20pt; font-weight: 500;">Rp. 1.000.000</p>
-                    <p class="card-text"><span class="p-1 rounded" style="background-color: #69ca69;">+25%</span> dari
-                      tahun lalu</p>
+                    Pendapatan Hari Ini</p>
+                    <p class="card-text" style="font-size: 20pt; font-weight: 500;">Rp. <%= keuntunganHarian.hariIni %></p>
+                    <p class="card-text"><span class="p-1 rounded" style="background-color: #69ca69;"><%= keuntunganHarian.persentasi %>%</span> dari
+                      hari sebelumnya</p>
                   </div>
-                  <!-- <div class="d-flex align-items-center justify-content-center">
-                    <img src="asset/widget-income.png" alt="" class="col-8">
-                  </div> -->
                 </div>
               </div>
               <div class="card widget-background py-3 col">
                 <div class="card-body d-flex justify-content-between">
                   <div class="content">
                     <p class="card-title text-bold" style="font-size: 12pt; font-weight: bold; opacity: 40%;">Total
-                      Pendapatan Hari Ini</p>
-                    <p class="card-text" style="font-size: 20pt; font-weight: 500;">Rp. <%= keuntunganHarian.hariIni %></p>
-                    <p class="card-text"><span class="p-1 rounded <%if(keuntunganHarian.persentasi < 0) {%>bg-danger<% } else { %>bg-success<% } %>" style="background-color: #69ca69;"><%= keuntunganHarian.persentasi %>%</span> dari
+                      Pengeluaran Hari Ini</p>
+                    <p class="card-text" style="font-size: 20pt; font-weight: 500;">Rp. <%= keluaranHarian.hariIni %></p>
+                    <p class="card-text"><span class="p-1 rounded" style="background-color: #ca6969;"><%= keluaranHarian.persentasi %>%</span> dari
                       hari sebelumnya</p>
                   </div>
-                  <!-- <div class="d-flex align-items-center justify-content-center">
-                    <img src="asset/widget-income.png" alt="" class="col-8">
-                  </div> -->
                 </div>
               </div>
               <div class="card widget-background py-3 col">
@@ -54,12 +48,9 @@
                   <div class="content">
                     <p class="card-title text-bold" style="font-size: 12pt; font-weight: bold; opacity: 40%;">Total Jenis Barang</p>
                     <p class="card-text" style="font-size: 20pt; font-weight: 500;">300</p>
-                    <p class="card-text"><span class="p-1 rounded" style="background-color: #69ca69;">+25%</span> dari
-                      tahun lalu</p>
+                    <!-- <p class="card-text"><span class="p-1 rounded" style="background-color: #69ca69;">+25%</span> dari
+                      tahun lalu</p> -->
                   </div>
-                  <!-- <div class="d-flex align-items-center justify-content-center">
-                    <img src="asset/widget-income.png" alt="" class="col-8">
-                  </div> -->
                 </div>
               </div>
           </div>

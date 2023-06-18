@@ -6,15 +6,16 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const Multer = require('multer');
+const multer = require("multer");
+const cronjob = require("node-cron");
 
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
 
 const AuthRoutes = require("./routes/auth");
-
 const UserRoutes = require("./routes/user");
-const multer = require("multer");
+
+const HitungKeuntungan = require("./util/hitungKeuntungan");
 
 const app = express();
 
@@ -22,6 +23,10 @@ const app = express();
 //   uri: process.env.MONGODB_URI,
 //   collection: "userSession",
 // });
+
+cronjob.schedule('0 0 1 * *', () => {
+  HitungKeuntungan();
+});
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
