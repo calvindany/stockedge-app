@@ -221,11 +221,9 @@ exports.postEditTransaksi = (req, res, next) => {
         Barang.findOne({ _id: idbarang })
         .then(barang => {
           barang.stok -= jumlah;
-
           barang.save();
         })
         .catch( err => console.log(err) );
-
         return transaksi.hitungKeuntungan();
       })
       .catch( err => { console.log(err) })
@@ -318,9 +316,26 @@ exports.postTambahMasukBarang = (req, res, next) => {
     status: status,
   })
 
-  barangmasukbaru.tambahBarang({ idbarangpilihan, jumlah, harga });
-
-  return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+  barangmasukbaru.tambahBarang({ idbarangpilihan, jumlah, harga })
+  .then( (result) => {
+    if(result){
+      Barang.findOne({ _id: idbarangpilihan })
+      .then( barang => {
+        barang.stok += parseInt(jumlah);
+        return barang.save();
+      })
+      .then( () => {
+        return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+      })
+      .catch( err => console.log(err) );
+    } else {
+      return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+  });
 };
 
 exports.getEditMasukBarang = (req, res, next) => {
@@ -349,7 +364,23 @@ exports.postEditMasukBarang = async (req, res, next) => {
     .then((barangmasuk) => {
       barangmasuk.namasupplier = namasupplier;
       barangmasuk.tanggal = tanggal;
-      barangmasuk.tambahBarang({ idbarangpilihan, jumlah, harga });
+      barangmasuk.tambahBarang({ idbarangpilihan, jumlah, harga })
+      .then( (result) => {
+        if(result){
+          Barang.findOne({ _id: idbarangpilihan })
+          .then( barang => {
+            barang.stok += jumlah;
+            barang.save();
+            return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+          })
+          .catch( err => console.log(err) );
+        }
+        return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+      })
+      .catch(err => {
+        console.log(err) 
+        return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+      });
     })
     .then(() => {
       return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk);
