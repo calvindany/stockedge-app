@@ -11,6 +11,9 @@
 
 const Keuangan = require("../model/keuangan");
 const Admin = require("../model/admin");
+const month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+'Juli', 'Agustus', 'November', 'Desember'
+]
 
 const hitungKeuntungan = () => {
     const date = new Date();
@@ -22,30 +25,43 @@ const hitungKeuntungan = () => {
         tahun = date.getFullYear();
     }
 
+    let keuntungan = 0;
     Keuangan.find({ tanggal: { $gte: `01-${bulan}-${tahun}`, $lte: `31-${bulan}-${tahun}` } })
     .then (keuangan => {
-        Admin.findOne({ _id: '646462085f335228b519600b' })
-        .then( admin => {
-            const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex(( riyawat ) => {
-                riwayat.tahun === tahun
-            })
-
-            if(getIndexOfCurrentYear == -1){
-                admin.riwayatKeuangan.push(
-                    {
-                        tahun: tahun,
-                        bulan: [
-                            {
-                                namabulan: {
-                                    
-                                }
-                            }
-                        ]
-                    }
-                )
-            }
+        keuangan.map( keu => {
+            keuntungan += parseInt(keu.pendapatan);
         })
+        return Admin.findOne({ _id: '646462085f335228b519600b' });
     })
+    .then( admin => {
+        const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex(( riyawat ) => {
+            riwayat.tahun === tahun
+        })
+
+        if(getIndexOfCurrentYear == -1){
+            admin.riwayatKeuangan.push(
+                {
+                    tahun: tahun,
+                    bulan: [
+                        {
+                            namabulan: month[bulan],
+                            keuntungan: keuntungan,
+                        }
+                    ]
+                }
+            )
+        } else {
+            admin.riwayatKeuangan[getIndexOfCurrentYear].bulan.push(
+                {
+                    namabulan: month[bulan],
+                    keuntungan: keuntungan,
+                }
+            )
+        }
+
+        return admin.save();
+    })
+    .catch( err => console.log(err) );
 }
 
 module.exports = hitungKeuntungan

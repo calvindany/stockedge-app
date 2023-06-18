@@ -22,6 +22,9 @@ const daftarKeuanganSchema = new Schema(
     nominal: {
       type: Number,
     },
+    pendapatan: {
+      type: Number,
+    }
   },
   { collection: "daftarkeuangan" }
 );
