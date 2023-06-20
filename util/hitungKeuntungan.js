@@ -35,7 +35,7 @@ const hitungKeuntungan = () => {
     })
     .then( admin => {
         const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex(( riyawat ) => {
-            riwayat.tahun === tahun
+            return riwayat.tahun === tahun
         })
 
         if(getIndexOfCurrentYear == -1){

@@ -28,12 +28,17 @@ exports.getDashboard = (req, res, next) => {
         return keluaranHarian = keluaran;
       })
       .then( result => {
-        // console.log(keuntunganHarian)
-        res.render("admin/dashboard/dashboard2", {
+        
+        const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex( riwayat => {
+          return riwayat.tahun === '2023';
+        })
+        // console.log(admin.riwayatKeuangan[getIndexOfCurrentYear])
+        return res.render("admin/dashboard/dashboard2", {
           route: "/dashboard",
           transaksi: transaksi,
           keuntunganHarian: keuntunganHarian,
-          keluaranHarian: keluaranHarian
+          keluaranHarian: keluaranHarian,
+          riwayatKeuangan: admin.riwayatKeuangan[getIndexOfCurrentYear],
         });
       })
     })
@@ -224,7 +229,7 @@ exports.postEditTransaksi = (req, res, next) => {
       transaksi.tanggal = tanggal;
       transaksi.tambahBarang({ idbarangpilihan, jumlah, harga })
       .then( () => {
-        Barang.findOne({ _id: idbarang })
+        Barang.findOne({ _id: idbarangpilihan })
         .then(barang => {
           barang.stok -= jumlah;
           barang.save();
