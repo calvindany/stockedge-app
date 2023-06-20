@@ -40,20 +40,21 @@ adminSchema.methods.getKeuntunganHariIni = function (today){
     const stringBuildYesterday = yesterday.toISOString().split('T')[0];
     const stringBuildToday = today.toISOString().split('T')[0];;
 
-    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday }, tipe: 'Masuk' }).select('tanggal nominal')
+    Keuangan.find({ tanggal: { $gte: stringBuildYesterday, $lte: stringBuildToday }, tipe: 'Masuk' }).select('tanggal pendapatan')
     .then( keuangan => {
       let hariIni = 0;
       let hariKemarin = 0;
 
       keuangan.map( keuangan => {
         if(keuangan.tanggal >= stringBuildYesterday && keuangan.tanggal < stringBuildToday){
-          hariKemarin += keuangan.nominal;
+          hariKemarin += parseInt(keuangan.pendapatan);
         } else {
-          hariIni += keuangan.nominal;
+          hariIni += parseInt(keuangan.pendapatan);
         }
       })
 
       const selisih = hariIni - hariKemarin;
+      console.log(hariIni, hariKemarin)
       let persentasiKeuntungan;
       if( hariKemarin == 0 || Math.floor((selisih / hariKemarin) * 100) >= 100){
         persentasiKeuntungan = 100;
