@@ -121,52 +121,64 @@ adminSchema.methods.getKeluaranHariIni = function (today){
   });
 }
 
-adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
-  return new Promise((resolve, reject) => {
-    let result = {};
-    const tahunKemarin = new Date();
-    tahunKemarin.setDate(tahunKemarin.getFullYear() - 1);
+// adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
+//   return new Promise((resolve, reject) => {
+    
 
-    const stringBuildTahunKemarin = `${tahunKemarin.toISOString().split('T')[0].split('-')[2]}-01-01`;
-    const stringBuildTahunIni = `${tahunIni.toISOString().split('T')[0].split('-')[2]}-01-01`;
+//       resolve(result);
+//     })
+//     .catch( err => {
+//       reject(err);
+//       console.log(err);
+//     })
+//   });
+// }
+// adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
+//   return new Promise((resolve, reject) => {
+//     let result = {};
+//     const tahunKemarin = new Date();
+//     tahunKemarin.setDate(tahunKemarin.getFullYear() - 1);
 
-    Keuangan.find({ tanggal: { $gte: stringBuildTahunKemarin, $lte: stringBuildToday } }).select('tanggal tipe nominal')
-    .then( keuangan => {
-      let tahunIni = 0;
-      let tahunKemarin = 0;
+//     const stringBuildTahunKemarin = `${tahunKemarin.toISOString().split('T')[0].split('-')[2]}-01-01`;
+//     const stringBuildTahunIni = `${tahunIni.toISOString().split('T')[0].split('-')[2]}-01-01`;
 
-      keuangan.map( keuangan => {
-        if(keuangan.tanggal >= stringBuildTahunKemarin && keuangan.tanggal < stringBuildTahunIni){
-          if(keuangan.tipe == 'Masuk'){
-            tahunKemarin += keuangan.nominal;
-          } else {
-            tahunKemarin -= keuangan.nominal;
-          }
-        } else {
-          if(keuangan.tipe == 'Masuk'){
-            tahunIni += keuangan.nominal;
-          } else {
-            tahunIni -= keuangan.nominal;
-          }
-        }
-      })
+//     Keuangan.find({ tanggal: { $gte: stringBuildTahunKemarin, $lte: stringBuildToday } }).select('tanggal tipe nominal')
+//     .then( keuangan => {
+//       let tahunIni = 0;
+//       let tahunKemarin = 0;
 
-      const selisih = tahunIni - tahunKemarin;
-      const persentasiKeuntungan = (selisih / hariKemarin) * 100;
+//       keuangan.map( keuangan => {
+//         if(keuangan.tanggal >= stringBuildTahunKemarin && keuangan.tanggal < stringBuildTahunIni){
+//           if(keuangan.tipe == 'Masuk'){
+//             tahunKemarin += keuangan.nominal;
+//           } else {
+//             tahunKemarin -= keuangan.nominal;
+//           }
+//         } else {
+//           if(keuangan.tipe == 'Masuk'){
+//             tahunIni += keuangan.nominal;
+//           } else {
+//             tahunIni -= keuangan.nominal;
+//           }
+//         }
+//       })
 
-      result = {
-        hariIni : hariIni, 
-        hariKemarin: hariKemarin, 
-        persentasi: persentasiKeuntungan
-      }
+//       const selisih = tahunIni - tahunKemarin;
+//       const persentasiKeuntungan = (selisih / hariKemarin) * 100;
 
-      resolve(result);
-    })
-    .catch( err => {
-      reject(err);
-      console.log(err);
-    })
-  });
-}
+//       result = {
+//         hariIni : hariIni, 
+//         hariKemarin: hariKemarin, 
+//         persentasi: persentasiKeuntungan
+//       }
+
+//       resolve(result);
+//     })
+//     .catch( err => {
+//       reject(err);
+//       console.log(err);
+//     })
+//   });
+// }
 
 module.exports = mongoose.model("admin", adminSchema);

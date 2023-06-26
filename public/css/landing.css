@@ -1,6 +1,17 @@
+@import "./root.css";
+
+/* 
+    --user-color-template-1: #091540;
+    --user-color-template-2: #F8F7F9;
+*/
+
 .border-half{
     position: relative;
-    /* background-color: blue !; */
+}
+
+.bg-jumbotron {
+    background-color: var(--user-color-template-1) !important;
+    color: var(--user-color-template-2);
 }
 
 .border-half::before{
@@ -29,6 +40,15 @@
 
 .borderless {
     border: none;
+}
+
+.tata-cara-pemesanan{
+    color: var(--user-color-template-2);
+}
+
+.tata-cara-pemesanan .card {
+    background-color: transparent;
+    color: var(--user-color-template-2);
 }
 
 .circle {

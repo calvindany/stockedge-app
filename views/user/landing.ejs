@@ -5,39 +5,47 @@
 </head>
 <body>
     <%- include('include/navigation') %>
-    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-      <div class="container container-fluid py-5">
-        <h1 class="display-6 fw-bold">Bangun Masa Depan Anda dengan Kami</h1>
-        <p class="col-md-8 fs-4">Kami siap membantu Anda dalam membangun masa depan yang lebih baik dengan solusi bangunan terbaik dari kami.</p>
-        <button class="btn btn-outline-success btn-md" type="button"><i class="bi bi-whatsapp"></i> Hubungi Kami</button>
+    <div class="p-5 mb-4 d-flex bg-jumbotron justify-content-between">
+      <div class="container d-flex">
+        <div class="container container-fluid py-5 d-flex flex-column justify-content-center">
+          <h1 class="display-6 fw-bold">Bangun Masa Depan Anda dengan Kami</h1>
+          <p class="col-md-8 fs-4">Kami siap membantu Anda dalam membangun masa depan yang lebih baik dengan solusi bangunan terbaik dari kami.</p>
+          <div>
+            <button class="btn btn-outline-success btn-md" type="button"><i class="bi bi-whatsapp"></i> Hubungi Kami</button>
+          </div>
+        </div>
+        <div class=" d-flex flex-column align-items-center">
+          <img src="/asset/jumbotron.png" alt="" style="max-width: 150%;">
+          <a href="http://www.freepik.com" class="mt-2" style="opacity: 80%; color: white; text-decoration: none;">Designed by macrovector / Freepik</a>
+        </div>
       </div>
     </div>
-    <div class="produk w-100 mt-4">
+    <div class="produk w-100 mt-4 mb-4">
       <div class="container">
         <div class="d-flex border-half">
           <p class="fs-4">PRODUK YANG KAMI JUAL</p>
         </div>
         <div class="list-produk d-flex justify-content-between my-4">
           <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/1/5/f2cdc69c-a9eb-4d01-af2a-f63ec70246ba.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="https://images.tokopedia.net/img/cache/500-square/product-1/2019/1/15/13800922/13800922_c00279ca-0cd2-4516-a4d9-99c6f99164af_1182_1182.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="https://static.bmdstatic.com/pk/product/large/5ba37cc5e0542.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
           </div>
           <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="https://media.monotaro.id/mid01/big/Komponen%20Mekanikal%2C%20Laher%20%26%20Roda/Kompresor%2C%20Kopling%2C%20Alat%20Pneumatik%2C%20Selang%2C%20Tube/Selang%20Industri/Selang%20Udara/TEKIRO%20Selang%20Bertekanan%20Tinggi/TEKIRO%20Selang%20Bertekanan%20Tinggi%20AT-AH1776%208_5x15mm%20(20m)%201pc/q0S013224936-1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
@@ -48,103 +56,101 @@
         </div>
       </div>
     </div>
-      <div class="kategori w-100 mt-4">
-        <div class="container">
-          <div class="d-flex justify-content-end border-half">
-            <p class="fs-4">KATEGORI BARANG</p>
+    <div class="kategori bg-jumbotron w-100 mt-4 mb-4 p-4">
+      <div class="container">
+        <div class="d-flex justify-content-center border-half">
+          <p class="fs-4">KATEGORI BARANG</p>
+        </div>
+        <div class="list-kategori d-flex justify-content-center my-4" style="gap: 20px;">
+          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+            <img src="/asset/kategori-pipa.jpg" class="card-img-top" alt="..." height="90%">
+            <p class="card-title mt-2">Pipa PVC</p>
           </div>
-          <div class="list-kategori d-flex justify-content-start my-4" style="gap: 20px;">
-            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-              <img src="/asset/kategori-pipa.jpg" class="card-img-top" alt="..." height="90%">
-              <p class="card-title mt-2">Pipa PVC</p>
+          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+            <div class="d-flex align-items-center" style="height: 90%">
+              <img src="/asset/kategori-kelistrikan.jpg" class="card-img-top" alt="...">
             </div>
-            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-              <div class="d-flex align-items-center" style="height: 90%">
-                <img src="/asset/kategori-kelistrikan.jpg" class="card-img-top" alt="...">
-              </div>
-              <p class="card-title mt-2">Kelistrikan</p>
+            <p class="card-title mt-2">Kelistrikan</p>
+          </div>
+          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+            <div class="d-flex align-items-center" style="height: 90%">
+              <img src="/asset/kategori-bahanbangunan.jpg" class="card-img-top" alt="...">
             </div>
-            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-              <div class="d-flex align-items-center" style="height: 90%">
-                <img src="/asset/kategori-bahanbangunan.jpg" class="card-img-top" alt="...">
-              </div>
-              <p class="card-title mt-2">Bahan Bangunan</p>
+            <p class="card-title mt-2">Bahan Bangunan</p>
+          </div>
+          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+            <div class="d-flex align-items-center" style="height: 90%">
+              <img src="/asset/kategori-alatbangunan.png" class="card-img-top" alt="...">
             </div>
-            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-              <div class="d-flex align-items-center" style="height: 90%">
-                <img src="/asset/kategori-alatbangunan.png" class="card-img-top" alt="...">
-              </div>
-              <p class="card-title mt-2">Alat Bangunan</p>
+            <p class="card-title mt-2">Alat Bangunan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tentang-kami w-100 mt-4 mb-4 p-4">
+      <div class="container">
+        <div class="d-flex border-half justify-content-end">
+          <p class="fs-4 ">TENTANG KAMI</p>
+        </div>
+        <div class="content d-flex my-4 align-items-center justify-content-between">
+          <div class="col-5">
+            <img src="/asset/image-landing.png" class="image-about-me">
+          </div>
+          <div class="text-center col-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tata-cara-pemesanan bg-jumbotron w-100 mt-4 mb-4 p-4">
+      <div class="container">
+        <div class="d-flex justify-content-center border-half mb-4">
+          <p class="fs-4 ">TATA CARA PEMESANAN</p>
+        </div>
+        <div class="step d-flex justify-content-between mt-4">
+          <div class="card borderless d-flex align-items-center p-4">
+            <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-search"></i></div>
+            <div class="card-body">
+              <h5 class="card-title">Cari Barang</h5>
+            </div>
+          </div>
+          <div class="card borderless d-flex align-items-center p-4">
+            <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-bag"></i></div>
+            <div class="card-body">
+              <h5 class="card-title">Beli Barang</h5>
+            </div>
+          </div>
+          <div class="card borderless d-flex align-items-center p-4">
+            <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-telephone-inbound"></i></div>
+            <div class="card-body text-center">
+              <h5 class="card-title">Anda akan<br>Kami Hubungi</h5>
+            </div>
+          </div>
+          <div class="card borderless d-flex align-items-center p-4">
+            <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-credit-card"></i></div>
+            <div class="card-body">
+              <h5 class="card-title">Pembayaran</h5>
+            </div>
+          </div>
+          <div class="card borderless d-flex align-items-center p-4">
+            <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-truck"></i></div>
+            <div class="card-body text-center">
+              <h5 class="card-title">Pengiriman<br>Barang</h5>
             </div>
           </div>
         </div>
       </div>
-
-      
-      <div class="tentang-kami w-100 mt-4">
-        <div class="container">
-          <div class="d-flex border-half">
-            <p class="fs-4 ">TENTANG KAMI</p>
-          </div>
-          <div class="content d-flex my-4 align-items-center justify-content-between">
-            <div class="col-5">
-              <img src="/asset/image-landing.png" class="image-about-me">
-            </div>
-            <div class="text-center col-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
-            </div>
-          </div>
+    </div>
+    <div class="tentang-kami w-100 mt-4 mb-4 p-4">
+      <div class="container">
+        <div class="d-flex border-half">
+          <p class="fs-4 ">LOKASI</p>
+        </div>
+        <div class="content d-flex my-4 align-items-center justify-content-between">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15858.60346941045!2d106.81176556977537!3d-6.4388641000000035!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ea26f781fc7d%3A0x4674a28effffb45!2sTB.%20Indo%20Maju!5e0!3m2!1sid!2sid!4v1683649823107!5m2!1sid!2sid" width="100%" height="460" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
-      <div class="tata-cara-pemesanan w-100 mt-4">
-        <div class="container">
-          <div class="d-flex justify-content-end border-half mb-4">
-            <p class="fs-4 ">TATA CARA PEMESANAN</p>
-          </div>
-          <div class="step d-flex justify-content-between mt-4">
-            <div class="card borderless d-flex align-items-center">
-              <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-search"></i></div>
-              <div class="card-body">
-                <h5 class="card-title">Cari Barang</h5>
-              </div>
-            </div>
-            <div class="card borderless d-flex align-items-center">
-              <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-bag"></i></div>
-              <div class="card-body">
-                <h5 class="card-title">Beli Barang</h5>
-              </div>
-            </div>
-            <div class="card borderless d-flex align-items-center">
-              <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-telephone-inbound"></i></div>
-              <div class="card-body text-center">
-                <h5 class="card-title">Anda akan<br>Kami Hubungi</h5>
-              </div>
-            </div>
-            <div class="card borderless d-flex align-items-center">
-              <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-credit-card"></i></div>
-              <div class="card-body">
-                <h5 class="card-title">Pembayaran</h5>
-              </div>
-            </div>
-            <div class="card borderless d-flex align-items-center">
-              <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-truck"></i></div>
-              <div class="card-body text-center">
-                <h5 class="card-title">Pengiriman<br>Barang</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tentang-kami w-100 mt-4">
-        <div class="container">
-          <div class="d-flex border-half">
-            <p class="fs-4 ">LOKASI</p>
-          </div>
-          <div class="content d-flex my-4 align-items-center justify-content-between">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15858.60346941045!2d106.81176556977537!3d-6.4388641000000035!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ea26f781fc7d%3A0x4674a28effffb45!2sTB.%20Indo%20Maju!5e0!3m2!1sid!2sid!4v1683649823107!5m2!1sid!2sid" width="100%" height="460" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-      </div>
+    </div>
 
 
 <script></script>
