@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/', UserController.getLanding);
 
+router.get('/produk', UserController.getProduct);
+
 module.exports = router;
