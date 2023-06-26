@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-body {
-    font-family: 'Poppins', sans-serif !important;
-}
 
 :root {
     --user-color-template-1: #091540;
     --user-color-template-2: #F8F7F9;
+}
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: var(--user-color-template-2);
 }
 
 .bg-navigation{
