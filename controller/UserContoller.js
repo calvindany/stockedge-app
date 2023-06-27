@@ -1,6 +1,7 @@
-const barang = require('../model/barang');
 const Barang = require('../model/barang');
 const User = require('../model/user');
+const Transaksi = require('../model/transaction');
+const { Transaction } = require('mongodb');
 
 exports.getLanding = (req, res, next) => {
     Barang.find()
@@ -128,3 +129,28 @@ exports.postHapusStokDalamKeranjang = (req, res, next) => {
         return res.redirect('/keranjang')
     })
 }
+
+exports.postPesanBarangDalamKeranjang = (req, res, next) => {
+    const totalBelanja = req.body.totalBelanja;
+    const date = new Date();
+    const stringBuildDate = date.toISOString().split('T')[0];
+    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    .then( user => {
+        const transaksi = new Transaksi({
+            namapembeli: user.username,
+            tanggal: stringBuildDate,
+            status: 'Belum Bayar',
+            barang: user.keranjang,
+            total: totalBelanja,
+        })
+
+        // Hapus semua data yang ada di keranjang user
+        user.keranjang = [];
+        user.save();
+        return transaksi.hitungKeuntungan()
+    })
+    .then( () => {
+
+        return res.redirect('/keranjang')
+    })
+}   

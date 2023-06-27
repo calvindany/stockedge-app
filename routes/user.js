@@ -16,4 +16,6 @@ router.post('/keranjang/edit', UserController.postEditStokDalamKeranjang);
 
 router.post('/keranjang/hapus', UserController.postHapusStokDalamKeranjang);
 
+router.post('/keranjang/pesan', UserController.postPesanBarangDalamKeranjang);
+
 module.exports = router;
