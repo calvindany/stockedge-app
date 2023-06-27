@@ -10,65 +10,71 @@
         </div>
     </header>
     <div class="container d-flex justify-content-between" style="position: relative;">
-        <div class="col-7" id="daftarKeranjang">
-            <ul class="list-group" style="gap: 5px;">
-                <% for(let i = 0; i < keranjang.length; i++) { %>
-                <li class="list-group-item d-flex align-items-center rounded" style="gap: 20px;">
-                    <img src="/images/1687832437180.jpg" class="card-img-top" alt="..." style="max-width: 20vh;">
-                    <div>
-                        <h4><%= keranjang[i].namabarang %></h4>
-                        <p>Rp. <%= keranjang[i].harga %> x <%= keranjang[i].jumlah %></p>
-                        <div class="d-flex" style="gap: 20px;">
-                            <button class="btn btn-primary" onclick="changeStok('<%= keranjang[i].idbarang %>', '<%= keranjang[i].jumlah %>')" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Edit</button>
-                            <form action="/keranjang/hapus" method="POST">
-                                <button class="btn btn-danger" type="Submit">Hapus</button>
-                                <input name="idbarang" type="hidden" value="<%= keranjang[i].idbarang %>">
+        <% if(keranjang.length <= 0) { %>
+            <div class="alert alert-primary w-100" role="alert">
+                Keranjang anda saat ini kosong
+            </div>
+        <% } else { %>
+            <div class="col-7" id="daftarKeranjang">
+                <ul class="list-group" style="gap: 5px;">
+                    <% for(let i = 0; i < keranjang.length; i++) { %>
+                    <li class="list-group-item d-flex align-items-center rounded" style="gap: 20px;">
+                        <img src="/images/1687832437180.jpg" class="card-img-top" alt="..." style="max-width: 20vh;">
+                        <div>
+                            <h4><%= keranjang[i].namabarang %></h4>
+                            <p>Rp. <%= keranjang[i].harga %> x <%= keranjang[i].jumlah %></p>
+                            <div class="d-flex" style="gap: 20px;">
+                                <button class="btn btn-primary" onclick="changeStok('<%= keranjang[i].idbarang %>', '<%= keranjang[i].jumlah %>')" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Edit</button>
+                                <form action="/keranjang/hapus" method="POST">
+                                    <button class="btn btn-danger" type="Submit">Hapus</button>
+                                    <input name="idbarang" type="hidden" value="<%= keranjang[i].idbarang %>">
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                    <!-- Modal -->
+                    <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="jumlahModalLabel">Masukkan jumlah barang</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="POST" id="jumlahModalForm" action="/keranjang/edit">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="jumlah" class="form-label">Jumlah Barang</label>
+                                            <input name="jumlah" type="number" class="form-control" id="inputJumlah">
+                                        </div>
+                                        <input name="idbarang" type="hidden" class="form-control" id="inputIdBarang">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary" id="buttonSubmitJumlahModalForm">Simpan</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
-                </li>
-                <% } %>
-                <!-- Modal -->
-                <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="jumlahModalLabel">Masukkan jumlah barang</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form method="POST" id="jumlahModalForm" action="/keranjang/edit">
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="jumlah" class="form-label">Jumlah Barang</label>
-                                        <input name="jumlah" type="number" class="form-control" id="inputJumlah">
-                                    </div>
-                                    <input name="idbarang" type="hidden" class="form-control" id="inputIdBarang">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary" id="buttonSubmitJumlahModalForm">Simpan</button>
-                                </div>
-                            </div>
+                </ul>
+            </div>
+            <div class="col-3" id="totalKeranjang" style="position: fixed;">
+                <div class="card">
+                    <div class="card-header">
+                      Total Pembelian
+                    </div>
+                    <div class="card-body d-flex flex-column" style="gap: 20px;">
+                        <h5>Total Barang : <%= totalBarang %></h5>
+                        <h4>Rp. <%= totalPembelian %></h4>
+                        <form method="POST" action="/keranjang/pesan" class="w-100 d-flex flex-column">
+                            <input name="totalBelanja" type="hidden" value="<%= totalPembelian %>">
+                            <button type="submit" class="btn btn-primary">Pesan</button>
                         </form>
                     </div>
                 </div>
-            </ul>
-        </div>
-        <div class="col-3" id="totalKeranjang" style="position: fixed;">
-            <div class="card">
-                <div class="card-header">
-                  Total Pembelian
-                </div>
-                <div class="card-body d-flex flex-column" style="gap: 20px;">
-                    <h5>Total Barang : <%= totalBarang %></h5>
-                    <h4>Rp. <%= totalPembelian %></h4>
-                    <form method="POST" action="/keranjang/pesan" class="w-100 d-flex flex-column">
-                        <input name="totalBelanja" type="hidden" value="<%= totalPembelian %>">
-                        <button type="submit" class="btn btn-primary">Pesan</button>
-                    </form>
-                </div>
             </div>
-        </div>
+        <% } %>
     </div>
 
     <script>

@@ -30,8 +30,6 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
     .then( user => {
         Barang.findOne({ _id: idbarang })
         .then( barang => {
-            console.log(user.keranjang.length)
-            console.log(parseInt(jumlah))
             if(user.keranjang.length <= 0) {
                 user.keranjang = [{
                     idbarang: idbarang,
@@ -120,8 +118,6 @@ exports.postHapusStokDalamKeranjang = (req, res, next) => {
         newKeranjang = newKeranjang.filter( barang => {
             return barang.idbarang != idbarang;
         })
-        console.log(idbarang)
-        console.log(newKeranjang);
         user.keranjang = newKeranjang;
 
         user.save();
