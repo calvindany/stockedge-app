@@ -1,7 +1,6 @@
 const Barang = require('../model/barang');
 const User = require('../model/user');
 const Transaksi = require('../model/transaction');
-const { Transaction } = require('mongodb');
 
 exports.getLanding = (req, res, next) => {
     Barang.find()
@@ -9,7 +8,7 @@ exports.getLanding = (req, res, next) => {
     .then( barang => {
         res.render('user/landing', {
             barang: barang,
-        });       
+        });
     })
 }
 
