@@ -3,23 +3,34 @@ const User = require('../model/user');
 const Transaksi = require('../model/transaction');
 
 exports.getLanding = (req, res, next) => {
+    let totalKeranjang = null;
+    if(req.isLoggedIn){
+        totalKeranjang = req.user.totalKeranjang;
+    }
     Barang.find()
     .select('namabarang stok harga image')
     .then( barang => {
         res.render('user/landing', {
             barang: barang,
             isLoggedIn: req.isLoggedIn,
+            totalKeranjang: totalKeranjang,
         });
     })
 }
 
 exports.getProduk = (req, res, next) => {
+    let totalKeranjang = null;
+    if(req.isLoggedIn){
+        totalKeranjang = req.user.totalKeranjang;
+    }
     Barang.find()
     .select('namabarang stok harga image')
     .then( barang => {
+        // console.log(req.isLoggedIn)
         res.render('user/produk',{
             barang: barang,
             isLoggedIn: req.isLoggedIn,
+            totalKeranjang: totalKeranjang,        
         })
     })
 }
@@ -78,14 +89,22 @@ exports.getKeranjang = (req, res, next) => {
     .then( user => {
         const totalBarang = user.keranjang.length;
         let totalPembelian = 0;
+
+        let totalKeranjang = null;
+        if(req.isLoggedIn){
+            totalKeranjang = req.user.totalKeranjang;
+        }
+
         user.keranjang.map( barangDalamKeranjang => {
             totalPembelian += barangDalamKeranjang.subtotal;
         })
+
         res.render('user/keranjang', {
             keranjang: user.keranjang,
             totalBarang: totalBarang,
             totalPembelian: totalPembelian,
             isLoggedIn: req.isLoggedIn,
+            totalKeranjang: totalKeranjang,        
         });
     })
 }

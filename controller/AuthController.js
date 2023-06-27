@@ -29,11 +29,15 @@ exports.postLogin = (req, res, next) => {
     
     User.findOne({email : email})
     .then ( user => {
+        if(!user){
+            req.flash('login-failed', 'Login gagal, email atau password salah!');
+            return res.redirect('/auth/login')
+        }
         return bcrypt
         .compare( password, user.password)
         .then( result => {
             if(result){
-                console.log('Login berhasil')
+                // console.log('Login berhasil')
                 const jwtToken = jwt.sign({ 
                     iduser: user._id,
                     username: user.username,
