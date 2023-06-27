@@ -8,6 +8,7 @@ exports.getLanding = (req, res, next) => {
     .then( barang => {
         res.render('user/landing', {
             barang: barang,
+            isLoggedIn: req.isLoggedIn,
         });
     })
 }
@@ -18,6 +19,7 @@ exports.getProduk = (req, res, next) => {
     .then( barang => {
         res.render('user/produk',{
             barang: barang,
+            isLoggedIn: req.isLoggedIn,
         })
     })
 }
@@ -25,7 +27,7 @@ exports.getProduk = (req, res, next) => {
 exports.postTambahProdukKeKeranjang = (req, res, next) => {
     // Mode Beli adalah pilihan user antara pesan atau tambah kekeranjang
     const {idbarang, jumlah, modeBeli} = req.body;
-    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    User.findOne({ _id: req.user.iduser })
     .then( user => {
         Barang.findOne({ _id: idbarang })
         .then( barang => {
@@ -72,7 +74,7 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
 }
 
 exports.getKeranjang = (req, res, next) => {
-    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    User.findOne({ _id: req.user.iduser })
     .then( user => {
         const totalBarang = user.keranjang.length;
         let totalPembelian = 0;
@@ -83,6 +85,7 @@ exports.getKeranjang = (req, res, next) => {
             keranjang: user.keranjang,
             totalBarang: totalBarang,
             totalPembelian: totalPembelian,
+            isLoggedIn: req.isLoggedIn,
         });
     })
 }
@@ -91,7 +94,7 @@ exports.postEditStokDalamKeranjang = (req, res, next) => {
     const idbarang = req.body.idbarang;
     const newJumlah = req.body.jumlah;
 
-    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    User.findOne({ _id: req.user.iduser })
     .then( user => {
         let newKeranjang = [...user.keranjang];
 
@@ -110,7 +113,7 @@ exports.postEditStokDalamKeranjang = (req, res, next) => {
 exports.postHapusStokDalamKeranjang = (req, res, next) => {
     const idbarang = req.body.idbarang;
 
-    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    User.findOne({ _id: req.user.iduser })
     .then( user => {
         let newKeranjang = [...user.keranjang];
     
@@ -129,7 +132,7 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
     const totalBelanja = req.body.totalBelanja;
     const date = new Date();
     const stringBuildDate = date.toISOString().split('T')[0];
-    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    User.findOne({ _id: req.user.iduser })
     .then( user => {
         const transaksi = new Transaksi({
             namapembeli: user.username,

@@ -35,6 +35,7 @@ exports.postLogin = (req, res, next) => {
             if(result){
                 console.log('Login berhasil')
                 const jwtToken = jwt.sign({ 
+                    iduser: user._id,
                     username: user.username,
                     email: user.email,
                 }, process.env.JWT_SECRET);
