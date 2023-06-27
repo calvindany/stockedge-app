@@ -8,6 +8,8 @@ router.get('/', UserController.getLanding);
 
 router.get('/produk', UserController.getProduk);
 
+router.post('/produk/tambah', UserController.postTambahProdukKeKeranjang);
+
 router.get('/keranjang', UserController.getKeranjang);
 
 module.exports = router;

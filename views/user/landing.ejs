@@ -25,30 +25,44 @@
           <p class="fs-4">PRODUK YANG KAMI JUAL</p>
         </div>
         <div class="list-produk d-flex justify-content-between my-4">
-          <div class="card" style="width: 18rem;">
-            <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2023/1/5/f2cdc69c-a9eb-4d01-af2a-f63ec70246ba.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <% for(let i = 0; i < barang.length; i++) { %>
+            <div class="card" style="width: 18rem;">
+              <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= barang[i].namabarang %></h5>
+                    <p class="card-text">Stok: <%= barang[i].stok %></p>
+                    <p class="card-text" style="font-weight: bold;">Rp. <%= barang[i].harga %></p>
+                    <div class="d-flex" style="gap: 5px;">
+                        <button href="#" onclick="changeModalRoute('Pesan')" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Pesan</button>
+                        <button href="#" onclick="changeModalRoute('Tambah')" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Tambah</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="jumlahModalLabel">Masukkan jumlah barang</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" id="jumlahModalForm">
+                                            <div class="mb-3">
+                                                <label for="jumlah" class="form-label">Jumlah Barang</label>
+                                                <input type="number" class="form-control" id="jumlah">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="buttonSubmitJumlahModalForm">Simpan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </div>
             </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="https://images.tokopedia.net/img/cache/500-square/product-1/2019/1/15/13800922/13800922_c00279ca-0cd2-4516-a4d9-99c6f99164af_1182_1182.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="https://static.bmdstatic.com/pk/product/large/5ba37cc5e0542.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem;">
-            <img src="https://media.monotaro.id/mid01/big/Komponen%20Mekanikal%2C%20Laher%20%26%20Roda/Kompresor%2C%20Kopling%2C%20Alat%20Pneumatik%2C%20Selang%2C%20Tube/Selang%20Industri/Selang%20Udara/TEKIRO%20Selang%20Bertekanan%20Tinggi/TEKIRO%20Selang%20Bertekanan%20Tinggi%20AT-AH1776%208_5x15mm%20(20m)%201pc/q0S013224936-1.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
+          <% } %>
         </div>
         <div class="d-flex justify-content-end">
           <a href="#" class="btn btn-outline-primary">Selengkapnya</a>
@@ -152,7 +166,19 @@
     </div>
 
 
-<script></script>
+    <script>
+      function changeModalRoute(mode){
+          const modalElement = document.getElementById('jumlahModalForm');
+          const buttonSubmit = document.getElementById('buttonSubmitJumlahModalForm');
+          if(mode === 'Pesan'){
+              modalElement.setAttribute('action', 'URL Pesan');
+              buttonSubmit.innerHTML = 'Pesan'
+          } else {
+              modalElement.setAttribute('action', 'URL Tambah');
+              buttonSubmit.innerHTML = 'Simpan'
+          }
+      }
+    </script>
 
 <%- include('include/footer') %>
 <%- include('include/footer-doc') %>

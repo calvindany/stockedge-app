@@ -1,7 +1,15 @@
+const barang = require('../model/barang');
 const Barang = require('../model/barang');
+const User = require('../model/user');
 
 exports.getLanding = (req, res, next) => {
-    res.render('user/landing');
+    Barang.find()
+    .select('namabarang stok harga image')
+    .then( barang => {
+        res.render('user/landing', {
+            barang: barang,
+        });       
+    })
 }
 
 exports.getProduk = (req, res, next) => {
@@ -14,6 +22,73 @@ exports.getProduk = (req, res, next) => {
     })
 }
 
+exports.postTambahProdukKeKeranjang = (req, res, next) => {
+    // Mode Beli adalah pilihan user antara pesan atau tambah kekeranjang
+    const {idbarang, jumlah, modeBeli} = req.body;
+    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    .then( user => {
+        Barang.findOne({ _id: idbarang })
+        .then( barang => {
+            console.log(user.keranjang.length)
+            console.log(parseInt(jumlah))
+            if(user.keranjang.length <= 0) {
+                user.keranjang = [{
+                    idbarang: idbarang,
+                    namabarang: barang.namabarang,
+                    harga: parseInt(barang.harga),
+                    jumlah: parseInt(jumlah),
+                    subtotal: parseInt(jumlah) * barang.harga,
+                }];
+            } else {
+                const isExist = user.keranjang.filter( barangDalamKeranjang => {
+                    return barangDalamKeranjang.idbarang == idbarang;
+                })
+    
+                if(isExist <= 0){
+                    user.keranjang.push({
+                        idbarang: idbarang,
+                        namabarang: barang.namabarang,
+                        harga: parseInt(barang.harga),
+                        jumlah: parseInt(jumlah),
+                        subtotal: parseInt(jumlah) * barang.harga,
+                    })
+                } else {
+                    const index = user.keranjang.findIndex( barangDalamKeranjang => {
+                        return barangDalamKeranjang.idbarang == idbarang;
+                    });    
+                    user.keranjang[index].jumlah += parseInt(jumlah);
+                    user.keranjang[index].subtotal += parseInt(user.keranjang[index].jumlah) * parseInt(barang.harga);
+                }
+            }
+            user.save();
+
+            if(modeBeli == 'Pesan'){
+                return res.redirect('/keranjang')
+            } else {
+                return res.redirect('/produk')
+            }
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+}
+
 exports.getKeranjang = (req, res, next) => {
-    res.render('user/keranjang');
+    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    .then( user => {
+        const totalBarang = user.keranjang.length;
+        let totalPembelian = 0;
+        user.keranjang.map( barangDalamKeranjang => {
+            totalPembelian += barangDalamKeranjang.subtotal;
+        })
+        res.render('user/keranjang', {
+            keranjang: user.keranjang,
+            totalBarang: totalBarang,
+            totalPembelian: totalPembelian,
+        });
+    })
+}
+
+exports.postEditStokDalamKeranjang = (req, res, next) => {
+
 }

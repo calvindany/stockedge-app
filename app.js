@@ -11,11 +11,13 @@ const cronjob = require("node-cron");
 
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
+const UserModel = require("./model/user");
 
 const AuthRoutes = require("./routes/auth");
 const UserRoutes = require("./routes/user");
 
 const HitungKeuntungan = require("./util/hitungKeuntungan");
+const user = require("./model/user");
 
 const app = express();
 
