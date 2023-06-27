@@ -74,3 +74,9 @@ exports.postRegister = (req, res, next) => {
         return res.redirect('/auth/login');
     })
 }
+
+exports.postLogout = (req, res, next) => {
+    res.clearCookie('jwt');
+
+    res.redirect('/');
+}

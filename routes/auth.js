@@ -11,4 +11,6 @@ router.get('/registrasi', AuthController.getRegister);
 
 router.post('/registrasi', AuthController.postRegister);
 
+router.post('/logout', AuthController.postLogout);
+
 module.exports = router;

@@ -6,7 +6,6 @@ exports.authCheck = (req, res, next) => {
         req.user = decodedToken;
         req.isLoggedIn = true;
     } catch (err) {
-        
         req.isLoggedIn = false;
     }
 

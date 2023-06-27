@@ -31,6 +31,11 @@
               </span>
             </a>
           </li>
+          <li class="nav-item">
+            <form action="/auth/logout" method="POST">
+              <button class="btn btn-danger">Log Out</button>
+            </form>
+          </li>
         <% } else { %>
           <li class="nav-item">
             <a class="btn btn-primary" href="/auth/login">Login</a>
