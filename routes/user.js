@@ -12,4 +12,6 @@ router.post('/produk/tambah', UserController.postTambahProdukKeKeranjang);
 
 router.get('/keranjang', UserController.getKeranjang);
 
+router.post('/keranjang/hapus', UserController.postEditStokDalamKeranjang);
+
 module.exports = router;

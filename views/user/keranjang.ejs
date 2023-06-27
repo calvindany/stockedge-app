@@ -20,8 +20,9 @@
                         <p>Rp. <%= keranjang[i].harga %> x <%= keranjang[i].jumlah %></p>
                         <div class="d-flex" style="gap: 20px;">
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Edit</button>
-                            <form action="#" method="POST">
+                            <form action="/keranjang/hapus" method="POST">
                                 <button class="btn btn-danger" type="Submit">Hapus</button>
+                                <input name="idbarang" type="hidden" value="<%= keranjang[i].idbarang %>">
                             </form>
                         </div>
                     </div>

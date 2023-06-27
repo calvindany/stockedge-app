@@ -90,5 +90,21 @@ exports.getKeranjang = (req, res, next) => {
 }
 
 exports.postEditStokDalamKeranjang = (req, res, next) => {
+    const idbarang = req.body.idbarang;
 
+    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    .then( user => {
+        let newKeranjang = [...user.keranjang];
+    
+        newKeranjang = newKeranjang.filter( barang => {
+            return barang.idbarang != idbarang;
+        })
+        console.log(idbarang)
+        console.log(newKeranjang);
+        user.keranjang = newKeranjang;
+
+        user.save();
+
+        return res.redirect('/keranjang')
+    })
 }
