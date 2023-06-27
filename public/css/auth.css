@@ -1,0 +1,9 @@
+@import "./root.css";
+
+body {
+    background-color: var(--user-color-template-1);
+}
+
+/* .login-box {
+    background-color: var(--user-color-template-2) !important;
+} */
