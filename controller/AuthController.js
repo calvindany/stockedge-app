@@ -1,6 +1,7 @@
 const Admin = require('../model/admin');
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.getLogin = (req, res, next) => {
     let messageLogin = req.flash('login-failed');
@@ -33,6 +34,13 @@ exports.postLogin = (req, res, next) => {
         .then( result => {
             if(result){
                 console.log('Login berhasil')
+                const jwtToken = jwt.sign({ 
+                    username: user.username,
+                    email: user.email,
+                }, process.env.JWT_SECRET);
+                res.cookie('jwt', jwtToken)
+
+                res.redirect('/')
             } else {
                 req.flash('login-failed', 'Login gagal, email atau password salah!');
                 return res.redirect('/auth/login')

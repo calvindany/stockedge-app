@@ -9,6 +9,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const multer = require("multer");
 const cronjob = require("node-cron");
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
 
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
@@ -45,6 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage: fileStorage }).single('image'))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, '/public/images')));
+app.use(cookieParser());
 
 app.use(
   session({
