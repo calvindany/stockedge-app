@@ -91,6 +91,26 @@ exports.getKeranjang = (req, res, next) => {
 
 exports.postEditStokDalamKeranjang = (req, res, next) => {
     const idbarang = req.body.idbarang;
+    const newJumlah = req.body.jumlah;
+
+    User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
+    .then( user => {
+        let newKeranjang = [...user.keranjang];
+
+        const index = newKeranjang.findIndex( barang => {
+            return barang.idbarang == idbarang;
+        })
+        // console.log(newKeranjang[index])
+        newKeranjang[index].jumlah = newJumlah;
+        newKeranjang[index].subtotal = newKeranjang[index].harga * newJumlah;
+    
+        user.save();
+        return res.redirect('/keranjang')
+    });
+}
+
+exports.postHapusStokDalamKeranjang = (req, res, next) => {
+    const idbarang = req.body.idbarang;
 
     User.findOne({ _id: '649a8a6ffed0e7607793c9dc' })
     .then( user => {
