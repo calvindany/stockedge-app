@@ -1,6 +1,5 @@
 const fs = require('fs');
-const path = require('path')
-const Admin = require('../model/admin')
+const path = require('path');
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");

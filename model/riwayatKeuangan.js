@@ -42,7 +42,7 @@ riwayatKeuanganSchema.methods.getKeuntunganHariIni = function (today){
       })
 
       const selisih = hariIni - hariKemarin;
-      console.log(hariIni, hariKemarin)
+    //   console.log(hariIni, hariKemarin)
       let persentasiKeuntungan;
       if( hariKemarin == 0 || Math.floor((selisih / hariKemarin) * 100) >= 100){
         persentasiKeuntungan = 100;
