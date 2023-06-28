@@ -4,13 +4,6 @@ body {
     font-family: 'Roboto', serif !important;
 }
 
-.selected {
-    color: white;
-}
-.unselected {
-    color: black;
-}
-
 .page-title{
     color: #343A40;
     font-weight: 1000 !important;

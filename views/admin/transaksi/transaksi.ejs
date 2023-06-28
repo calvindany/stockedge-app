@@ -57,7 +57,7 @@
                         <%= transaksi[i].status %>
                       </td>
                       <td class="d-flex" style="gap: 20px;">
-                        <a class="btn btn-primary" href="/transaksi/edit/<%= transaksi[i]._id %>"><i
+                        <a class="btn btn-primary <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/edit/<%= transaksi[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>
                         <form action="/transaksi/bayar" method="POST">
                           <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
