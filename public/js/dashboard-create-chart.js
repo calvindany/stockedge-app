@@ -5,7 +5,6 @@ const generateChart = (dataset) => {
   console.log(dataset)
   for(let i = 0; i < dataset.length; i++){
     data[dataset[i].namabulan] = parseInt(dataset[i].keuntungan)
-
   }
   
   const chart = new Chart(ctx, {
@@ -26,7 +25,7 @@ const generateChart = (dataset) => {
       ],
       datasets: [
         {
-          label: "Tahun 2022",
+          label: "Tahun 2023",
           data: data,
           borderWidth: 1,
           backgroundColor: "skyblue",

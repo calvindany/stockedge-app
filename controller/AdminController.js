@@ -6,6 +6,7 @@ const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
 const Karyawan = require("../model/karyawan");
 const Keuangan = require("../model/keuangan");
+const RiwayatKeuangan = require("../model/riwayatKeuangan");
 const BarangMasuk = require('../model/barangmasuk');
 
 const fileHelper = require('../util/fileDelete');
@@ -14,31 +15,53 @@ exports.getDashboard = (req, res, next) => {
   const date = new Date();
   let keuntunganHarian = {};
   let keluaranHarian = {};
+  // const newKeuangan = new RiwayatKeuangan({
+  //   tahun: '2023',
+  //   bulan: [
+  //     {
+  //       namabulan: 0,
+  //       keuntungan: 11000000
+  //     },
+  //     {
+  //       namabulan: 1,
+  //       keuntungan: 10000000,
+  //     },
+  //     {
+  //       namabulan: 2,
+  //       keuntungan: 13000000,
+  //     },
+  //     {
+  //       namabulan: 3,
+  //       keuntungan: 14000000,
+  //     },
+  //     {
+  //       namabulan: 4,
+  //       keuntungan: 10000000,
+  //     },
+  //   ]
+  // })
+  // newKeuangan.save();
   Transaksi.find()
   .limit(5)
   .then( transaksi => {
-    Admin.findOne({ _id: '646462085f335228b519600b' })
-    .then( admin => {
-      admin.getKeuntunganHariIni(date)
+    RiwayatKeuangan.findOne({tahun : '2023'})
+    .then( riwayat => {
+      // console.log(riwayat.getKeuntunganHariIni())
+      riwayat.getKeuntunganHariIni(date)
       .then( keuntungan => {
         keuntunganHarian = keuntungan;
-        return admin.getKeluaranHariIni(date)
+        return riwayat.getKeluaranHariIni(date)
       })
       .then( keluaran => {
         return keluaranHarian = keluaran;
       })
       .then( result => {
-        
-        const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex( riwayat => {
-          return riwayat.tahun === '2023';
-        })
-        // console.log(admin.riwayatKeuangan[getIndexOfCurrentYear])
         return res.render("admin/dashboard/dashboard2", {
           route: "/dashboard",
           transaksi: transaksi,
           keuntunganHarian: keuntunganHarian,
           keluaranHarian: keluaranHarian,
-          riwayatKeuangan: admin.riwayatKeuangan[getIndexOfCurrentYear],
+          riwayatKeuangan: riwayat,
         });
       })
     })
