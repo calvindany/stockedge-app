@@ -37,7 +37,6 @@ exports.postLogin = (req, res, next) => {
         .compare( password, user.password)
         .then( result => {
             if(result){
-                // console.log('Login berhasil')
                 const jwtToken = jwt.sign({ 
                     iduser: user._id,
                     username: user.username,

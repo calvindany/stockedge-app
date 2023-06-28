@@ -14,7 +14,7 @@
     <div class="container d-flex min-vh-100 justify-content-center align-items-center login-box">
         <form class="col-5 border border-2 p-4 rounded-3" style="background-color: white;" method="POST" action="/auth/login">
             <header class="mb-4 text-center">
-                <h4>Login</h4>
+                <h4>Masuk</h4>
             </header>
             <% if(message) { %>
                 <div class="alert <%= (message[0] == 'Failed') ? 'alert-danger' : 'alert-success'  %>" role="alert">
@@ -23,7 +23,7 @@
             <% } %>
             <div class="form-floating mb-3">
                 <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Alamat Email</label>
             </div>
             <div class="form-floating mb-4">
                 <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
@@ -33,7 +33,10 @@
                 <label class="form-check-label">Belum memiliki akun? </label>
                 <a href="/auth/registrasi">Registrasi</a>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="mb-3 d-flex align-items-center" style="gap: 20px;">
+                <button type="submit" class="btn btn-primary">Masuk</button>
+                <label class="form-check-label">Kembali ke <a href="/">halaman utama</a> </label>
+            </div>
         </form>
     </div>
 

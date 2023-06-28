@@ -1,9 +1,11 @@
-To do :
-- Ide fitur baru : 
- Get data, oper ke landing
- Pemasukan per periode (hari, bulan, tahun)
+To Do :
+[Overall]
+- Tambah role pas login untuk misahin user sama admin
 
-- Improvement on dashboard page
- Adding getKeuntunganHariIni dan getKeuntunganTahunIni
+[User]
+- Fitur search di halaman produk
+- Footer di fixed di button
+- Keranjang header cardnya ganti warna
 
- - Need to add scheduler
+[Admin]
+- Revisi untuk konfigurasi route Admin
