@@ -10,7 +10,7 @@
 */
 
 const Keuangan = require("../model/keuangan");
-const Admin = require("../model/admin");
+const RiwayatKeuangan = require("../model/riwayatKeuangan");
 const month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
 'Juli', 'Agustus', 'November', 'Desember'
 ]
@@ -31,32 +31,26 @@ const hitungKeuntungan = () => {
         keuangan.map( keu => {
             keuntungan += parseInt(keu.pendapatan);
         })
-        return Admin.findOne({ _id: '646462085f335228b519600b' });
+        return RiwayatKeuangan.findOne({ tahun: tahun });
     })
-    .then( admin => {
-        const getIndexOfCurrentYear = admin.riwayatKeuangan.findIndex(( riyawat ) => {
-            return riwayat.tahun === tahun
-        })
-
-        if(getIndexOfCurrentYear == -1){
-            admin.riwayatKeuangan.push(
-                {
-                    tahun: tahun,
-                    bulan: [
-                        {
-                            namabulan: month[bulan],
-                            keuntungan: keuntungan,
-                        }
-                    ]
-                }
-            )
-        } else {
-            admin.riwayatKeuangan[getIndexOfCurrentYear].bulan.push(
+    .then( riwayat => {
+        if(riwayat){
+            riwayat.bulan.push(
                 {
                     namabulan: month[bulan],
                     keuntungan: keuntungan,
                 }
             )
+        } else {
+            const newRiwayat = new RiwayatKeuangan({
+                tahun: tahun,
+                bulan: [
+                    {
+                        namabulan: month[bulan],
+                        keuntungan: keuntungan,
+                    }
+                ]
+            })
         }
 
         return admin.save();
