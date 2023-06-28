@@ -1,6 +1,7 @@
 To Do :
 [Overall]
 - Tambah role pas login untuk misahin user sama admin
+- Flow dari user kalau send keranjang ke collection transaksi, pendapatannya ga ke eksekusi
 
 [User]
 - Fitur search di halaman produk
