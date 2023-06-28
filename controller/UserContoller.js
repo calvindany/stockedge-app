@@ -20,9 +20,19 @@ exports.getLanding = (req, res, next) => {
 
 exports.getProduk = (req, res, next) => {
     let totalKeranjang = null;
+    let messageSuccess = req.flash('status-send-to-cart');
+    let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
+
     if(req.isLoggedIn){
         totalKeranjang = req.user.totalKeranjang;
     }
+
+    if(messageSuccess.length > 0){
+        message = messageSuccess[0];
+    } else {
+        message = null;
+    }
+
     Barang.find()
     .select('namabarang stok harga image')
     .then( barang => {
@@ -30,7 +40,8 @@ exports.getProduk = (req, res, next) => {
         res.render('user/produk',{
             barang: barang,
             isLoggedIn: req.isLoggedIn,
-            totalKeranjang: totalKeranjang,        
+            totalKeranjang: totalKeranjang,  
+            message: message,      
         })
     })
 }
@@ -76,12 +87,21 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
             if(modeBeli == 'Pesan'){
                 return res.redirect('/keranjang')
             } else {
+                req.flash('status-send-to-cart', 'Item berhasil ditambahkan di cart');
                 return res.redirect('/produk')
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+            req.flash('status-send-to-cart', 'Item gagal ditambahkan di cart');
+            return res.redirect('/produk')
+        });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+        req.flash('status-send-to-cart', 'Item gagal ditambahkan di cart');
+        return res.redirect('/produk')
+    });
 }
 
 exports.getKeranjang = (req, res, next) => {
