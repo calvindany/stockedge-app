@@ -4,6 +4,7 @@ To Do :
 
 [User]
 - Fitur search di halaman produk
+- Tambah placeholder di search boxnya
 - Footer di fixed di button
 - Keranjang header cardnya ganti warna
 
