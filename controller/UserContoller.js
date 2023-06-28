@@ -4,9 +4,19 @@ const Transaksi = require('../model/transaction');
 
 exports.getLanding = (req, res, next) => {
     let totalKeranjang = null;
+    let messageSuccess = req.flash('status-send-to-cart');
+    let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
+
     if(req.isLoggedIn){
         totalKeranjang = req.user.totalKeranjang;
     }
+
+    if(messageSuccess.length > 0){
+        message = messageSuccess[0];
+    } else {
+        message = null;
+    }
+
     Barang.find()
     .select('namabarang stok harga image')
     .then( barang => {
@@ -14,6 +24,7 @@ exports.getLanding = (req, res, next) => {
             barang: barang,
             isLoggedIn: req.isLoggedIn,
             totalKeranjang: totalKeranjang,
+            message: message,      
         });
     })
 }
@@ -85,6 +96,7 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
             user.save();
 
             if(modeBeli == 'Pesan'){
+                req.flash('status-send-to-cart', 'Item berhasil ditambahkan di cart');
                 return res.redirect('/keranjang')
             } else {
                 req.flash('status-send-to-cart', 'Item berhasil ditambahkan di cart');
@@ -105,6 +117,15 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
 }
 
 exports.getKeranjang = (req, res, next) => {
+    let messageSuccess = req.flash('status-send-to-cart');
+    let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
+
+    if(messageSuccess.length > 0){
+        message = messageSuccess[0];
+    } else {
+        message = null;
+    }
+
     User.findOne({ _id: req.user.iduser })
     .then( user => {
         const totalBarang = user.keranjang.length;
@@ -124,7 +145,8 @@ exports.getKeranjang = (req, res, next) => {
             totalBarang: totalBarang,
             totalPembelian: totalPembelian,
             isLoggedIn: req.isLoggedIn,
-            totalKeranjang: totalKeranjang,        
+            totalKeranjang: totalKeranjang,   
+            message: message,     
         });
     })
 }
