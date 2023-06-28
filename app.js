@@ -12,7 +12,6 @@ const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 
 const AdminRoutes = require("./routes/admin");
-const AdminModel = require("./model/admin");
 
 const AuthRoutes = require("./routes/auth");
 const UserRoutes = require("./routes/user");
@@ -80,18 +79,6 @@ app.use("/auth", AuthRoutes);
 mongoose
   .connect(process.env.MONGODB_URI_PROD)
   .then(() => {
-    AdminModel.find().then((admin) => {
-      if (admin.length < 1) {
-        bcrypt.hash(" ", 12).then((hashedPassword) => {
-          const admin = new AdminModel({
-            username: "admin",
-            password: hashedPassword,
-          });
-          admin.save();
-        });
-      }
-    });
-
     app.listen(3000, () => {
       console.log(`Server running in http://localhost:${3000}`);
     });

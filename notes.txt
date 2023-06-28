@@ -11,3 +11,4 @@ To Do :
 
 [Admin]
 - Revisi untuk konfigurasi route Admin
+- Admin tambah barang, masuk barang kedua kali, error
