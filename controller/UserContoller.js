@@ -23,6 +23,7 @@ exports.getLanding = (req, res, next) => {
         res.render('user/landing', {
             barang: barang,
             isLoggedIn: req.isLoggedIn,
+            isAdmin: req.isAdmin,
             totalKeranjang: totalKeranjang,
             message: message,      
         });
@@ -51,6 +52,7 @@ exports.getProduk = (req, res, next) => {
         res.render('user/produk',{
             barang: barang,
             isLoggedIn: req.isLoggedIn,
+            isAdmin: req.isAdmin,
             totalKeranjang: totalKeranjang,  
             message: message,      
         })
@@ -145,6 +147,7 @@ exports.getKeranjang = (req, res, next) => {
             totalBarang: totalBarang,
             totalPembelian: totalPembelian,
             isLoggedIn: req.isLoggedIn,
+            isAdmin: req.isAdmin,
             totalKeranjang: totalKeranjang,   
             message: message,     
         });

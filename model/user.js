@@ -16,6 +16,10 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  role: {
+    type: String,
+    require: true,
+  },
   keranjang: [
     {
       idbarang: {
