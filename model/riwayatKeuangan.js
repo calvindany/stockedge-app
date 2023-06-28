@@ -55,7 +55,6 @@ riwayatKeuanganSchema.methods.getKeuntunganHariIni = function (today){
         hariKemarin: hariKemarin, 
         persentasi: persentasiKeuntungan
       }
-    //   console.log(result);
       resolve(result);
     })
     .catch( err => {
@@ -99,7 +98,6 @@ riwayatKeuanganSchema.methods.getKeluaranHariIni = function (today){
         hariKemarin: hariKemarin, 
         persentasi: persentasiKeluaran
       }
-    //   console.log(result);
       resolve(result);
     })
     .catch( err => {
@@ -108,65 +106,5 @@ riwayatKeuanganSchema.methods.getKeluaranHariIni = function (today){
     })
   });
 }
-
-// adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
-//   return new Promise((resolve, reject) => {
-    
-
-//       resolve(result);
-//     })
-//     .catch( err => {
-//       reject(err);
-//       console.log(err);
-//     })
-//   });
-// }
-// adminSchema.methods.getKeuntunganTahunIni = function (tahunIni){
-//   return new Promise((resolve, reject) => {
-//     let result = {};
-//     const tahunKemarin = new Date();
-//     tahunKemarin.setDate(tahunKemarin.getFullYear() - 1);
-
-//     const stringBuildTahunKemarin = `${tahunKemarin.toISOString().split('T')[0].split('-')[2]}-01-01`;
-//     const stringBuildTahunIni = `${tahunIni.toISOString().split('T')[0].split('-')[2]}-01-01`;
-
-//     Keuangan.find({ tanggal: { $gte: stringBuildTahunKemarin, $lte: stringBuildToday } }).select('tanggal tipe nominal')
-//     .then( keuangan => {
-//       let tahunIni = 0;
-//       let tahunKemarin = 0;
-
-//       keuangan.map( keuangan => {
-//         if(keuangan.tanggal >= stringBuildTahunKemarin && keuangan.tanggal < stringBuildTahunIni){
-//           if(keuangan.tipe == 'Masuk'){
-//             tahunKemarin += keuangan.nominal;
-//           } else {
-//             tahunKemarin -= keuangan.nominal;
-//           }
-//         } else {
-//           if(keuangan.tipe == 'Masuk'){
-//             tahunIni += keuangan.nominal;
-//           } else {
-//             tahunIni -= keuangan.nominal;
-//           }
-//         }
-//       })
-
-//       const selisih = tahunIni - tahunKemarin;
-//       const persentasiKeuntungan = (selisih / hariKemarin) * 100;
-
-//       result = {
-//         hariIni : hariIni, 
-//         hariKemarin: hariKemarin, 
-//         persentasi: persentasiKeuntungan
-//       }
-
-//       resolve(result);
-//     })
-//     .catch( err => {
-//       reject(err);
-//       console.log(err);
-//     })
-//   });
-// }
 
 module.exports = mongoose.model("riwayatkeuangan", riwayatKeuanganSchema);
