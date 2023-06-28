@@ -27,3 +27,12 @@ checkboxedititem.addEventListener("change", function () {
     document.getElementById("namabarang").disabled = true;
   }
 });
+
+const jumlahbarang = document.getElementById("jumlah");
+
+jumlahbarang.addEventListener("keyup", function () {
+  let subtotal =
+    parseInt(document.getElementById("jumlah").value) *
+    parseInt(document.getElementById("hargafield").value);
+  document.getElementById("subtotal").value = subtotal;
+});

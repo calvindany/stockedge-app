@@ -20,25 +20,26 @@
               <form
                 action="<% if(barangmasuk) { %>/transaksi/masukbarang/edit/<%= barangmasuk._id %><% } else { %>/transaksi/masukbarang/tambah <% } %>"
                 method="POST">
-                <div class="mb-3">
+                <div class="mb-3 col-8">
                   <label for="namasupplier" class="form-label">Nama Supplier</label>
                   <input type="text" class="form-control" id="namasupplier" name="namasupplier"
                     aria-describedby="pembeliHelp" value="<% if(barangmasuk) { %><%= barangmasuk.namasupplier %><% } %>">
                   <div id="pembeliHelp" class="form-text">Sementara masukan nama supplier secara manual</div>
                 </div>
-                <div class="mb-3">
-                  <label for="tanggal" class="form-label">Tanggal</label>
-                  <input type="date" class="form-control" id="tanggal" name="tanggal"
-                    value="<% if(barangmasuk) { %><%= barangmasuk.tanggal %><% } %>">
-                </div>
-                <div class="mb-3">
-                  <label for="tanggal" class="form-label">Status Transaksi</label>
-                  <br>
-                  <select name="status" id="" class="form-select" aria-label="Default select example">
-                    <option value='null' selected>Pilih status</option>
-                    <option value="Belum Bayar">Belum Bayar</option>
-                    <option value="Lunas">Lunas</option>
-                  </select>
+                <div class="mb-3 d-flex justify-content-start" style="gap: 50px;">
+                  <div class="col-2">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal"
+                      value="<% if(barangmasuk) { %><%= barangmasuk.tanggal %><% } %>">
+                  </div>
+                  <div class="col-3">
+                    <label for="status" class="form-label">Status Transaksi</label>
+                    <br>
+                    <select name="status" id="statustransaksi" class="form-select" aria-label="Default select example">
+                      <option value="Draft" selected>Draft</option>
+                      <option value="Belum Bayar">Belum Bayar</option>
+                    </select>
+                  </div>
                 </div>
 
                 <hr>
@@ -72,8 +73,8 @@
                     <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
                   </div>
 
-                  <div class="right-panel widget-background rounded p-4 col-8">
-                    <table class="hover table table-striped widget-background display">
+                  <div class="right-panel border rounded p-4 col-8">
+                    <table class="table display">
                       <thead>
                         <tr>
                           <th>Nama barang</th>
@@ -109,8 +110,8 @@
                 </div>
                 <hr>
               </form>
-              <div class="widget-background rounded p-4 mb-3">
-                <table class="hover table table-striped widget-background  display">
+              <div class="border rounded p-4 mb-3">
+                <table class="table display">
                   <thead>
                     <tr>
                       <th>Nama barang</th>
@@ -179,6 +180,19 @@
             });
           });
         });
+      </script>
+      <script>
+        const statustransaksi = document.getElementById('statustransaksi');
+        const value = '<% if(barangmasuk) { %><%= barangmasuk.status %><% } %>'
+
+        if(value.length > 1){
+          for (var i = 0; i < statustransaksi.options.length; i++) {
+            if (statustransaksi.options[i].value === value) {
+              statustransaksi.options[i].selected = true;
+              break;
+            }
+          }
+        }
       </script>
       <script src="/js/masukbarang.js"></script>
       <%- include('../include/footer') %>
