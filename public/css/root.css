@@ -23,3 +23,12 @@ body {
 .nav-link{
     color: var(--user-color-template-2) !important;
 }
+
+.toast-header {
+    background-color: var(--user-color-template-1);
+    color: var(--user-color-template-2) !important;
+}
+
+.toast-header button i{
+    color: var(--user-color-template-2) !important;
+}

@@ -12,17 +12,16 @@
 
 <body>
     <div class="container d-flex min-vh-100 justify-content-center align-items-center login-box">
-        <form class="col-5 border border-2 p-4 rounded-3" style="background-color: white;" method="POST" action="/auth/login">
+        <form class="col-5 border border-2 p-4 rounded-3" style="background-color: white;" method="POST" action="/auth/registrasi">
             <header class="mb-4 text-center">
-                <h4>Masuk</h4>
+                <h4>Registrasi</h4>
             </header>
-            <% if(message) { %>
-                <div class="alert <%= (message[0] == 'Failed') ? 'alert-danger' : 'alert-success'  %>" role="alert">
-                    <%= message[1] %>
-                </div>
-            <% } %>
             <div class="form-floating mb-3">
-                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input name="name" type="text" class="form-control" id="floatingInput" placeholder="John Doe">
+                <label for="floatingInput">Nama</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="johndoe@example.com">
                 <label for="floatingInput">Alamat Email</label>
             </div>
             <div class="form-floating mb-4">
@@ -30,11 +29,11 @@
                 <label for="floatingPassword">Password</label>
             </div>
             <div class="mb-3">
-                <label class="form-check-label">Belum memiliki akun? </label>
-                <a href="/auth/registrasi">Registrasi</a>
+                <label class="form-check-label">Sudah memiliki akun? </label>
+                <a href="/auth/login">Masuk</a>
             </div>
             <div class="mb-3 d-flex align-items-center" style="gap: 20px;">
-                <button type="submit" class="btn btn-primary">Masuk</button>
+                <button type="submit" class="btn btn-primary">Daftar</button>
                 <label class="form-check-label">Kembali ke <a href="/">halaman utama</a> </label>
             </div>
         </form>

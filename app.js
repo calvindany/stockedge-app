@@ -8,6 +8,8 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const multer = require("multer");
 const cronjob = require("node-cron");
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
 
 const AdminRoutes = require("./routes/admin");
 const AdminModel = require("./model/admin");
@@ -44,16 +46,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage: fileStorage }).single('image'))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, '/public/images')));
+app.use(cookieParser());
 
-// app.use(
-//   session({
-//     secret: "my secret",
-//     resave: false,
-//     saveUninitialized: false,
-//     store: store,
-//   })
-// );
+app.use(
+  session({
+    secret: "mysecret",
+    cookie: { maxAge: 60000 }, 
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
+app.use(flash())
+  
 app.use((req, res, next) => {
   return next();
   // if (!req.session.admin) {

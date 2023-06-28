@@ -20,19 +20,27 @@
         <li class="nav-item">
           <a class="nav-link" href="/produk">Produk</a>
         </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" href="/produk">Keranjang</a> -->
-          <a class="position-relative nav-link" href="/keranjang">
-            Keranjang
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              10
-              <span class="visually-hidden">item</span>
-            </span>
-          </a>
-        </li>
-        <li class="nav-item d-none">
-          <a class="btn btn-primary" href="#">Login</a>
-        </li>
+        <% if(isLoggedIn) { %>
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="/produk">Keranjang</a> -->
+            <a class="position-relative nav-link" href="/keranjang">
+              Keranjang
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= totalKeranjang %>
+                <span class="visually-hidden">item</span>
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <form action="/auth/logout" method="POST">
+              <button class="btn btn-danger">Log Out</button>
+            </form>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="btn btn-primary" href="/auth/login">Login</a>
+          </li>
+        <% } %>
       </ul>
     </div>
   </div>
