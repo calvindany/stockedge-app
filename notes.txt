@@ -6,9 +6,10 @@ To Do :
 [User]
 - Fitur search di halaman produk
 - Tambah placeholder di search boxnya v
-- Footer di fixed di buttom
+- Cek ukuran card di produk sama landing page
+- Footer di fixed di buttom (gabisa, nanti saja)
 - Keranjang header cardnya ganti warna
 
 [Admin]
 - Revisi untuk konfigurasi route Admin
-- Admin tambah barang, masuk barang kedua kali, error
+- Admin tambah barang, masuk barang kedua kali, error v

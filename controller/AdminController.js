@@ -405,15 +405,15 @@ exports.postEditMasukBarang = async (req, res, next) => {
           .then( barang => {
             barang.stok += jumlah;
             barang.save();
-            return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+            return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
           })
           .catch( err => console.log(err) );
         }
-        return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+        // return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
       })
       .catch(err => {
         console.log(err) 
-        return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
+        return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
       });
     })
     .then(() => {
