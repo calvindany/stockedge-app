@@ -1,79 +1,83 @@
 const express = require("express");
+
 const AdminController = require("../controller/AdminController");
+
+const AuthCheck = require("../util/auth");
+
 const router = express.Router();
 
-router.get("/dashboard", AdminController.getDashboard);
+router.get("/dashboard", AuthCheck.authCheckAdmin,  AdminController.getDashboard);
 
-router.get("/barang", AdminController.getBarang);
+router.get("/barang", AuthCheck.authCheckAdmin, AdminController.getBarang);
 
-router.post("/barang", AdminController.postBarang);
+router.post("/barang", AuthCheck.authCheckAdmin, AdminController.postBarang);
 
-router.post("/barang/:idbarang", AdminController.postEditBarang);
+router.post("/barang/:idbarang", AuthCheck.authCheckAdmin, AdminController.postEditBarang);
 
-router.post("/deletebarang", AdminController.postDeleteBarang);
+router.post("/deletebarang", AuthCheck.authCheckAdmin, AdminController.postDeleteBarang);
 
-router.get("/transaksi", AdminController.getTransaksi);
+router.get("/transaksi", AuthCheck.authCheckAdmin, AdminController.getTransaksi);
 
-router.get("/transaksi/tambah", AdminController.getTambahTransaksi);
+router.get("/transaksi/tambah", AuthCheck.authCheckAdmin, AdminController.getTambahTransaksi);
 
-router.post("/transaksi/tambah", AdminController.postTambahTransaksi);
+router.post("/transaksi/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahTransaksi);
 
-router.post("/transaksi/edit/hapusbarang", AdminController.postHapusBarangdiCart);
+router.post("/transaksi/edit/hapusbarang", AuthCheck.authCheckAdmin, AdminController.postHapusBarangdiCart);
 
-router.get("/transaksi/edit/:idtransaksi", AdminController.getEditTransaksi);
+router.get("/transaksi/edit/:idtransaksi", AuthCheck.authCheckAdmin, AdminController.getEditTransaksi);
 
-router.post("/transaksi/edit/:idtransaksi", AdminController.postEditTransaksi);
+router.post("/transaksi/edit/:idtransaksi", AuthCheck.authCheckAdmin, AdminController.postEditTransaksi);
 
-router.post("/transaksi/bayar", AdminController.postLunasOrderMasuk);
+router.post("/transaksi/bayar", AuthCheck.authCheckAdmin, AdminController.postLunasOrderMasuk);
 
-router.post("/transaksi/hapus", AdminController.postHapusTransaksi);
+router.post("/transaksi/hapus", AuthCheck.authCheckAdmin, AdminController.postHapusTransaksi);
 
-router.get("/transaksi/masukbarang", AdminController.getMasukBarang);
+router.get("/transaksi/masukbarang", AuthCheck.authCheckAdmin, AdminController.getMasukBarang);
 
-router.get("/transaksi/masukbarang/tambah", AdminController.getTambahMasukBarang);
+router.get("/transaksi/masukbarang/tambah", AuthCheck.authCheckAdmin, AdminController.getTambahMasukBarang);
 
-router.post("/transaksi/masukbarang/tambah", AdminController.postTambahMasukBarang);
+router.post("/transaksi/masukbarang/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahMasukBarang);
 
-router.post("/transaksi/masukbarang/edit/hapusbarang", AdminController.postHapusBarangdiCartMasukBarang);
+router.post("/transaksi/masukbarang/edit/hapusbarang", AuthCheck.authCheckAdmin, AdminController.postHapusBarangdiCartMasukBarang);
 
-router.get("/transaksi/masukbarang/edit/:idbarangmasuk", AdminController.getEditMasukBarang);
+router.get("/transaksi/masukbarang/edit/:idbarangmasuk", AuthCheck.authCheckAdmin, AdminController.getEditMasukBarang);
 
-router.post("/transaksi/masukbarang/edit/:idbarangmasuk", AdminController.postEditMasukBarang);
+router.post("/transaksi/masukbarang/edit/:idbarangmasuk", AuthCheck.authCheckAdmin, AdminController.postEditMasukBarang);
 
-router.post("/transaksi/masukbarang/bayar", AdminController.postBayarMasukBarang);
+router.post("/transaksi/masukbarang/bayar", AuthCheck.authCheckAdmin, AdminController.postBayarMasukBarang);
 
-router.post("/transaksi/masukbarang/hapus", AdminController.postHapusMasukBarang);
+router.post("/transaksi/masukbarang/hapus", AuthCheck.authCheckAdmin, AdminController.postHapusMasukBarang);
 
-router.get("/kategori", AdminController.getKategoriBarang);
+router.get("/kategori", AuthCheck.authCheckAdmin, AdminController.getKategoriBarang);
 
-router.post("/kategori/tambah", AdminController.postTambahKategoriBarang);
+router.post("/kategori/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahKategoriBarang);
 
-router.post("/kategori/edit/:idkategori", AdminController.postEditKategoriBarang);
+router.post("/kategori/edit/:idkategori", AuthCheck.authCheckAdmin, AdminController.postEditKategoriBarang);
 
-router.post("/kategori/delete", AdminController.postHapusKategoriBarang);
+router.post("/kategori/delete", AuthCheck.authCheckAdmin, AdminController.postHapusKategoriBarang);
 
-router.get("/karyawan", AdminController.getKaryawan);
+router.get("/karyawan", AuthCheck.authCheckAdmin, AdminController.getKaryawan);
 
-router.get("/karyawan/tambah", AdminController.getTambahKaryawan);
+router.get("/karyawan/tambah", AuthCheck.authCheckAdmin, AdminController.getTambahKaryawan);
 
-router.post("/karyawan/tambah", AdminController.postTambahKaryawan);
+router.post("/karyawan/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahKaryawan);
 
-router.get("/karyawan/edit/:idkaryawan", AdminController.getEditKaryawan);
+router.get("/karyawan/edit/:idkaryawan", AuthCheck.authCheckAdmin, AdminController.getEditKaryawan);
 
-router.post("/karyawan/edit/:idkaryawan", AdminController.postEditKaryawan);
+router.post("/karyawan/edit/:idkaryawan", AuthCheck.authCheckAdmin, AdminController.postEditKaryawan);
 
-router.post("/karyawan/gaji/:idkaryawan", AdminController.postBayarGajiKaryawan);
+router.post("/karyawan/gaji/:idkaryawan", AuthCheck.authCheckAdmin, AdminController.postBayarGajiKaryawan);
 
-router.get("/daftarkeuangan", AdminController.getLaporanKeuangan);
+router.get("/daftarkeuangan", AuthCheck.authCheckAdmin, AdminController.getLaporanKeuangan);
 
-router.get("/daftarkeuangan/tambah", AdminController.getTambahDaftarKeuangan);
+router.get("/daftarkeuangan/tambah", AuthCheck.authCheckAdmin, AdminController.getTambahDaftarKeuangan);
 
-router.post("/daftarkeuangan/tambah", AdminController.postTambahDatfarKeuangan);
+router.post("/daftarkeuangan/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahDatfarKeuangan);
 
-router.get("/daftarkeuangan/edit/:iddaftar", AdminController.getEditDaftarKeuangan);
+router.get("/daftarkeuangan/edit/:iddaftar", AuthCheck.authCheckAdmin, AdminController.getEditDaftarKeuangan);
 
-router.post("/daftarkeuangan/edit/:iddaftar", AdminController.postEditDaftarKeuangan);
+router.post("/daftarkeuangan/edit/:iddaftar", AuthCheck.authCheckAdmin, AdminController.postEditDaftarKeuangan);
 
-router.post("/daftarkeuangan/hapus", AdminController.postHapusDaftarKeuangan);
+router.post("/daftarkeuangan/hapus", AuthCheck.authCheckAdmin, AdminController.postHapusDaftarKeuangan);
  
 module.exports = router;

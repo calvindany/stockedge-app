@@ -35,7 +35,7 @@ exports.authCheckAdmin = async (req, res, next) => {
         await User.findOne({ _id: decodedToken.iduser, role: 'admin'})
         .then( user => {
             if(!user){
-                return res.redirect('/login');
+                return res.redirect('/auth/login');
             }
             req.user = decodedToken;
             req.user = {
@@ -49,6 +49,6 @@ exports.authCheckAdmin = async (req, res, next) => {
             next();
         })
     } catch (err) {
-        return res.redirect('/login');
+        return res.redirect('/auth/login');
     }
 }
