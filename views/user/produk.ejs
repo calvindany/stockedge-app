@@ -13,7 +13,7 @@
             <form action="GET" class="d-flex justify-content-between align-items-center" style="gap: 20px;">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" placeholder="Nama Barang" aria-label="" aria-describedby="basic-addon1">
                 </div>
                 <div class=" mb-3">
                     <button type="submit" class="btn btn-primary">Cari</button>
@@ -22,9 +22,9 @@
         </div>
     </header>
     <div class="produk w-100 mt-4 mb-4 d-flex justify-content-center">
-      <div class="container d-flex <%= (barang.length < 4) ? 'justify-content-start' : 'justify-content-between' %> row p-4" style="gap: 20px;">
+      <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-between' %> row p-4" style="gap: 20px;">
         <% for(let i = 0; i < barang.length; i++) { %>
-            <div class="card" style="max-width: 30vh;">
+            <div class="card col-2 col-lg-2">
                 <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= barang[i].namabarang %></h5>

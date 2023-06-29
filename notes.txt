@@ -1,12 +1,12 @@
 To Do :
 [Overall]
-- Tambah role pas login untuk misahin user sama admin
+- Tambah role pas login untuk misahin user sama admin v
 - Flow dari user kalau send keranjang ke collection transaksi, pendapatannya ga ke eksekusi
 
 [User]
 - Fitur search di halaman produk
-- Tambah placeholder di search boxnya
-- Footer di fixed di button
+- Tambah placeholder di search boxnya v
+- Footer di fixed di buttom
 - Keranjang header cardnya ganti warna
 
 [Admin]
