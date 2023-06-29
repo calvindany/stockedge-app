@@ -11,5 +11,5 @@ To Do :
 - Keranjang header cardnya ganti warna
 
 [Admin]
-- Revisi untuk konfigurasi route Admin
+- Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
 - Admin tambah barang, masuk barang kedua kali, error v
