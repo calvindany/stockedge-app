@@ -1,15 +1,9 @@
 To Do :
 [Overall]
-- Tambah role pas login untuk misahin user sama admin v
-- Flow dari user kalau send keranjang ke collection transaksi, pendapatannya ga ke eksekusi v
 
 [User]
-- Fitur search di halaman produk v
-- Tambah placeholder di search boxnya v
-- Cek ukuran card di produk sama landing page v
 - Footer di fixed di buttom (gabisa, nanti saja)
 - Keranjang header cardnya ganti warna v (udah bagus kayaknya, nanti liat user acceptance aja)
 
 [Admin]
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
-- Admin tambah barang, masuk barang kedua kali, error v
