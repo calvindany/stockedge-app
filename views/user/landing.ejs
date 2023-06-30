@@ -33,8 +33,8 @@
                     <p class="card-text">Stok: <%= barang[i].stok %></p>
                     <p class="card-text" style="font-weight: bold;">Rp. <%= barang[i].harga %></p>
                     <div class="d-flex" style="gap: 5px;">
-                      <button href="#" onclick="changeModalRoute('Tambah', '<%= barang[i]._id %>')" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Tambah</button>
-                        <button href="#" onclick="changeModalRoute('Pesan', '<%= barang[i]._id %>')" class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Pesan</button>
+                      <button href="#" onclick="changeModalRoute('Tambah', '<%= barang[i]._id %>')" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Tambah</button>
+                        <button href="#" onclick="changeModalRoute('Pesan', '<%= barang[i]._id %>')" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Pesan</button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
