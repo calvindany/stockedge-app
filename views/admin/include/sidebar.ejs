@@ -15,7 +15,7 @@
     </li>
     <li class="nav-item mb-3">
       <a
-        class="nav-link text-white d-flex justify-content-between <%= (route == '/barang' || route == '/kategori') ? 'active' : '' %> mb-1"
+        class="nav-link text-white d-flex justify-content-between align-items-center <%= (route == '/barang' || route == '/kategori') ? 'active' : '' %> mb-1"
         data-bs-toggle="collapse"
         href="#collapse1"
         role="button"
@@ -27,7 +27,7 @@
           <i class="bi bi-bricks"></i>
           Inventori
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
+        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
         <ul class="list-group list-group-flush">
@@ -42,7 +42,7 @@
     </li>
     <li class="nav-item mb-3">
       <a
-        class="nav-link text-white d-flex justify-content-between <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'active' : '' %> mb-1"
+        class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'active' : '' %> mb-1"
         data-bs-toggle="collapse"
         href="#collapse2"
         role="button"
@@ -54,7 +54,7 @@
           <i class="bi bi-bag"></i>
           Transaksi
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
+        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
         <ul class="list-group list-group-flush">
@@ -78,7 +78,7 @@
     </li>
     <li class="nav-item mb-3">
       <a
-        class="nav-link text-white d-flex justify-content-between <%= (route == '/laporan' || route == '/daftar') ? 'active' : '' %> mb-1"
+        class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/laporan' || route == '/daftar') ? 'active' : '' %> mb-1"
         data-bs-toggle="collapse"
         href="#collapse3"
         role="button"
@@ -90,7 +90,7 @@
           <i class="bi bi-file-earmark-check"></i>
           Laporan Keuangan
         </div>
-        <i class="text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
+        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
       </a>
       <div class="collapse <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
         <ul class="list-group list-group-flush">
