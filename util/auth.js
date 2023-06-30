@@ -5,9 +5,16 @@ exports.authCheck = async (req, res, next) => {
     try {
         const token = req.cookies.jwt;
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
+        
+        if(!token){
+            return res.redirect('/auth/login')
+        }
+        
         await User.findOne({ _id: decodedToken.iduser })
         .then( user => {
+            if(!user){
+                return res.redirect('/auth/login')
+            }
             req.user = decodedToken;
             req.user = {
                 ...decodedToken,
@@ -23,6 +30,8 @@ exports.authCheck = async (req, res, next) => {
         })
     } catch (err) {
         req.isLoggedIn = false;
+
+        return res.redirect('/auth/login')
     }
     next();
 }
