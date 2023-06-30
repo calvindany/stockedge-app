@@ -46,7 +46,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`)">
+                          onclick="editData(`<%= kategori[i]._id %>`, `<%= kategori[i].kategori %>`, `<%= (kategori[i].image) ? kategori[i].image : null %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                           <form action="/kategori/delete" method="POST">
@@ -69,9 +69,13 @@
         });
       </script>
       <script>
-        function editData(idkategori, kategori) {
+        function editData(idkategori, kategori, image) {
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = idkategori;
           const newnamabarang = document.getElementsByName('kategori')[0].value = kategori;
+
+          if(image) {
+            const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="/images/${image}">`;
+          }
 
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/edit/' + idkategori);
         }

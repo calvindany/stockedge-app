@@ -51,9 +51,10 @@ const hitungKeuntungan = () => {
                     }
                 ]
             })
+            return newRiwayat.save();
         }
-
-        return admin.save();
+        
+        return riwayat.save();
     })
     .catch( err => console.log(err) );
 }

@@ -14,32 +14,7 @@ exports.getDashboard = (req, res, next) => {
   const date = new Date();
   let keuntunganHarian = {};
   let keluaranHarian = {};
-  // const newKeuangan = new RiwayatKeuangan({
-  //   tahun: '2023',
-  //   bulan: [
-  //     {
-  //       namabulan: 0,
-  //       keuntungan: 11000000
-  //     },
-  //     {
-  //       namabulan: 1,
-  //       keuntungan: 10000000,
-  //     },
-  //     {
-  //       namabulan: 2,
-  //       keuntungan: 13000000,
-  //     },
-  //     {
-  //       namabulan: 3,
-  //       keuntungan: 14000000,
-  //     },
-  //     {
-  //       namabulan: 4,
-  //       keuntungan: 10000000,
-  //     },
-  //   ]
-  // })
-  // newKeuangan.save();
+
   Transaksi.find()
   .limit(5)
   .then( transaksi => {
