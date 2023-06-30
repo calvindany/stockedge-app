@@ -77,28 +77,12 @@
           <p class="fs-4">KATEGORI BARANG</p>
         </div>
         <div class="list-kategori d-flex justify-content-center my-4" style="gap: 20px;">
-          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-            <img src="/asset/kategori-pipa.jpg" class="card-img-top" alt="..." height="90%">
-            <p class="card-title mt-2">Pipa PVC</p>
-          </div>
-          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-            <div class="d-flex align-items-center" style="height: 90%">
-              <img src="/asset/kategori-kelistrikan.jpg" class="card-img-top" alt="...">
+          <% for(let i = 0; i < kategori.length; i++) { %>
+            <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
+              <img src="/images/<%= kategori[i].image %>" class="card-img-top" alt="<%= kategori[i].image %>" height="90%">
+              <p class="card-title mt-2"><%= kategori[i].kategori %></p>
             </div>
-            <p class="card-title mt-2">Kelistrikan</p>
-          </div>
-          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-            <div class="d-flex align-items-center" style="height: 90%">
-              <img src="/asset/kategori-bahanbangunan.jpg" class="card-img-top" alt="...">
-            </div>
-            <p class="card-title mt-2">Bahan Bangunan</p>
-          </div>
-          <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-            <div class="d-flex align-items-center" style="height: 90%">
-              <img src="/asset/kategori-alatbangunan.png" class="card-img-top" alt="...">
-            </div>
-            <p class="card-title mt-2">Alat Bangunan</p>
-          </div>
+          <% } %>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 const Barang = require('../model/barang');
 const User = require('../model/user');
+const Kategori = require('../model/kategori');
 const Transaksi = require('../model/transaction');
 
 exports.getLanding = (req, res, next) => {
@@ -16,18 +17,23 @@ exports.getLanding = (req, res, next) => {
     } else {
         message = null;
     }
-
-    Barang.find()
-    .select('namabarang stok harga image')
-    .then( barang => {
-        res.render('user/landing', {
-            barang: barang,
-            isLoggedIn: req.isLoggedIn,
-            isAdmin: req.isAdmin,
-            totalKeranjang: totalKeranjang,
-            message: message,      
-        });
+    Kategori.find()
+    .then( kategori => {
+        Barang.find()
+        .select('namabarang stok harga image')
+        .then( barang => {
+            res.render('user/landing', {
+                barang: barang,
+                kategori: kategori,
+                isLoggedIn: req.isLoggedIn,
+                isAdmin: req.isAdmin,
+                totalKeranjang: totalKeranjang,
+                message: message,      
+            });
+        })
+        .catch( err => console.log(err));
     })
+    .catch(err => console.log(err));
 }
 
 exports.getProduk = (req, res, next) => {
