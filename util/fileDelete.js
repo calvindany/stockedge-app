@@ -17,7 +17,6 @@ const renameFile = (fileName) => {
         if(err) {
             console.log(err);
         }
-        console.log('aa')
     })
 }
 

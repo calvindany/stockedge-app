@@ -112,7 +112,7 @@ exports.postEditBarang = (req, res, next) => {
       barang.image = image;
 
       sharp(path.join(__dirname, '../public/images/') + barang.image)
-      .resize(800, 600)
+      .resize(400, 400)
       .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
         if(err) {
           console.log(err);
@@ -126,6 +126,20 @@ exports.postEditBarang = (req, res, next) => {
       })
     } else if (image) {
       barang.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + barang.image)
+      .resize(800, 600)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(barang.image)
+      })
     } else if (barang.image){
       barang.image = barang.image;
     } else {
