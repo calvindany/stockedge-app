@@ -84,6 +84,19 @@ exports.postBarang = (req, res, next) => {
     image: image,
   });
 
+  sharp(path.join(__dirname, '../public/images/') + newbarang.image)
+    .resize(400, 400)
+    .toFile(path.join(__dirname, '../public/images/') + 'temp_' + newbarang.image, (err, info) => {
+      if(err) {
+        console.log(err);
+      }
+
+      //Hapus gambar sebelum di resize
+      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + newbarang.image)
+
+      //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+      fileHelper.renameFile(newbarang.image)
+  });
   newbarang.save();
 
   return res.redirect("/barang");
@@ -495,7 +508,21 @@ exports.postTambahKategoriBarang = (req, res, next) => {
     kategori: kategori,
     image: image,
   })
-  
+
+  sharp(path.join(__dirname, '../public/images/') + kategoribaru.image)
+    .resize(400, 400)
+    .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategoribaru.image, (err, info) => {
+      if(err) {
+        console.log(err);
+      }
+
+      //Hapus gambar sebelum di resize
+      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategoribaru.image)
+
+      //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+      fileHelper.renameFile(kategoribaru.image)
+    })
+
   kategoribaru.save()
 
   return res.redirect('/kategori')
