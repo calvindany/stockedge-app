@@ -5,9 +5,9 @@ const AuthCheck = require('../util/auth');
 
 const router = express.Router();
 
-router.get('/', AuthCheck.authCheck, UserController.getLanding);
+router.get('/', UserController.getLanding);
 
-router.get('/produk', AuthCheck.authCheck, UserController.getProduk);
+router.get('/produk', UserController.getProduk);
 
 router.post('/produk/tambah', AuthCheck.authCheck, UserController.postTambahProdukKeKeranjang);
 

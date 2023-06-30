@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 exports.getLogin = (req, res, next) => {
     let messageLogin = req.flash('login-failed');
     let messageRegist = req.flash('regist-success');
+    let messageAdminProtectionRoute = req.flash('admin-failed');
+    let messageUserProtectionRoute = req.flash('user-failed');
 
     let message = [];
     if(messageLogin && messageLogin.length > 0){
@@ -13,6 +15,12 @@ exports.getLogin = (req, res, next) => {
     } else if(messageRegist && messageRegist.length > 0){
         message[0] = 'Success';
         message[1] = messageRegist[0];
+    } else if(messageAdminProtectionRoute && messageAdminProtectionRoute.length > 0){
+        message[0] = 'Failed';
+        message[1] = messageAdminProtectionRoute[0];
+    } else if(messageUserProtectionRoute && messageUserProtectionRoute.length > 0){
+        message[0] = 'Failed';
+        message[1] = messageUserProtectionRoute[0];
     } else {
         message = null;
     }
