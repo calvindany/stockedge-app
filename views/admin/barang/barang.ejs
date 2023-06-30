@@ -62,7 +62,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].kategori %>`, `<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`)">
+                          onclick="editData(`<%= barang[i]._id %>`, `<%= barang[i].namabarang %>`,`<%= barang[i].kategori %>`, `<%= barang[i].stok %>`,`<%= barang[i].harga %>`,`<%= barang[i].modal %>`, `<%= barang[i].image %>`)">
                           <i class="bi bi-pencil-square"></i> Edit
                         </button>
                           <form action="/deletebarang" method="POST">
@@ -85,7 +85,8 @@
         });
       </script>
       <script>
-        function editData(idbarang, namabarang, kategori, stok, harga, modal) {
+        function editData(idbarang, namabarang, kategori, stok, harga, modal, image) {
+          const modaltitle = document.getElementById('BarangModalForm').innerHTML = 'Edit Data';
           const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = idbarang;
           const newnamabarang = document.getElementsByName('namabarang')[0].value = namabarang;
           const newkategori = document.getElementsByName('kategori')[0].value = kategori;
@@ -93,9 +94,12 @@
           const newharga = document.getElementsByName('harga')[0].value = harga;
           const newmodal = document.getElementsByName('modal')[0].value = modal;
 
+          const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="/images/${image}">`;
+
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang/' + idbarang);
         }
         function tambahData() {
+          const modaltitle = document.getElementById('BarangModalForm').innerHTML = 'Tambah Data';
           const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = '';
           const newnamabarang = document.getElementsByName('namabarang')[0].value = '';
           const newstok = document.getElementsByName('stok')[0].value = '';
