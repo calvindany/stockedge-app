@@ -9,6 +9,7 @@ const RiwayatKeuangan = require("../model/riwayatKeuangan");
 const BarangMasuk = require('../model/barangmasuk');
 
 const fileHelper = require('../util/fileDelete');
+const sharp = require('sharp');
 
 exports.getDashboard = (req, res, next) => {
   const date = new Date();
@@ -109,6 +110,20 @@ exports.postEditBarang = (req, res, next) => {
     if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image) && image) {
       fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
       barang.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + barang.image)
+      .resize(800, 600)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(barang.image)
+      })
     } else if (image) {
       barang.image = image;
     } else if (barang.image){
