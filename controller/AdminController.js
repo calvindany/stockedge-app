@@ -517,8 +517,36 @@ exports.postEditKategoriBarang = (req, res, next) => {
     if (fs.existsSync(path.join(__dirname, '../public/images/') + kategori.image) && image) {
       fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
       kategori.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + kategori.image)
+      .resize(400, 400)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategori.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(kategori.image)
+      })
     } else if (image) {
       kategori.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + kategori.image)
+      .resize(400, 400)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategori.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(kategori.image)
+      })
     } else if (kategori.image){
       kategori.image = kategori.image;
     } else {
