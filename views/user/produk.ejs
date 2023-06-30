@@ -24,7 +24,7 @@
     <div class="produk w-100 mt-4 mb-4 d-flex justify-content-center">
       <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-between' %> row p-4" style="gap: 20px;">
         <% for(let i = 0; i < barang.length; i++) { %>
-            <div class="card col-2 col-lg-2">
+            <div class="card " style="width: 18rem;">
                 <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= barang[i].namabarang %></h5>
