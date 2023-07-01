@@ -14,7 +14,10 @@ const hitungtotal = (barang) => {
 };
 
 const transaksiSchema = new Schema(
-  {
+  { 
+    iduser: {
+      type: String,
+    },
     namapembeli: {
       type: String,
       require: true,
@@ -26,6 +29,9 @@ const transaksiSchema = new Schema(
     status: {
       type: String,
       require: true,
+    },
+    buktiBayar: {
+      type: String,
     },
     barang: [
       {

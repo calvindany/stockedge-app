@@ -18,8 +18,8 @@
             <div class="col-7" id="daftarKeranjang">
                 <ul class="list-group" style="gap: 5px;">
                     <% for(let i = 0; i < keranjang.length; i++) { %>
-                    <li class="list-group-item d-flex align-items-center rounded" style="gap: 20px;">
-                        <img src="/images/1687832437180.jpg" class="card-img-top" alt="..." style="max-width: 20vh;">
+                    <li class="list-group-item d-flex align-items-center rounded" style="gap: 50px;">
+                        <img src="/images/<%= gambarBarang[i] %>" class="card-img-top" alt="..." style="max-width: 20vh;">
                         <div>
                             <h4><%= keranjang[i].namabarang %></h4>
                             <p>Rp. <%= keranjang[i].harga %> x <%= keranjang[i].jumlah %></p>
