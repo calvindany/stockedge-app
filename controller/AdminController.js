@@ -508,11 +508,26 @@ exports.postBayarMasukBarang = (req, res, next) => {
 };
 
 exports.getKategoriBarang = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   Kategori.find()
   .then( kategori => {
     res.render('admin/kategori/kategoribarang', {
       kategori: kategori,
-      route: '/kategori'
+      route: '/kategori',
+      message: message,
     })
   })
   .catch( err => {
@@ -521,35 +536,42 @@ exports.getKategoriBarang = (req, res, next) => {
 }
 
 exports.postTambahKategoriBarang = (req, res, next) => {
-  const kategori = req.body.kategori;
-  let image;
-
-  if(req.file){
-    image = req.file.filename;
-  }
-
-  const kategoribaru = new Kategori({
-    kategori: kategori,
-    image: image,
-  })
-
-  sharp(path.join(__dirname, '../public/images/') + kategoribaru.image)
-    .resize(400, 400)
-    .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategoribaru.image, (err, info) => {
-      if(err) {
-        console.log(err);
-      }
-
-      //Hapus gambar sebelum di resize
-      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategoribaru.image)
-
-      //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-      fileHelper.renameFile(kategoribaru.image)
+  try {
+    const kategori = req.body.kategori;
+    let image;
+  
+    if(req.file){
+      image = req.file.filename;
+    }
+  
+    const kategoribaru = new Kategori({
+      kategori: kategori,
+      image: image,
     })
-
-  kategoribaru.save()
-
-  return res.redirect('/kategori')
+  
+    sharp(path.join(__dirname, '../public/images/') + kategoribaru.image)
+      .resize(400, 400)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategoribaru.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+  
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategoribaru.image)
+  
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(kategoribaru.image)
+      })
+    
+    req.flash('success', 'Kategori berhasil disimpan');
+    kategoribaru.save()
+  
+    return res.redirect('/kategori')
+  } catch ( err ) {
+    console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/kategori')
+  }
 }
 
 exports.postEditKategoriBarang = (req, res, next) => {
@@ -605,9 +627,15 @@ exports.postEditKategoriBarang = (req, res, next) => {
     }
 
     kategori.save();
+    req.flash('success', 'Kategori berhasil diedit');
+
     return res.redirect("/kategori");
   })
-  .catch( err => console.log(err) );
+  .catch( err => {
+    console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/kategori');
+  });
 }
 
 exports.postHapusKategoriBarang = (req, res, next) => {
@@ -624,9 +652,14 @@ exports.postHapusKategoriBarang = (req, res, next) => {
     }
   })
   .then( result => {
+    req.flash('success', 'Kategori berhasil dihapus');
     return res.redirect("/kategori");
   })
-  .catch( err => console.log(err) );
+  .catch( err => {
+    console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/kategori')
+  });
 }
 
 exports.getKaryawan = (req, res, next) => {
