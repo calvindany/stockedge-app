@@ -19,6 +19,8 @@ router.post('/keranjang/hapus', AuthCheck.authCheckUser, UserController.postHapu
 
 router.post('/keranjang/pesan', AuthCheck.authCheckUser, UserController.postPesanBarangDalamKeranjang);
 
-router.get('/invoice', UserController.getInvoice);
+router.get('/invoice', AuthCheck.authCheckUser, UserController.getInvoice);
+
+router.post('/invoice/buktibayar/tambah', AuthCheck.authCheckUser, UserController.getInvoice);
 
 module.exports = router;

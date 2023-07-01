@@ -84,7 +84,6 @@ exports.postBarang = (req, res, next) => {
   const stok = req.body.stok;
   const harga = req.body.harga;
   const modal = req.body.modal;
-  let image;
 
   const newbarang = new Barang({
     namabarang: namabarang,
