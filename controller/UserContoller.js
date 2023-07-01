@@ -270,6 +270,17 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
 }   
 
 exports.getInvoice = (req, res, next) => {
+    const messageSuccess = req.flash('success');
+    const messageFailed = req.flash('failed');
+    let message = '';
+    if(messageSuccess.length > 0){
+        message = messageSuccess[0];
+    } else if(messageFailed.length > 0){
+        message = messageFailed[0];
+    } else {
+        message = null;
+    }
+
     User.findOne({ _id: req.user.iduser })
     .then( user => {
         Transaksi.find({ iduser: user._id })
@@ -279,6 +290,7 @@ exports.getInvoice = (req, res, next) => {
                 isLoggedIn: req.isLoggedIn,
                 isAdmin: req.isAdmin,
                 totalKeranjang: req.user.totalKeranjang,
+                message: message,
             });
         })
         .catch( err => console.log(err));
@@ -298,6 +310,8 @@ exports.postBuktiPembayaran = (req, res, next) => {
             }
 
             let imageFileName = req.file.filename;
+
+            transaksi.status = 'Menunggu Validasi';
             transaksi.buktibayar = 'invoice_' + imageFileName;
             sharp(path.join(__dirname, '../public/images/') + imageFileName)
             .resize(400, 400)
@@ -310,13 +324,14 @@ exports.postBuktiPembayaran = (req, res, next) => {
                 fileHelper.deleteFile(path.join(__dirname, '../public/images/') + imageFileName)
             });
 
-            req.flash('success', 'Barang berhasil disimpan');
+            req.flash('success', 'Bukti pembayaran berhasil disimpan');
             transaksi.save();
-
+            
             return res.redirect("/invoice");
         })
         .catch (err => {
             console.log(err)
+            req.flash('failed', 'Bukti pembayaran gagal disimpan');
             return res.redirect('/invoice')
         })
     }
