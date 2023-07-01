@@ -31,8 +31,8 @@
                         <td>Rp. <%= invoice[i].total %></td>
                         <td><%= invoice[i].status %></td>
                         <td>
-                            <% if(invoice[i].buktiBayar) { %>
-                                <a href="/images/buktibayar/invoice_<%= invoice[i].buktibayar %>">Bukti Bayar 1</a>
+                            <% if(invoice[i].buktibayar) { %>
+                                <a href="/images/buktibayar/<%= invoice[i].buktibayar %>" target="_blank">Bukti Bayar <%= i + 1 %></a>
                             <% } else { %>
                                 <button type="button" onclick="addDataToInputImageModal('<%= invoice[i]._id %>')" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#buktiBayarModal">
                                     Upload Bukti
@@ -64,16 +64,17 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Bukti Bayar</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" id="buktiBayarModalForm">
+                <form action="" method="POST" id="buktiBayarModalForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="mb-3 text-start">
                             <label for="formFile" class="form-label">Masukkan Bukti Bayar</label>
                             <input class="form-control" type="file" id="formFile" name="image">
+                            <input class="form-control" type="hidden" id="idinvoice" name="idinvoice" value="">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -137,9 +138,9 @@
         }
 
         function addDataToInputImageModal(idinvoice){
-            console.log(idinvoice);
             //Function ini untuk button add gambar bukti bayar
             const inputBuktiBayarForm = document.getElementById('buktiBayarModalForm');
+            const idInvoice = document.getElementById('idinvoice').value = idinvoice;
 
             inputBuktiBayarForm.setAttribute('action', '/invoice/buktibayar/tambah')
         }

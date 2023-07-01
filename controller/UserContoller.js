@@ -2,6 +2,11 @@ const Barang = require('../model/barang');
 const User = require('../model/user');
 const Kategori = require('../model/kategori');
 const Transaksi = require('../model/transaction');
+const fileHelper = require('../util/fileDelete');
+
+const sharp = require('sharp');
+const path = require('path');
+const fs = require('fs')
 
 exports.getLanding = (req, res, next) => {
     let totalKeranjang = null;
@@ -285,18 +290,24 @@ exports.postBuktiPembayaran = (req, res, next) => {
     const idinvoice = req.body.idinvoice;
 
     if(req.file){
-        Transaksi.findOne({_id: idinvoice })
+        Transaksi.findOne({ _id: idinvoice })
         .then( transaksi => {
-            transaksi.buktiBayar = req.file.filename;
-            sharp(path.join(__dirname, '../public/images/') + transaksi.buktiBayar)
+            if(transaksi.buktibayar && fs.existsSync(path.join(__dirname, '../public/images/buktibayar/') + transaksi.buktibayar)){
+                // Hapus gambar invoice kalau exist (buat jaga jaga aja)
+                fileHelper.deleteFile(path.join(__dirname, '../public/images/buktibayar/') + transaksi.buktibayar)
+            }
+
+            let imageFileName = req.file.filename;
+            transaksi.buktibayar = 'invoice_' + imageFileName;
+            sharp(path.join(__dirname, '../public/images/') + imageFileName)
             .resize(400, 400)
-            .toFile(path.join(__dirname, '../public/images/buktibayar') + 'invoice_' + transaksi.buktiBayar, (err, info) => {
+            .toFile(path.join(__dirname, '../public/images/buktibayar/') + 'invoice_' + imageFileName, (err, info) => {
                 if(err) {
                     console.log(err);
                 }
 
                 //Hapus gambar sebelum di resize
-                fileHelper.deleteFile(path.join(__dirname, '../public/images/') + transaksi.buktiBayar)
+                fileHelper.deleteFile(path.join(__dirname, '../public/images/') + imageFileName)
             });
 
             req.flash('success', 'Barang berhasil disimpan');
