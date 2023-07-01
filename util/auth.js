@@ -1,7 +1,42 @@
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
 
-exports.authCheck = async (req, res, next) => {
+exports.authCheckPublic = async (req, res, next) => {
+    try {
+        const token = req.cookies.jwt;
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+        await User.findOne({ _id: decodedToken.iduser })
+        .then( user => {
+            if(!user){
+                req.flash('user-failed', 'Silahkan login dahulu!')
+                return res.redirect('/auth/login')
+            }
+
+            req.user = decodedToken;
+
+            // Store decoded JWT Token melewatir request
+            req.user = {
+                ...decodedToken,
+                totalKeranjang: user.keranjang.length,
+            };
+
+            if(user.role == 'admin'){
+                req.isAdmin = true;
+            }
+
+            req.isLoggedIn = true;
+        })
+    } catch (err) {
+        console.log(err);
+        // req.flash('user-failed', 'Silahkan login dahulu!')
+        req.isLoggedIn = false;
+        // return res.redirect('/auth/login')
+    }
+    next();
+}
+
+exports.authCheckUser = async (req, res, next) => {
     try {
         const token = req.cookies.jwt;
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
@@ -10,7 +45,7 @@ exports.authCheck = async (req, res, next) => {
             req.flash('user-failed', 'Silahkan login dahulu!')
             return res.redirect('/auth/login')
         }
-        
+
         await User.findOne({ _id: decodedToken.iduser })
         .then( user => {
             if(!user){

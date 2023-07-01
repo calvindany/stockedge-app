@@ -5,18 +5,18 @@ const AuthCheck = require('../util/auth');
 
 const router = express.Router();
 
-router.get('/', UserController.getLanding);
+router.get('/', AuthCheck.authCheckPublic, UserController.getLanding);
 
-router.get('/produk', UserController.getProduk);
+router.get('/produk', AuthCheck.authCheckPublic, UserController.getProduk);
 
-router.post('/produk/tambah', AuthCheck.authCheck, UserController.postTambahProdukKeKeranjang);
+router.post('/produk/tambah', AuthCheck.authCheckUser, UserController.postTambahProdukKeKeranjang);
 
-router.get('/keranjang', AuthCheck.authCheck, UserController.getKeranjang);
+router.get('/keranjang', AuthCheck.authCheckUser, UserController.getKeranjang);
 
-router.post('/keranjang/edit', AuthCheck.authCheck, UserController.postEditStokDalamKeranjang);
+router.post('/keranjang/edit', AuthCheck.authCheckUser, UserController.postEditStokDalamKeranjang);
 
-router.post('/keranjang/hapus', AuthCheck.authCheck, UserController.postHapusStokDalamKeranjang);
+router.post('/keranjang/hapus', AuthCheck.authCheckUser, UserController.postHapusStokDalamKeranjang);
 
-router.post('/keranjang/pesan', AuthCheck.authCheck, UserController.postPesanBarangDalamKeranjang);
+router.post('/keranjang/pesan', AuthCheck.authCheckUser, UserController.postPesanBarangDalamKeranjang);
 
 module.exports = router;

@@ -7,7 +7,8 @@ exports.getLanding = (req, res, next) => {
     let totalKeranjang = null;
     let messageSuccess = req.flash('status-send-to-cart');
     let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
-
+    // console.log(req.isLoggedIn)
+    // console.log(req.isAdmin)
     if(req.isLoggedIn){
         totalKeranjang = req.user.totalKeranjang;
     }
