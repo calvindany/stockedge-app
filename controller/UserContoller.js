@@ -2,6 +2,7 @@ const Barang = require('../model/barang');
 const User = require('../model/user');
 const Kategori = require('../model/kategori');
 const Transaksi = require('../model/transaction');
+const barang = require('../model/barang');
 
 exports.getLanding = (req, res, next) => {
     let totalKeranjang = null;
@@ -144,6 +145,12 @@ exports.postTambahProdukKeKeranjang = (req, res, next) => {
 }
 
 exports.getKeranjang = (req, res, next) => {
+    /* 
+    Notes :
+    1. bk akronim dari barang keranjang
+    2. b akronim dari barang
+    */
+
     let messageSuccess = req.flash('status-send-to-cart');
     let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
 
@@ -157,25 +164,41 @@ exports.getKeranjang = (req, res, next) => {
     .then( user => {
         const totalBarang = user.keranjang.length;
         let totalPembelian = 0;
+        let gambarBarangDalamKeranjang = [];
 
         let totalKeranjang = null;
         if(req.isLoggedIn){
             totalKeranjang = req.user.totalKeranjang;
         }
 
-        user.keranjang.map( barangDalamKeranjang => {
-            totalPembelian += barangDalamKeranjang.subtotal;
+        user.keranjang.map( bk => {
+            totalPembelian += bk.subtotal;
         })
 
-        res.render('user/keranjang', {
-            keranjang: user.keranjang,
-            totalBarang: totalBarang,
-            totalPembelian: totalPembelian,
-            isLoggedIn: req.isLoggedIn,
-            isAdmin: req.isAdmin,
-            totalKeranjang: totalKeranjang,   
-            message: message,     
-        });
+        Barang.find()
+        .select('_id image')
+        .then(barang => {
+            // Statement ini akan mengambil nama file image dari collection barang
+            // dan menyimpannya di array barangDalamKeranjang.
+            user.keranjang.map( bk => {
+                let index = barang.findIndex( b => {
+                    return b._id == bk.idbarang;
+                });
+
+                gambarBarangDalamKeranjang.push(barang[index].image);
+            })
+
+            res.render('user/keranjang', {
+                keranjang: user.keranjang,
+                gambarBarang: gambarBarangDalamKeranjang,
+                totalBarang: totalBarang,
+                totalPembelian: totalPembelian,
+                isLoggedIn: req.isLoggedIn,
+                isAdmin: req.isAdmin,
+                totalKeranjang: totalKeranjang,   
+                message: message,
+            });
+        })
     })
 }
 
@@ -224,12 +247,13 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
     User.findOne({ _id: req.user.iduser })
     .then( user => {
         const transaksi = new Transaksi({
+            iduser: user._id,
             namapembeli: user.username,
             tanggal: stringBuildDate,
             status: 'Belum Bayar',
             barang: user.keranjang,
             total: totalBelanja,
-        })
+        });
 
         // Hapus semua data yang ada di keranjang user
         user.keranjang = [];
@@ -237,7 +261,6 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
         return transaksi.hitungKeuntungan()
     })
     .then( () => {
-
         return res.redirect('/keranjang')
     })
 }   
