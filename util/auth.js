@@ -28,7 +28,7 @@ exports.authCheckPublic = async (req, res, next) => {
             req.isLoggedIn = true;
         })
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         // req.flash('user-failed', 'Silahkan login dahulu!')
         req.isLoggedIn = false;
         // return res.redirect('/auth/login')
