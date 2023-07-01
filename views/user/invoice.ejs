@@ -23,70 +23,63 @@
               </tr>
             </thead>
             <tbody class="invoice-tbody">
-              <tr class="text-center">
-                <td>1</td>
-                <td>asxsdcqf213asxawe</td>
-                <td>1 Juli 2023</td>
-                <td>Rp. 23.000</td>
-                <td>Lunas</td>
-                <td><a href="#">Bukti Bayar 1</a></td>
-                <td>
-                    <a href="#" class="btn btn-outline-success" onclick="addDataToModal()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>2</td>
-                <td>asxsdcqf213asxawe</td>
-                <td>12 Juli 2023</td>
-                <td>Rp. 23.000</td>
-                <td>Lunas</td>
-                <td><a href="#">Bukti Bayar 2</a></td>
-                <td>
-                    <a href="#" class="btn btn-outline-success" onclick="addDataToModal()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>3</td>
-                <td>asxsdcqf213asxawe</td>
-                <td>11 Juli 2023</td>
-                <td>Rp. 23.000</td>
-                <td>Belum Bayar</td>
-                <!-- <td><a href="#" class="btn btn-outline-primary">Upload Bukti</a></td> -->
-                <td>
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Upload Bukti
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Bukti Bayar</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                             <form action="">
-                                <div class="mb-3 text-start">
-                                    <label for="formFile" class="form-label">Masukkan Bukti Bayar</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                             </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-outline-success" onclick="addDataToModal()" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
-                </td>
-              </tr>
+                <% for(let i = 0; i < invoice.length; i++) { %>
+                    <tr class="text-center">
+                        <td><%= i + 1 %></td>
+                        <td><%= invoice[i]._id %></td>
+                        <td><%= invoice[i].tanggal %></td>
+                        <td>Rp. <%= invoice[i].total %></td>
+                        <td><%= invoice[i].status %></td>
+                        <td>
+                            <% if(invoice[i].buktiBayar) { %>
+                                <a href="/images/buktibayar/invoice_<%= invoice[i].buktibayar %>">Bukti Bayar 1</a>
+                            <% } else { %>
+                                <button type="button" onclick="addDataToInputImageModal('<%= invoice[i]._id %>')" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#buktiBayarModal">
+                                    Upload Bukti
+                                </button>
+                            <% } %>
+                        </td>
+                        <td>
+                            <script>
+                                let barangDalamInvoice = [];
+                                '<% for(let j = 0; j < invoice[i].barang.length; j++) { %>'
+                                    barangDalamInvoice.push({
+                                        namabarang: '<%= invoice[i].barang[j].namabarang %>',
+                                        jumlah: '<%= invoice[i].barang[j].jumlah %>',
+                                        subtotal: '<%= invoice[i].barang[j].subtotal %>',
+                                    })
+                                '<% } %>'
+                            </script>
+                            <a href="#" class="btn btn-outline-success" onclick="addDataToModal('<%= invoice[i].tanggal %>', barangDalamInvoice, '<%= invoice[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
+                        </td>
+                    </tr>
+                <% } %>
             </tbody>
         </table>
-        <!-- Modal -->
+        <!-- Modal untuk input gambar bukti bayar -->
+        <div class="modal fade" id="buktiBayarModal" tabindex="-1" aria-labelledby="buktiBayarModal" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Bukti Bayar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="POST" id="buktiBayarModalForm">
+                    <div class="modal-body">
+                        <div class="mb-3 text-start">
+                            <label for="formFile" class="form-label">Masukkan Bukti Bayar</label>
+                            <input class="form-control" type="file" id="formFile" name="image">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <!-- Modal untuk menampilkan detail invoice -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -95,7 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Tanggal Pembelian : 17 July 2023</p>
+                    <p id="tanggalInvoice"></p>
                     <table class="table">
                         <thead>
                             <tr>
@@ -105,45 +98,50 @@
                               <th scope="col">Sub total</th>
                             </tr>
                         </thead>
-                        <tbody id="table-body">
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Bata Merah</td>
-                              <td>20</td>
-                              <td>Rp. 40000</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td>PVC Pipa</td>
-                              <td>20</td>
-                              <td>Rp. 40000</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td>Palu</td>
-                              <td>20</td>
-                              <td>Rp. 40000</td>
-                            </tr>
+                        <tbody id="tableBody">
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="3" class="text-center">Total</td>
-                                <td>Rp. 40000</td>
+                                <td id="totalInvoice"></td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <!-- <button type="button" class="btn btn-primary">Understood</button> -->
                 </div>
             </div>
             </div>
         </div>
     </div>
     <script>
-        function addDataToModal() {
+        function addDataToModal(tanggal, dataBarang, total) {
+            const tanggalInvoice = document.getElementById('tanggalInvoice');
+            const tableBody = document.getElementById('tableBody');
+            const totalInvoice = document.getElementById('totalInvoice');
 
+            tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
+
+            for(let k = 0; k < dataBarang.length; k++){
+                tableBody.innerHTML += `<tr>
+                    <td>${k + 1}</td>
+                    <td>${dataBarang[k].namabarang}</td>
+                    <td>${dataBarang[k].jumlah}</td>
+                    <td>Rp. ${dataBarang[k].subtotal}</td>
+                </tr>`
+            }
+
+            totalInvoice.innerHTML = `Rp. ${total}`
+        }
+
+        function addDataToInputImageModal(idinvoice){
+            console.log(idinvoice);
+            //Function ini untuk button add gambar bukti bayar
+            const inputBuktiBayarForm = document.getElementById('buktiBayarModalForm');
+
+            inputBuktiBayarForm.setAttribute('action', '/invoice/buktibayar/tambah')
         }
     </script>
 <%- include('include/footer') %>

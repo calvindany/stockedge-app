@@ -2,7 +2,6 @@ const Barang = require('../model/barang');
 const User = require('../model/user');
 const Kategori = require('../model/kategori');
 const Transaksi = require('../model/transaction');
-const barang = require('../model/barang');
 
 exports.getLanding = (req, res, next) => {
     let totalKeranjang = null;
@@ -266,9 +265,48 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
 }   
 
 exports.getInvoice = (req, res, next) => {
-    res.render('user/invoice', {
-        isLoggedIn: true,
-        isAdmin: false,
-        totalKeranjang: 0
-    });
+    User.findOne({ _id: req.user.iduser })
+    .then( user => {
+        Transaksi.find({ iduser: user._id })
+        .then( transaksi => {
+            return res.render('user/invoice', {
+                invoice: transaksi,
+                isLoggedIn: req.isLoggedIn,
+                isAdmin: req.isAdmin,
+                totalKeranjang: req.user.totalKeranjang,
+            });
+        })
+        .catch( err => console.log(err));
+    })
+    .catch(err => console.log(err));
+}
+
+exports.postBuktiPembayaran = (req, res, next) => {
+    const idinvoice = req.body.idinvoice;
+
+    if(req.file){
+        Transaksi.findOne({_id: idinvoice })
+        .then( transaksi => {
+            transaksi.buktiBayar = req.file.filename;
+            sharp(path.join(__dirname, '../public/images/') + transaksi.buktiBayar)
+            .resize(400, 400)
+            .toFile(path.join(__dirname, '../public/images/buktibayar') + 'invoice_' + transaksi.buktiBayar, (err, info) => {
+                if(err) {
+                    console.log(err);
+                }
+
+                //Hapus gambar sebelum di resize
+                fileHelper.deleteFile(path.join(__dirname, '../public/images/') + transaksi.buktiBayar)
+            });
+
+            req.flash('success', 'Barang berhasil disimpan');
+            transaksi.save();
+
+            return res.redirect("/invoice");
+        })
+        .catch (err => {
+            console.log(err)
+            return res.redirect('/invoice')
+        })
+    }
 }
