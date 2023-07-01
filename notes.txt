@@ -4,6 +4,12 @@ To Do :
 [User]
 - Footer di fixed di buttom (gabisa, nanti saja)
 - Keranjang header cardnya ganti warna v (udah bagus kayaknya, nanti liat user acceptance aja)
+- Pembayaran dilakukan melalui sistem web, kirim bukti pembayaran lewat web
+- Sorting by kategori untuk produk page
+- Pagination di halaman produk
+
 
 [Admin]
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
+
+usecase activity, deployment
