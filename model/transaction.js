@@ -30,7 +30,7 @@ const transaksiSchema = new Schema(
       type: String,
       require: true,
     },
-    buktiBayar: {
+    buktibayar: {
       type: String,
     },
     barang: [
