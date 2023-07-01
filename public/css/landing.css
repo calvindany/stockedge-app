@@ -58,3 +58,12 @@
     border-radius: 50%;
     font-size: large;
 }
+
+.invoice-thead {
+    background-color: var(--user-color-template-1);
+    color: var(--user-color-template-2);
+}
+
+.invoice-tbody {
+    color: var(--user-color-template-1);
+}

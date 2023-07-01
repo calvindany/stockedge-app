@@ -241,3 +241,11 @@ exports.postPesanBarangDalamKeranjang = (req, res, next) => {
         return res.redirect('/keranjang')
     })
 }   
+
+exports.getInvoice = (req, res, next) => {
+    res.render('user/invoice', {
+        isLoggedIn: true,
+        isAdmin: false,
+        totalKeranjang: 0
+    });
+}
