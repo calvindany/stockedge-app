@@ -58,8 +58,7 @@
                       </td>
                       <% if(transaksi[i].status == 'Lunas') { %>
                         <td class="text-center">
-                          <!-- <em class="">Transaksi ini sudah lunas</em> -->
-                          <em>Transaksi sudah lunas | <a href="#">Bukti Pembayaran</a></em>
+                          <em>Transaksi sudah lunas | <a href="/images/buktibayar/<%= transaksi[i].buktibayar %>" target="_blank">Bukti Pembayaran</a></em>
                         </td>
                       <% } else { %>
                         <td class="d-flex justify-content-center" style="gap: 20px;">
