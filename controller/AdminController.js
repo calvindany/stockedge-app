@@ -47,6 +47,20 @@ exports.getDashboard = (req, res, next) => {
 };
 
 exports.getBarang = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   Kategori.find()
   .then( kategori => {
     Barang.find()
@@ -56,6 +70,7 @@ exports.getBarang = (req, res, next) => {
           route: "/barang",
           barang: barang,
           kategori: kategori,
+          message: message,
         });
       })
       .catch((err) => console.log(err));
@@ -71,20 +86,17 @@ exports.postBarang = (req, res, next) => {
   const modal = req.body.modal;
   let image;
 
-  if(req.file){
-    image = req.file.filename;
-  }
-
   const newbarang = new Barang({
     namabarang: namabarang,
     kategori: kategori,
     stok: stok,
     harga: harga,
     modal: modal,
-    image: image,
   });
 
-  sharp(path.join(__dirname, '../public/images/') + newbarang.image)
+  if(req.file){
+    newbarang.image = req.file.filename;
+    sharp(path.join(__dirname, '../public/images/') + newbarang.image)
     .resize(400, 400)
     .toFile(path.join(__dirname, '../public/images/') + 'temp_' + newbarang.image, (err, info) => {
       if(err) {
@@ -95,10 +107,12 @@ exports.postBarang = (req, res, next) => {
       fileHelper.deleteFile(path.join(__dirname, '../public/images/') + newbarang.image)
 
       //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-      fileHelper.renameFile(newbarang.image)
-  });
-  newbarang.save();
+      fileHelper.renameFile(newbarang.image);
+    });
+  }
 
+  req.flash('success', 'Barang berhasil disimpan');
+  newbarang.save();
   return res.redirect("/barang");
 };
 
@@ -160,8 +174,14 @@ exports.postEditBarang = (req, res, next) => {
     }
 
     barang.save();
+    req.flash('success', 'Barang berhasil diedit');
 
     return res.redirect("/barang");
+  })
+  .catch( err => {
+    console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/barang');
   });
 };
 
@@ -172,17 +192,21 @@ exports.postDeleteBarang = (req, res, next) => {
     try {
       if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image)) {
         fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
-        return Barang.findOneAndDelete({ _id: idbarang })
       }
     } catch (err) {
+      req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
       return res.redirect("/barang");
     }
+    return Barang.findOneAndDelete({ _id: idbarang })
   })
   .then((result) => {
+    req.flash('success', 'Barang berhasil dihapus');
     return res.redirect("/barang");
   })
   .catch( err => {
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
     console.log(err);
+    return res.redirect('/barang');
   });
 };
 
