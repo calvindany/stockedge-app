@@ -4,7 +4,7 @@ To Do :
 [User]
 - Footer di fixed di buttom (gabisa, nanti saja)
 - Keranjang header cardnya ganti warna v (udah bagus kayaknya, nanti liat user acceptance aja)
-- Pembayaran dilakukan melalui sistem web, kirim bukti pembayaran lewat web
+- Pembayaran dilakukan melalui sistem web, kirim bukti pembayaran lewat web v
 - Sorting by kategori untuk produk page
 - Pagination di halaman produk
 
