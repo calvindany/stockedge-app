@@ -136,7 +136,7 @@
             const totalInvoice = document.getElementById('totalInvoice');
 
             tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
-
+            tableBody.innerHTML = '';
             for(let k = 0; k < dataBarang.length; k++){
                 tableBody.innerHTML += `<tr>
                     <td>${k + 1}</td>
