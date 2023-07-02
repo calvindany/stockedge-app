@@ -2,9 +2,24 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    let daftarInvoice = [];
+  </script>
   </head>
 
   <body class="d-flex">
+    <% if(message) { %>
+      <script>
+        Swal.fire({
+          position: 'center-middle',
+          icon: '<%= message[0] %>',
+          text: '<%= message[1] %>',
+          // showConfirmButton: false,
+          timer: 1500,
+        })
+      </script>
+    <% } %>
     <%- include('../include/sidebar') %>
       <div class="" style="background-color: #F5F7FB; width: 100%;">
         <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
@@ -62,11 +77,34 @@
                         </td>
                       <% } else { %>
                         <td class="d-flex justify-content-center" style="gap: 20px;">
-                          <a class="btn btn-primary <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/edit/<%= transaksi[i]._id %>"><i
-                            class="bi bi-pencil-square"></i> Edit</a>
+                          <a class="btn btn-primary <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/edit/<%= transaksi[i]._id %>">
+                            <i class="bi bi-pencil-square"></i> Edit
+                          </a>
+                          <script>
+                            daftarInvoice.push({
+                              nomorInvoice: '<%= i %>',
+                              data: [],
+                            });
+                            // console.log(daftarInvoice)
+
+                            let index = daftarInvoice.findIndex( invoice => {
+                              return invoice.nomorInvoice == '<%= i %>'
+                            });
+
+                            '<% for(let j = 0; j < transaksi[i].barang.length; j++) { %>'
+                            daftarInvoice[index].data.push({
+                                namabarang: '<%= transaksi[i].barang[j].namabarang %>',
+                                jumlah: '<%= transaksi[i].barang[j].jumlah %>',
+                                subtotal: '<%= transaksi[i].barang[j].subtotal %>',
+                            });
+                            '<% } %>'
+                          </script>
+                          <button class="btn btn-primary <%= (transaksi[i].buktibayar) ? '' : 'disabled' %>" onclick="addDataToModal('<%= i %>','<%= transaksi[i].tanggal %>', '<%= transaksi[i].buktibayar %>', '<%= transaksi[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="bi bi-file-text"></i> Detail
+                          </button>
                           <form action="/transaksi/bayar" method="POST">
                             <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
-                            <button class="btn btn-success <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>
+                            <button class="btn btn-success <%= (!(transaksi[i].status == 'Menunggu Validasi')) ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>
                           </form>
                           <form action="/transaksi/hapus" method="POST">
                             <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
@@ -78,10 +116,76 @@
                     <% } %>
                 </tbody>
               </table>
+
+              <!-- Modal untuk menampilkan detail invoice -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Invoice</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="tanggalInvoice"></p>
+                        <p id="buktiBayarInvoice"></p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Nama Barang</th>
+                                  <th scope="col">Jumlah</th>
+                                  <th scope="col">Sub total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-center">Total</td>
+                                    <td id="totalInvoice"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                    </div>
+                </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>
       </div>
+      <script>
+        function addDataToModal(noinvoice, tanggal, buktibayar, total) {
+            const buktiBayarInvoice = document.getElementById('buktiBayarInvoice')
+            const tanggalInvoice = document.getElementById('tanggalInvoice');
+            const tableBody = document.getElementById('tableBody');
+            const totalInvoice = document.getElementById('totalInvoice');
+
+            let index = daftarInvoice.findIndex( invoice => {
+              return invoice.nomorInvoice == noinvoice
+            });
+
+            console.log(daftarInvoice[index].data)
+
+            tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
+            buktiBayarInvoice.innerHTML = (buktiBayarInvoice == '') ? 'Bukti Pembayaran : Belum ada transaksi' : `Bukti Pembayaran : <a href="/images/buktibayar/${buktibayar}" target="_blank">Bukti Bayar</a>`
+            tableBody.innerHTML = '';
+            for(let k = 0; k < daftarInvoice[index].data.length; k++){
+                tableBody.innerHTML += `<tr>
+                    <td>${k + 1}</td>
+                    <td>${daftarInvoice[index].data[k].namabarang}</td>
+                    <td>${daftarInvoice[index].data[k].jumlah}</td>
+                    <td>Rp. ${daftarInvoice[index].data[k].subtotal}</td>
+                </tr>`
+            }
+
+            totalInvoice.innerHTML = `Rp. ${total}`
+        }
+      </script>
       <script>
         $(document).ready(function () {
           $('table.display').DataTable();

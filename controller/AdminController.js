@@ -210,22 +210,52 @@ exports.postDeleteBarang = (req, res, next) => {
 };
 
 exports.getTransaksi = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   Transaksi.find()
     .then((transaksi) => {
       res.render("admin/transaksi/transaksi", {
         route: "/transaksi",
         transaksi: transaksi,
+        message: message,
       });
     })
     .catch((err) => console.log(err));
 };
 
 exports.getTambahTransaksi = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   Barang.find().then((barang) => {
     res.render("admin/transaksi/tambahtransaksi", {
       route: "/transaksi/tambah",
       barang: barang,
       transaksi: null,
+      message: message,
     });
   });
 };
@@ -258,12 +288,31 @@ exports.postTambahTransaksi = (req, res, next) => {
     return transaksibaru.hitungKeuntungan();
   })
   .then( result => {
+    req.flash('success', 'Berhasil menambahkan barang');
     return res.redirect("/transaksi/edit/" + transaksibaru._id);
   })
-  .catch( err => console.log(err) )
+  .catch( err => {
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    // console.log(err);
+    return res.redirect("/transaksi/tambah")
+  })
 };
 
 exports.getEditTransaksi = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   const idtransaksi = req.params.idtransaksi;
   Transaksi.findOne({ _id: idtransaksi }).then((transaksi) => {
     Barang.find().then((barang) => {
@@ -271,6 +320,7 @@ exports.getEditTransaksi = (req, res, next) => {
         route: "/transaksi",
         transaksi: transaksi,
         barang: barang,
+        message: message,
       });
     });
   });
@@ -299,12 +349,21 @@ exports.postEditTransaksi = (req, res, next) => {
         .catch( err => console.log(err) );
         return transaksi.hitungKeuntungan();
       })
-      .catch( err => { console.log(err) })
+      .catch( err => { 
+        // console.log(err) 
+        req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+        return res.redirect("/transaksi/edit/" + idtransaksi)
+      })
     })
     .then(() => {
+      req.flash('success', 'Berhasil menambahkan barang');
       return res.redirect("/transaksi/edit/" + idtransaksi);
     })
-    .catch( err => { console.log(err) });
+    .catch( err => { 
+      // console.log(err);
+      req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+      return res.redirect("/transaksi/edit/" + idtransaksi);
+    });
 };
 
 exports.postHapusBarangdiCart = (req, res, next) => {
@@ -316,14 +375,18 @@ exports.postHapusBarangdiCart = (req, res, next) => {
       return transaksi.hapusBarang(idbarang);
     })
     .then((result) => {
+      req.flash('success', 'Berhasil menghapus barang');
       return res.redirect("/transaksi/edit/" + idtransaksi);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+      // console.log(err)
+      return res.redirect("/transaksi/edit/" + idtransaksi)
+    });
 };
 
 exports.postLunasOrderMasuk = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
-  const date = new Date();
   Transaksi.findOne({_id: idtransaksi})
   .then( transaksi => {
     transaksi.status = 'Lunas';
@@ -339,18 +402,28 @@ exports.postLunasOrderMasuk = (req, res, next) => {
     transaksi.save();
     keuanganbaru.save();
 
+    req.flash('success', 'Transaksi lunas');
     return res.redirect('/transaksi')
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    // console.log(err)
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/transaksi')
+  });
 };
 
 exports.postHapusTransaksi = (req, res, next) => {
   const idtransaksi = req.body.idtransaksi;
   Transaksi.findOneAndDelete({ _id: idtransaksi })
-    .then((result) => {
-      res.redirect("/transaksi");
-    })
-    .catch((err) => console.log(err));
+  .then((result) => {
+    req.flash('success', 'Transaksi berhasil dihapus');
+    res.redirect("/transaksi");
+  })
+  .catch((err) => {
+    // console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/transaksi')
+  });
 };
 
 exports.getMasukBarang = (req, res, next) => {

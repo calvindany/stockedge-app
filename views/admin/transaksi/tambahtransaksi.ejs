@@ -2,9 +2,21 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body class="d-flex">
+    <% if(message) { %>
+      <script>
+        Swal.fire({
+          position: 'center-middle',
+          icon: '<%= message[0] %>',
+          text: '<%= message[1] %>',
+          // showConfirmButton: false,
+          timer: 1500,
+        })
+      </script>
+    <% } %>
     <%- include('../include/sidebar') %>
       <div class="" style="background-color: #F5F7FB; width: 100%;">
         <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
@@ -12,8 +24,11 @@
           <h2 class=""><i class="bi bi-box-arrow-right text-danger"></i></h2>
         </header>
         <main class="d-flex flex-column align-items-center">
-          <div class="d-flex align-items-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
+          <div class="d-flex flex-column justify-content-center my-4 w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <h4 class="page-title">Tambah Transaksi</h4>
+            <div class="mt-4">
+              <a href="/transaksi" class="btn btn-primary">Selesai</a>
+            </div>
           </div>
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
