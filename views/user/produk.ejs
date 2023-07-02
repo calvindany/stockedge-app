@@ -53,8 +53,8 @@
     <div class="container produk w-100 mt-4 mb-4">
       <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-start' %> row p-4" style="gap: 20px;">
         <% for(let i = 0; i < barang.length; i++) { %>
-            <div class="card " style="width: 18rem;">
-                <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
+            <div class="card" style="width: 18rem; padding: 0;">
+                <img src="/images/<%= barang[i].image %>" style="max-width: 100% !important;" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= barang[i].namabarang %></h5>
                     <p class="card-text"><%= barang[i].stok %></p>
