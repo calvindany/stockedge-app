@@ -7,7 +7,8 @@ To Do :
 - Pembayaran dilakukan melalui sistem web, kirim bukti pembayaran lewat web v
 - Sorting by kategori untuk produk page v
 - Pagination di halaman produk v
-- Check invoice
+- Check invoice v
+- Fix display item on landing page
 
 [Admin]
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
