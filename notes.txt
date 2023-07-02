@@ -12,5 +12,7 @@ To Do :
 
 [Admin]
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
+- Tambah mode transaksi
+- Tambah improvement di halaman masuk barang
 
 usecase activity, deployment
