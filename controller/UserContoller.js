@@ -23,6 +23,7 @@ exports.getLanding = (req, res, next) => {
     } else {
         message = null;
     }
+    
     Kategori.find()
     .then( kategori => {
         Barang.find()
@@ -46,7 +47,8 @@ exports.getProduk = (req, res, next) => {
     let totalKeranjang = null;
     let messageSuccess = req.flash('status-send-to-cart');
     let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
-    let search = req.query.namabarang;
+    let searchByKeyword = req.query.namabarang;
+    let searchByCategori = req.query.kategori;
 
     if(req.isLoggedIn){
         totalKeranjang = req.user.totalKeranjang;
@@ -58,32 +60,56 @@ exports.getProduk = (req, res, next) => {
         message = null;
     }
     
-    if(search){
-        let regexPattern = new RegExp(search, "i");
+    if(searchByKeyword){
+        let regexPattern = new RegExp(searchByKeyword, "i");
         // console.log(regexPattern);
         Barang.find({namabarang: { $regex: regexPattern }})
         .select('namabarang stok harga image')
         .then( barang => {
-            // console.log(barang)
-            return res.render('user/produk',{
-                barang: barang,
-                isLoggedIn: req.isLoggedIn,
-                isAdmin: req.isAdmin,
-                totalKeranjang: totalKeranjang,  
-                message: message,      
+            Kategori.find()
+            .then( kategori => {
+                return res.render('user/produk',{
+                    barang: barang,
+                    kategori: kategori,
+                    isLoggedIn: req.isLoggedIn,
+                    isAdmin: req.isAdmin,
+                    totalKeranjang: totalKeranjang,  
+                    message: message,      
+                })
             })
         })
+    } else if(searchByCategori) {
+        Barang.find({ kategori: searchByCategori })
+        .select('namabarang stok harga image')
+        .then( barang => {
+            Kategori.find()
+            .then( kategori => {
+                return res.render('user/produk',{
+                    barang: barang,
+                    kategori: kategori,
+                    isLoggedIn: req.isLoggedIn,
+                    isAdmin: req.isAdmin,
+                    totalKeranjang: totalKeranjang,  
+                    message: message,      
+                })
+            })
+        })
+        
     } else {
         Barang.find()
         .select('namabarang stok harga image')
         .then( barang => {
-            // console.log(req.isLoggedIn)
-            return res.render('user/produk',{
-                barang: barang,
-                isLoggedIn: req.isLoggedIn,
-                isAdmin: req.isAdmin,
-                totalKeranjang: totalKeranjang,  
-                message: message,      
+            Kategori.find()
+            .then( kategori => {
+                // console.log(req.isLoggedIn)
+                return res.render('user/produk',{
+                    barang: barang,
+                    kategori: kategori,
+                    isLoggedIn: req.isLoggedIn,
+                    isAdmin: req.isAdmin,
+                    totalKeranjang: totalKeranjang,  
+                    message: message,      
+                })
             })
         })
     }

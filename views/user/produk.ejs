@@ -6,19 +6,49 @@
 <body>
     <%- include('include/navigation') %>
     <header class="d-flex flex-column justify-content-center my-4 p-4">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mb-4">
             <h4>Produk Yang Kami Jual</h4>
         </div>
-        <div class="d-flex justify-content-center mt-4">
-            <form method="GET" class="d-flex justify-content-between align-items-center" style="gap: 20px;">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                    <input name="namabarang" type="text" class="form-control" placeholder="Nama Barang" aria-label="" aria-describedby="basic-addon1">
+        <div class="d-flex justify-content-center align-items-start" style="gap: 20px;">
+            <div class="search-by-keyword d-flex align-items-center">
+                <form method="GET" >
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                        <input name="namabarang" type="text" class="form-control" placeholder="Nama Barang" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                </form>
+            </div>
+            <div class="search-by-category d-flex justify-content-between align-items-center">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#sortByCategoryModal">
+                    <i class="bi bi-filter-left"></i>
+                </button>
+
+                <div class="modal fade" id="sortByCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Cari berdasarkan kategori</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="GET">
+                                <div class="modal-body">
+                                    <label for="kategori" class="mb-2">Masukkan jenis kategori</label>
+                                    <select name="kategori" class="form-select" aria-label="Default select example">
+                                        <option selected>...</option>
+                                        <% for(let i = 0; i < kategori.length; i++) { %>
+                                            <option value="<%= kategori[i].kategori %>"><%= kategori[i].kategori %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Cari</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Cari</button>
-                </div>
-            </form>
+            </div>
+            
         </div>
     </header>
     <div class="produk w-100 mt-4 mb-4 d-flex justify-content-center">
