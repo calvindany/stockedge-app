@@ -1,6 +1,9 @@
 <%- include('include/header-doc') %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" href="/css/landing.css">
+<script>
+    let daftarInvoice = [];
+</script>
 </head>
 <body>
     <%- include('include/navigation') %>
@@ -41,16 +44,20 @@
                         </td>
                         <td>
                             <script>
-                                let barangDalamInvoice = [];
+                                daftarInvoice.push({
+                                    nomorInvoice: '<%= i %>',
+                                    data: [],
+                                });
+                                
                                 '<% for(let j = 0; j < invoice[i].barang.length; j++) { %>'
-                                    barangDalamInvoice.push({
-                                        namabarang: '<%= invoice[i].barang[j].namabarang %>',
-                                        jumlah: '<%= invoice[i].barang[j].jumlah %>',
-                                        subtotal: '<%= invoice[i].barang[j].subtotal %>',
-                                    })
+                                daftarInvoice['<%= i %>'].data.push({
+                                    namabarang: '<%= invoice[i].barang[j].namabarang %>',
+                                    jumlah: '<%= invoice[i].barang[j].jumlah %>',
+                                    subtotal: '<%= invoice[i].barang[j].subtotal %>',
+                                });
                                 '<% } %>'
                             </script>
-                            <a href="#" class="btn btn-outline-success" onclick="addDataToModal('<%= invoice[i].tanggal %>', barangDalamInvoice, '<%= invoice[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
+                            <a href="#" class="btn btn-outline-success" onclick="addDataToModal('<%= i %>','<%= invoice[i].tanggal %>', '<%= invoice[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
                         </td>
                     </tr>
                 <% } %>
@@ -130,19 +137,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script>
-        function addDataToModal(tanggal, dataBarang, total) {
+        function addDataToModal(noinvoice, tanggal, total) {
             const tanggalInvoice = document.getElementById('tanggalInvoice');
             const tableBody = document.getElementById('tableBody');
             const totalInvoice = document.getElementById('totalInvoice');
+            // console.log(daftarInvoice[parseInt(noinvoice)].data.length)
 
             tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
             tableBody.innerHTML = '';
-            for(let k = 0; k < dataBarang.length; k++){
+            for(let k = 0; k < daftarInvoice[noinvoice].data.length; k++){
                 tableBody.innerHTML += `<tr>
                     <td>${k + 1}</td>
-                    <td>${dataBarang[k].namabarang}</td>
-                    <td>${dataBarang[k].jumlah}</td>
-                    <td>Rp. ${dataBarang[k].subtotal}</td>
+                    <td>${daftarInvoice[noinvoice].data[k].namabarang}</td>
+                    <td>${daftarInvoice[noinvoice].data[k].jumlah}</td>
+                    <td>Rp. ${daftarInvoice[noinvoice].data[k].subtotal}</td>
                 </tr>`
             }
 
