@@ -47,8 +47,11 @@ exports.getProduk = (req, res, next) => {
     let totalKeranjang = null;
     let messageSuccess = req.flash('status-send-to-cart');
     let message = ''; // Variabel ini yang akan dikirim ke depan untuk notif
+    let jumlahData = 0;
+
     let searchByKeyword = req.query.namabarang;
     let searchByCategori = req.query.kategori;
+    let page = req.query.page;
 
     if(req.isLoggedIn){
         totalKeranjang = req.user.totalKeranjang;
@@ -59,18 +62,29 @@ exports.getProduk = (req, res, next) => {
     } else {
         message = null;
     }
-    
+
+    if(!page){
+        page = 1;
+    }
+
     if(searchByKeyword){
         let regexPattern = new RegExp(searchByKeyword, "i");
         // console.log(regexPattern);
-        Barang.find({namabarang: { $regex: regexPattern }})
-        .select('namabarang stok harga image')
+        Barang.find({ namabarang: { $regex: regexPattern }})
+        .then (barang => {
+            jumlahData = barang.length;
+            return Barang.find({ namabarang: { $regex: regexPattern }})
+            .select('namabarang stok harga image')
+            .limit(8)
+            .skip((page - 1) * 8)
+        })
         .then( barang => {
             Kategori.find()
             .then( kategori => {
                 return res.render('user/produk',{
                     barang: barang,
                     kategori: kategori,
+                    banyakData: jumlahData,
                     isLoggedIn: req.isLoggedIn,
                     isAdmin: req.isAdmin,
                     totalKeranjang: totalKeranjang,  
@@ -80,13 +94,21 @@ exports.getProduk = (req, res, next) => {
         })
     } else if(searchByCategori) {
         Barang.find({ kategori: searchByCategori })
-        .select('namabarang stok harga image')
+        .then( barang => {
+            jumlahData = barang.length;
+
+            return Barang.find({ kategori: searchByCategori })
+            .select('namabarang stok harga image')
+            .limit(8)
+            .skip((page - 1) * 8)
+        })
         .then( barang => {
             Kategori.find()
             .then( kategori => {
                 return res.render('user/produk',{
                     barang: barang,
                     kategori: kategori,
+                    banyakData: jumlahData,
                     isLoggedIn: req.isLoggedIn,
                     isAdmin: req.isAdmin,
                     totalKeranjang: totalKeranjang,  
@@ -97,7 +119,14 @@ exports.getProduk = (req, res, next) => {
         
     } else {
         Barang.find()
-        .select('namabarang stok harga image')
+        .then( barang => {
+            jumlahData = barang.length
+            
+            return Barang.find()
+            .select('namabarang stok harga image')
+            .limit(8)
+            .skip((page - 1) * 8)
+        })
         .then( barang => {
             Kategori.find()
             .then( kategori => {
@@ -105,6 +134,7 @@ exports.getProduk = (req, res, next) => {
                 return res.render('user/produk',{
                     barang: barang,
                     kategori: kategori,
+                    banyakData: jumlahData,
                     isLoggedIn: req.isLoggedIn,
                     isAdmin: req.isAdmin,
                     totalKeranjang: totalKeranjang,  

@@ -47,12 +47,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
+            </div> 
         </div>
     </header>
-    <div class="produk w-100 mt-4 mb-4 d-flex justify-content-center">
-      <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-between' %> row p-4" style="gap: 20px;">
+    <div class="container produk w-100 mt-4 mb-4">
+      <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-start' %> row p-4" style="gap: 20px;">
         <% for(let i = 0; i < barang.length; i++) { %>
             <div class="card " style="width: 18rem;">
                 <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
@@ -67,6 +66,7 @@
                 </div>
             </div>
         <% } %>
+        
         <!-- Modal (Ini akan dihide dan di trigger melalui button) -->
         <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -93,6 +93,21 @@
             </div>
         </div>
       </div>
+        <% if(banyakData > 8) { %>
+            <nav class="d-flex justify-content-center" aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <% for(let i = 0; i < banyakData; i++) { %>
+                        <li class="page-item" onclick="createQueryUrl('<%= i + 1 %>')"><a id="pagination-item<%= i + 1 %>" class="page-link" href="#"><%= i + 1 %></a></li>
+                    <% } %>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        <% } %>
     </div>
     <div class="toast bottom-0 end-0 me-4 mb-4" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed;">
         <div class="toast-header d-flex" style="gap: 20px;">
@@ -134,5 +149,32 @@
             toastBootstrap.show()
         '<% } %>'
     </script>
+    '<% if(banyakData > 8) { %>'
+        <script>
+            function createQueryUrl(paginationItem){
+                const url = window.location.href;
+                const urlObject = new URL(url);
+                const params = new URLSearchParams(urlObject.search);
+                console.log('aa')
+                const namabarang = params.get('namabarang');
+                const kategori = params.get('category');
+                const page = params.get('page');
+                console.log(kategori)
+                console.log(namabarang)
+                const element = document.getElementById('pagination-item'+paginationItem);
+
+                if(namabarang){
+                    element.setAttribute('href', `http://127.0.0.1:3000/produk?namabarang=${namabarang}&page=${paginationItem}`);
+                    // console.log(`http://127.0.0.1:3000/produk?namabarang=${namabarang}&page=${paginationItem}`)
+                } else if(kategori){
+                    element.setAttribute('href', `http://127.0.0.1:3000/produk?kategori=${kategori}&page=${paginationItem}`);
+                    // console.log('href', `http://127.0.0.1:3000/produk?kategori=${kategori}&page=${paginationItem}`);
+                } else {
+                    element.setAttribute('href', `http://127.0.0.1:3000/produk?page=${paginationItem}`);
+                    // console.log('href', `http://127.0.0.1:3000/produk?page=${paginationItem}`);
+                }
+            }
+        </script>
+    <% } %>
     <%- include('include/footer') %>
 <%- include('include/footer-doc') %>
