@@ -27,6 +27,7 @@ exports.getLanding = (req, res, next) => {
     Kategori.find()
     .then( kategori => {
         Barang.find()
+        .limit(4)
         .select('namabarang stok harga image')
         .then( barang => {
             res.render('user/landing', {

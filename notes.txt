@@ -8,7 +8,7 @@ To Do :
 - Sorting by kategori untuk produk page v
 - Pagination di halaman produk v
 - Check invoice v
-- Fix display item on landing page
+- Fix display item on landing page v
 
 [Admin]
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
