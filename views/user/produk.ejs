@@ -34,7 +34,7 @@
                                 <div class="modal-body">
                                     <label for="kategori" class="mb-2">Masukkan jenis kategori</label>
                                     <select name="kategori" class="form-select" aria-label="Default select example">
-                                        <option selected>...</option>
+                                        <option value="all" selected>...</option>
                                         <% for(let i = 0; i < kategori.length; i++) { %>
                                             <option value="<%= kategori[i].kategori %>"><%= kategori[i].kategori %></option>
                                         <% } %>

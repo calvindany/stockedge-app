@@ -71,10 +71,16 @@ exports.getProduk = (req, res, next) => {
     if(searchByKeyword){
         let regexPattern = new RegExp(searchByKeyword, "i");
         // console.log(regexPattern);
-        Barang.find({ namabarang: { $regex: regexPattern }})
+        let properties = {}
+        if(searchByKeyword == ''){
+            properties = {}
+        } else {
+            properties = { namabarang: { $regex: regexPattern }}
+        }
+        Barang.find(properties)
         .then (barang => {
             jumlahData = barang.length;
-            return Barang.find({ namabarang: { $regex: regexPattern }})
+            return Barang.find(properties)
             .select('namabarang stok harga image')
             .limit(8)
             .skip((page - 1) * 8)
@@ -94,11 +100,16 @@ exports.getProduk = (req, res, next) => {
             })
         })
     } else if(searchByCategori) {
-        Barang.find({ kategori: searchByCategori })
+        let properties = {}
+        if(searchByCategori == 'all'){
+            properties = {}
+        } else {
+            properties = { kategori: searchByCategori }
+        }
+        Barang.find(properties)
         .then( barang => {
             jumlahData = barang.length;
-
-            return Barang.find({ kategori: searchByCategori })
+            return Barang.find(properties)
             .select('namabarang stok harga image')
             .limit(8)
             .skip((page - 1) * 8)
