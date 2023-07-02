@@ -6,7 +6,7 @@ To Do :
 - Keranjang header cardnya ganti warna v (udah bagus kayaknya, nanti liat user acceptance aja)
 - Pembayaran dilakukan melalui sistem web, kirim bukti pembayaran lewat web v
 - Sorting by kategori untuk produk page v
-- Pagination di halaman produk 
+- Pagination di halaman produk v
 
 
 [Admin]
