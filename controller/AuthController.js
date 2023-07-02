@@ -68,12 +68,14 @@ exports.postRegister = (req, res, next) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
+    const notelp = req.body.notelp;
 
     bcrypt.hash(password, 12)
     .then( hashedpassword => {
         const newUser = new User({
             username: name,
             email: email,
+            notelp: notelp,
             password: hashedpassword,
         })
 
