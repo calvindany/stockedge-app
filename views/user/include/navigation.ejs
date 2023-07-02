@@ -14,6 +14,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto" style="gap: 20px;">
+        <% if(isLoggedIn) { %>
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="/produk">Keranjang</a> -->
+            <a class="position-relative nav-link" href="/keranjang">
+              <!-- Keranjang (Text)-->
+              <i class="bi bi-cart2"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= totalKeranjang %>
+                <span class="visually-hidden">item</span>
+              </span>
+            </a>
+          </li>
+        <% } %>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Beranda</a>
         </li>
@@ -31,17 +44,6 @@
           <% } else { %>
             <li class="nav-item">
               <a class="nav-link" href="/invoice">Invoice</a>
-            </li>
-            <li class="nav-item">
-              <!-- <a class="nav-link" href="/produk">Keranjang</a> -->
-              <a class="position-relative nav-link" href="/keranjang">
-                <!-- Keranjang (Text)-->
-                <i class="bi bi-cart2"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  <%= totalKeranjang %>
-                  <span class="visually-hidden">item</span>
-                </span>
-              </a>
             </li>
           <% } %>
           <li class="nav-item">
