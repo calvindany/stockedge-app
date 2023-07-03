@@ -2,6 +2,12 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script>
+    let daftarBarangMasuk = [];
+    let daftarBarangMasukYangLunas = [];
+    let index1;
+    let index2;
+  </script>
   </head>
 
   <body class="d-flex">
@@ -31,7 +37,7 @@
                     <th>Tanggal Transaksi</th>
                     <th>Total Beli</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,45 +58,157 @@
                       <td>
                         <%= barangmasuk[i].status %>
                       </td>
-                      <td class="d-flex" style="gap: 20px;">
-                        <% if(barangmasuk[i].status == 'Lunas') { %>
-                          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Transaksi sudah lunas">
-                            <button class="btn btn-primary" type="button" disabled><i class="bi bi-pencil-square"></i> Edit</button>
-                          </span>
-                        <% } else { %>
+                      <% if(barangmasuk[i].status == 'Lunas') { %>
+                        <td class="text-center">
+                          <script>
+                            daftarBarangMasukYangLunas.push({
+                              nomorBarangMasuk: '<%= i %>',
+                              data: [],
+                            });
+
+                            index1 = daftarBarangMasukYangLunas.findIndex( barangmasuk => {
+                              return barangmasuk.nomorBarangMasuk == '<%= i %>'
+                            });
+
+                            '<% for(let j = 0; j < barangmasuk[i].barang.length; j++) { %>'
+                            daftarBarangMasukYangLunas[index1].data.push({
+                                namabarang: '<%= barangmasuk[i].barang[j].namabarang %>',
+                                jumlah: '<%= barangmasuk[i].barang[j].jumlah %>',
+                                subtotal: '<%= barangmasuk[i].barang[j].subtotal %>',
+                            });
+                            '<% } %>'
+                          </script>
+                          <em>
+                            Transaksi sudah lunas |
+                            <a class="" style="cursor: pointer;" onclick="addDataToModal('<%= i %>','<%= barangmasuk[i].tanggal %>', '<%= barangmasuk[i].total %>', true)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Detail Barang Masuk</a>
+                          </em>
+                        </td>
+                      <% } else { %>
+                        <td class="d-flex justify-content-center" style="gap: 5px;">
+                          <script>
+                            daftarBarangMasuk.push({
+                              nomorBarangMasuk: '<%= i %>',
+                              data: [],
+                            });
+
+                            index1 = daftarBarangMasuk.findIndex( barangmasuk => {
+                              return barangmasuk.nomorBarangMasuk == '<%= i %>'
+                            });
+
+                            '<% for(let j = 0; j < barangmasuk[i].barang.length; j++) { %>'
+                            daftarBarangMasuk[index1].data.push({
+                                namabarang: '<%= barangmasuk[i].barang[j].namabarang %>',
+                                jumlah: '<%= barangmasuk[i].barang[j].jumlah %>',
+                                subtotal: '<%= barangmasuk[i].barang[j].subtotal %>',
+                            });
+                            '<% } %>'
+                          </script>
                           <a class="btn btn-primary <%= (barangmasuk[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/masukbarang/edit/<%= barangmasuk[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>
-                        <% } %>
-                        <form action="/transaksi/masukbarang/bayar" method="POST">
-                          <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
                           <% if(barangmasuk[i].status == 'Lunas') { %>
-                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Transaksi sudah lunas">
-                              <button class="btn btn-success" type="button" disabled><i class="bi bi-cash-stack"></i> Bayar</button>
-                            </span>
-                          <% } else if(barangmasuk[i].status == 'Draft') { %>
-                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Transaksi masih dalam status draft">
-                              <button class="btn btn-success" type="button" disabled><i class="bi bi-cash-stack"></i> Bayar</button>
-                            </span>
-                          <% } else { %>
-                            <button class="btn btn-success" type="submit"><i class="bi bi-cash-stack"></i> Bayar</button>
+                            <form action="/transaksi/masukbarang/bayar" method="POST">
+                              <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
+                              <button class="btn btn-success" type="submit"><i class="bi bi-cash-stack"></i> Bayar</button>
+                            </form>
                           <% } %>
-                        </form>
-                        <form action="/transaksi/masukbarang/hapus" method="POST">
-                          <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
-                          <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
-                        </form>
-                      </td>
+                          <form action="/transaksi/masukbarang/hapus" method="POST">
+                            <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
+                            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                          </form>
+                        </td>
+                      <% } %>
                     </tr>
-                    <% } %>
+                  <% } %>
                 </tbody>
               </table>
+              <!-- Modal untuk menampilkan detail invoice -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Invoice</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="tanggalMasukBarang"></p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Nama Barang</th>
+                                  <th scope="col">Jumlah</th>
+                                  <th scope="col">Sub total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-center">Total</td>
+                                    <td id="totalBarangMasuk"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                    </div>
+                </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>
       </div>
       <script>
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+        function addDataToModal(nodaftarbarangmasuk, tanggal, total, lunas) {
+          const tanggalInvoice = document.getElementById('tanggalMasukBarang');
+          const tableBody = document.getElementById('tableBody');
+          const totalBarangMasuk = document.getElementById('totalBarangMasuk');
+          
+          let findIndex = 0;
+          tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
+          tableBody.innerHTML = '';
+          
+          // console.log(daftarBarangMasuk);
+          // console.log(daftarBarangMasukYangLunas);
+          
+          if(!lunas){
+            findIndex = daftarBarangMasuk.findIndex( barangmasuk => {
+              return barangmasuk.nomorBarangMasuk == nodaftarbarangmasuk;
+            });
+
+            // console.log(daftarBarangMasuk[findIndex]);
+
+            for(let k = 0; k < daftarBarangMasuk[findIndex].data.length; k++){
+                tableBody.innerHTML += `<tr>
+                    <td>${k + 1}</td>
+                    <td>${daftarBarangMasuk[findIndex].data[k].namabarang}</td>
+                    <td>${daftarBarangMasuk[findIndex].data[k].jumlah}</td>
+                    <td>Rp. ${daftarBarangMasuk[findIndex].data[k].subtotal}</td>
+                </tr>`
+            }
+            totalBarangMasuk.innerHTML = `Rp. ${total}`
+
+          } else {
+            findIndex = daftarBarangMasukYangLunas.findIndex( barangmasuk => {
+              return barangmasuk.nomorBarangMasuk == nodaftarbarangmasuk;
+            });
+
+            // console.log(daftarBarangMasukYangLunas, findIndex);
+
+            for(let k = 0; k < daftarBarangMasukYangLunas[findIndex].data.length; k++){
+                tableBody.innerHTML += `<tr>
+                    <td>${k + 1}</td>
+                    <td>${daftarBarangMasukYangLunas[findIndex].data[k].namabarang}</td>
+                    <td>${daftarBarangMasukYangLunas[findIndex].data[k].jumlah}</td>
+                    <td>Rp. ${daftarBarangMasukYangLunas[findIndex].data[k].subtotal}</td>
+                </tr>`
+            }
+          }
+          totalBarangMasuk.innerHTML = `Rp. ${total}`
+        }
       </script>
       <script>
         $(document).ready(function () {
