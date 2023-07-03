@@ -511,14 +511,13 @@ exports.postEditMasukBarang = async (req, res, next) => {
     .then((barangmasuk) => {
       barangmasuk.namasupplier = namasupplier;
       barangmasuk.tanggal = tanggal;
-      barangmasuk.tambahBarang({ idbarangpilihan, jumlah, harga })
+      return barangmasuk.tambahBarang({ idbarangpilihan, jumlah, harga })
       .then( (result) => {
         if(result){
           Barang.findOne({ _id: idbarangpilihan })
           .then( barang => {
             barang.stok += jumlah;
-            barang.save();
-            return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
+            return barang.save();
           })
           .catch( err => console.log(err) );
         }
