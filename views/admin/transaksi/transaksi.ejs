@@ -5,6 +5,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let daftarInvoice = [];
+    let daftarInvoiceYangLunas = [];
+    let index1;
+    let index2;
   </script>
   </head>
 
@@ -63,20 +66,42 @@
                         <%= transaksi[i].tanggal %>
                       </td>
                       <td>
-                        <%= transaksi[i].total %>
+                        Rp. <%= transaksi[i].total %>
                       </td>
                       <td>
-                        <%= transaksi[i].pendapatan %>
+                        Rp. <%= transaksi[i].pendapatan %>
                       </td>
                       <td>
                         <%= transaksi[i].status %>
                       </td>
                       <% if(transaksi[i].status == 'Lunas') { %>
                         <td class="text-center">
-                          <em>Transaksi sudah lunas | <a href="/images/buktibayar/<%= transaksi[i].buktibayar %>" target="_blank">Bukti Pembayaran</a></em>
+                          <script>
+                            daftarInvoiceYangLunas.push({
+                              nomorInvoice: '<%= i %>',
+                              data: [],
+                            });
+
+                            index1 = daftarInvoiceYangLunas.findIndex( invoice => {
+                              return invoice.nomorInvoice == '<%= i %>'
+                            });
+
+                            '<% for(let j = 0; j < transaksi[i].barang.length; j++) { %>'
+                            daftarInvoiceYangLunas[index1].data.push({
+                                namabarang: '<%= transaksi[i].barang[j].namabarang %>',
+                                jumlah: '<%= transaksi[i].barang[j].jumlah %>',
+                                subtotal: '<%= transaksi[i].barang[j].subtotal %>',
+                            });
+                            '<% } %>'
+                          </script>
+                          <em>
+                            Transaksi sudah lunas |
+                            <!-- <a href="/images/buktibayar/<%= transaksi[i].buktibayar %>" target="_blank">Bukti Pembayaran</a> | -->
+                            <a class="" style="cursor: pointer;" onclick="addDataToModal('<%= i %>','<%= transaksi[i].tanggal %>', '<%= transaksi[i].buktibayar %>', '<%= transaksi[i].total %>', true)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Detail Transaksi</a>
+                          </em>
                         </td>
                       <% } else { %>
-                        <td class="d-flex justify-content-center" style="gap: 20px;">
+                        <td class="d-flex justify-content-center" style="gap: 5px;">
                           <a class="btn btn-primary <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/edit/<%= transaksi[i]._id %>">
                             <i class="bi bi-pencil-square"></i> Edit
                           </a>
@@ -85,21 +110,20 @@
                               nomorInvoice: '<%= i %>',
                               data: [],
                             });
-                            // console.log(daftarInvoice)
 
-                            let index = daftarInvoice.findIndex( invoice => {
+                            index2 = daftarInvoice.findIndex( invoice => {
                               return invoice.nomorInvoice == '<%= i %>'
                             });
 
                             '<% for(let j = 0; j < transaksi[i].barang.length; j++) { %>'
-                            daftarInvoice[index].data.push({
+                            daftarInvoice[index2].data.push({
                                 namabarang: '<%= transaksi[i].barang[j].namabarang %>',
                                 jumlah: '<%= transaksi[i].barang[j].jumlah %>',
                                 subtotal: '<%= transaksi[i].barang[j].subtotal %>',
                             });
                             '<% } %>'
                           </script>
-                          <button class="btn btn-primary <%= (transaksi[i].buktibayar) ? '' : 'disabled' %>" onclick="addDataToModal('<%= i %>','<%= transaksi[i].tanggal %>', '<%= transaksi[i].buktibayar %>', '<%= transaksi[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          <button class="btn btn-primary <%= (transaksi[i].buktibayar) ? '' : 'disabled' %>" onclick="addDataToModal('<%= i %>','<%= transaksi[i].tanggal %>', '<%= transaksi[i].buktibayar %>', '<%= transaksi[i].total %>', false)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="bi bi-file-text"></i> Detail
                           </button>
                           <form action="/transaksi/bayar" method="POST">
@@ -159,29 +183,52 @@
         </main>
       </div>
       <script>
-        function addDataToModal(noinvoice, tanggal, buktibayar, total) {
+        function addDataToModal(noinvoice, tanggal, buktibayar, total, lunas) {
             const buktiBayarInvoice = document.getElementById('buktiBayarInvoice')
             const tanggalInvoice = document.getElementById('tanggalInvoice');
             const tableBody = document.getElementById('tableBody');
             const totalInvoice = document.getElementById('totalInvoice');
-
-            let index = daftarInvoice.findIndex( invoice => {
-              return invoice.nomorInvoice == noinvoice
-            });
-
-            console.log(daftarInvoice[index].data)
-
+            let findIndex = 0;
             tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
-            buktiBayarInvoice.innerHTML = (buktiBayarInvoice == '') ? 'Bukti Pembayaran : Belum ada transaksi' : `Bukti Pembayaran : <a href="/images/buktibayar/${buktibayar}" target="_blank">Bukti Bayar</a>`
+            buktiBayarInvoice.innerHTML = (buktiBayarInvoice == '') ? 'Bukti Pembayaran : Belum ada transaksi' : `Bukti Pembayaran : <a href="/images/buktibayar/${buktibayar}" target="_blank">Bukti Bayar</a>`;
             tableBody.innerHTML = '';
-            for(let k = 0; k < daftarInvoice[index].data.length; k++){
-                tableBody.innerHTML += `<tr>
-                    <td>${k + 1}</td>
-                    <td>${daftarInvoice[index].data[k].namabarang}</td>
-                    <td>${daftarInvoice[index].data[k].jumlah}</td>
-                    <td>Rp. ${daftarInvoice[index].data[k].subtotal}</td>
-                </tr>`
+            
+            console.log(daftarInvoice);
+            console.log(daftarInvoiceYangLunas);
+            
+            if(!lunas){
+              findIndex = daftarInvoice.findIndex( invoice => {
+                return invoice.nomorInvoice == noinvoice;
+              });
+
+              console.log(daftarInvoice[findIndex].data);
+
+              for(let k = 0; k < daftarInvoice[findIndex].data.length; k++){
+                  tableBody.innerHTML += `<tr>
+                      <td>${k + 1}</td>
+                      <td>${daftarInvoice[findIndex].data[k].namabarang}</td>
+                      <td>${daftarInvoice[findIndex].data[k].jumlah}</td>
+                      <td>Rp. ${daftarInvoice[findIndex].data[k].subtotal}</td>
+                  </tr>`
+              }
+            } else {
+              findIndex = daftarInvoiceYangLunas.findIndex( invoice => {
+                return invoice.nomorInvoice == noinvoice;
+              });
+
+              console.log(daftarInvoiceYangLunas[findIndex].data);
+
+              for(let k = 0; k < daftarInvoiceYangLunas[findIndex].data.length; k++){
+                  tableBody.innerHTML += `<tr>
+                      <td>${k + 1}</td>
+                      <td>${daftarInvoiceYangLunas[findIndex].data[k].namabarang}</td>
+                      <td>${daftarInvoiceYangLunas[findIndex].data[k].jumlah}</td>
+                      <td>Rp. ${daftarInvoiceYangLunas[findIndex].data[k].subtotal}</td>
+                  </tr>`
+              }
             }
+
+
 
             totalInvoice.innerHTML = `Rp. ${total}`
         }
