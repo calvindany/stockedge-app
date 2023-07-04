@@ -5,7 +5,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
 const multer = require("multer");
 const cronjob = require("node-cron");
 const flash = require('connect-flash');
@@ -19,11 +18,6 @@ const UserRoutes = require("./routes/user");
 const HitungKeuntungan = require("./util/hitungKeuntungan");
 
 const app = express();
-
-// const store = new MongoDBStore({
-//   uri: process.env.MONGODB_URI,
-//   collection: "userSession",
-// });
 
 cronjob.schedule('0 0 1 * *', () => {
   HitungKeuntungan();
@@ -51,16 +45,6 @@ app.use(flash())
   
 app.use((req, res, next) => {
   return next();
-  // if (!req.session.admin) {
-  // }
-  // AdminModel.findById(req.session.admin._id)
-  //   .then((admin) => {
-  //     req.admin = admin;
-  //     next();
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 });
 
 app.use("/", UserRoutes);
