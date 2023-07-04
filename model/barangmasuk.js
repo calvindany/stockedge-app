@@ -88,7 +88,7 @@ barangMasukSchema.methods.tambahBarang = function (selectedbarang) {
       })
       .catch((err) => {
         console.log(err); 
-        reject(err)
+        reject(false)
       });
   });
 };

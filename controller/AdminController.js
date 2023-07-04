@@ -427,11 +427,26 @@ exports.postHapusTransaksi = (req, res, next) => {
 };
 
 exports.getMasukBarang = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   BarangMasuk.find()
   .then( barangmasuk => {
     res.render('admin/transaksi/masukbarang', {
       route: '/masukbarang',
       barangmasuk: barangmasuk,
+      message: message,
     });
   })
 }
@@ -443,6 +458,7 @@ exports.getTambahMasukBarang = (req, res, next) => {
       route: 'masukbarang',
       barangmasuk: null,
       barang: barang,
+      message: null,
     })
   })
   .catch( err => console.log(err));
@@ -471,27 +487,45 @@ exports.postTambahMasukBarang = (req, res, next) => {
         return barang.save();
       })
       .then( () => {
+        req.flash('success', 'Berhasil menambahkan barang');
         return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
       })
       .catch( err => console.log(err) );
     } else {
+      req.flash('failed', 'Gagal menambahkan barang');
       return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
     }
   })
   .catch(err => {
     console.log(err);
+    req.flash('failed', 'Gagal menambahkan barang');
     return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
   });
 };
 
 exports.getEditMasukBarang = (req, res, next) => {
   const idbarangmasuk = req.params.idbarangmasuk;
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   BarangMasuk.findOne({ _id: idbarangmasuk }).then((barangmasuk) => {
     Barang.find().then((barang) => {
       res.render("admin/transaksi/tambahmasukbarang", {
         route: "/barangmasuk",
         barangmasuk: barangmasuk,
         barang: barang,
+        message: message,
       });
     })
     .catch( err => console.log(err) );
@@ -524,11 +558,13 @@ exports.postEditMasukBarang = async (req, res, next) => {
         // return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
       })
       .catch(err => {
-        console.log(err) 
+        console.log(err);
+        req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
         return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
       });
     })
     .then(() => {
+      req.flash('success', 'Berhasil menambahkan barang');
       return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk);
     });
 };
@@ -542,18 +578,27 @@ exports.postHapusBarangdiCartMasukBarang = (req, res, next) => {
       return barangmasuk.hapusBarang(idbarang);
     })
     .then((result) => {
+      req.flash('success', 'Berhasil menghapus barang');
       return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      req.flash("success", "Ada yang salah, silahkan hubungi developer");
+      return res.redirect("/transaksi/masukbarang/edit/" + idbarangmasuk)
+    });
 };
 
 exports.postHapusMasukBarang = (req, res, next) => {
   const idbarangmasuk = req.body.idbarangmasuk;
   BarangMasuk.findOneAndDelete({ _id: idbarangmasuk })
     .then((result) => {
-      res.redirect("/transaksi/masukbarang");
+      req.flash('success', 'Berhasil menghapus barang');
+      return res.redirect("/transaksi/masukbarang");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+      console.log(err)
+    });
 };
 
 exports.postBayarMasukBarang = (req, res, next) => {
@@ -573,9 +618,14 @@ exports.postBayarMasukBarang = (req, res, next) => {
     barangmasuk.save();
     keuanganbaru.save();
 
+    req.flash('success', 'Berhasil transaksi telah lunas');
     return res.redirect('/transaksi/masukbarang')
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err)
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/transaksi/masukbarang');
+  });
 };
 
 exports.getKategoriBarang = (req, res, next) => {
