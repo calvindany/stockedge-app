@@ -88,7 +88,7 @@
           // console.log(image)
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = idkategori;
           const newnamabarang = document.getElementsByName('kategori')[0].value = kategori;
-
+          const modalTitle = document.getElementById('modalTitle').innerHTML = 'Edit Kategori'
           if(image) {
             const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="${image}">`;
             const publicUrl = document.getElementById('publicUrl').value = image;
@@ -100,6 +100,8 @@
         function tambahData() {
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = '';
           const newnamabarang = document.getElementsByName('kategori')[0].value = '';
+          const modalTitle = document.getElementById('modalTitle').innerHTML = 'Tambah Kategori'
+
           const addGambarElement = document.getElementById('urlgambar').innerHTML = '';
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/tambah');
         }
