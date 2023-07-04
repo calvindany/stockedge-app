@@ -33,9 +33,10 @@ const karyawanSchema = new Schema(
           type: String,
         },
       }
-    ]
+    ],
   },
-  { collection: "karyawan" }
+  { collection: "karyawan" },
+  {}
 );
 
 karyawanSchema.methods.cekGajiBulanIni = function () {

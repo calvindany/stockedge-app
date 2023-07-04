@@ -49,6 +49,10 @@ const barangMasukSchema = new Schema(
     total: {
       type: Number,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { collection: "barangmasuk" }
 );

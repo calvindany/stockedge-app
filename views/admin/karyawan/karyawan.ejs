@@ -2,9 +2,22 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
 
   <body class="d-flex">
+    <% if(message) { %>
+      <script>
+        Swal.fire({
+          position: 'center-middle',
+          icon: '<%= message[0] %>',
+          text: '<%= message[1] %>',
+          // showConfirmButton: false,
+          timer: 1500,
+        })
+      </script>
+    <% } %>
     <%- include('../include/sidebar') %>
       <div class="" style="background-color: #F5F7FB; width: 100%;">
         <header class="w-100 d-flex align-items-center justify-content-end p-3 shadow"
@@ -17,7 +30,7 @@
             <h4 class="page-title">Data Karyawan</h4>
             <div class="d-flex" style="gap: 10px;">
               <a class="btn btn-primary px-3" href="/karyawan"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</a>
-              <a class="btn btn-outline-primary px-3" href="/tambahkaryawan"><i class="bi bi-plus-lg"></i> Tambah
+              <a class="btn btn-outline-primary px-3" href="/karyawan/tambah"><i class="bi bi-plus-lg"></i> Tambah
                 Karyawan</a>
             </div>
           </div>

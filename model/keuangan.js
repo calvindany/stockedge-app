@@ -24,7 +24,11 @@ const daftarKeuanganSchema = new Schema(
     },
     pendapatan: {
       type: Number,
-    }
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { collection: "daftarkeuangan" }
 );

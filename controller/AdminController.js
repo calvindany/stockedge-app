@@ -225,6 +225,7 @@ exports.getTransaksi = (req, res, next) => {
   }
 
   Transaksi.find()
+    .sort({createdAt: -1})
     .then((transaksi) => {
       res.render("admin/transaksi/transaksi", {
         route: "/transaksi",
@@ -784,11 +785,26 @@ exports.postHapusKategoriBarang = (req, res, next) => {
 }
 
 exports.getKaryawan = (req, res, next) => {
+  let messageSuccess = req.flash('success');
+  let messageFailed = req.flash('failed');
+  let message = [];
+
+  if(messageSuccess.length > 0){
+    message[0] = 'success',
+    message[1] = messageSuccess[0]
+  } else if(messageFailed.length > 0) {
+    message[0] = 'failed',
+    message[1] = messageFailed[0]
+  }else {
+    message = null;
+  }
+
   Karyawan.find()
   .then ( karyawan => {
     res.render('admin/karyawan/karyawan', {
       karyawan: karyawan,
-      route : '/karyawan'
+      route : '/karyawan',
+      message: message,
     });
   })
   .catch( err => console.log(err) );
@@ -818,6 +834,7 @@ exports.postTambahKaryawan = (req, res, next) => {
 
   karyawan.save();
 
+  req.flash('success', 'Karyawan berhasil ditambahkan')
   return res.redirect('/karyawan')
 }
 
@@ -852,6 +869,7 @@ exports.postEditKaryawan = (req, res, next) => {
     return karyawan.save();
   })
   .then( result => {
+    req.flash('success', 'Data karyawan berhasil di update')
     return res.redirect('/karyawan');
   })
   .catch(err => console.log(err));
@@ -876,16 +894,21 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
       });
       
       try {
-        karyawan.riwayatgaji.push({bulan: month, tahun: year});
+        karyawan.riwayatgaji.push({bulan: parseInt(date.getMonth()), tahun: date.getFullYear()});
         karyawan.save();
         keuangan.save();
+        req.flash('success', 'Gaji karyawan telah terdaftar');
       } catch (err) {
         console.log(err);
+        req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
       }
+    } else {
+      req.flash('failed', 'Karyawan telah digaji bulan ini');
     }
   })
   .catch(err => {
     console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
   });
 
   return res.redirect('/karyawan');

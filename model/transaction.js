@@ -58,6 +58,11 @@ const transaksiSchema = new Schema(
     pendapatan: {
       type: Number,
     },
+    createdAt: {
+      type: Date,
+      require: true,
+      default: Date.now(),
+    }
   },
   { collection: "transaksi" }
 );
