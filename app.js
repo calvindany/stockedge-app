@@ -76,11 +76,13 @@ app.use("/", UserRoutes);
 app.use("/", AdminRoutes);
 app.use("/auth", AuthRoutes);
 
+const PORT = process.env.PORT || 3000;
+
 mongoose
   .connect(process.env.MONGODB_URI_PROD)
   .then(() => {
-    app.listen(3000, () => {
-      console.log(`Server running in http://localhost:${3000}`);
+    app.listen(PORT, () => {
+      console.log(`Server running in http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
