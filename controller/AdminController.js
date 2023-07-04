@@ -443,6 +443,7 @@ exports.getMasukBarang = (req, res, next) => {
   }
 
   BarangMasuk.find()
+  .sort({ createdAt: -1 })
   .then( barangmasuk => {
     res.render('admin/transaksi/masukbarang', {
       route: '/masukbarang',
@@ -919,6 +920,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
   const bulanselesai = req.query.bulanselesai + '-31'
   if(req.query.bulanmulai || req.query.bulanselesai){
     Keuangan.find({tanggal: {$gte: bulanmulai, $lte: bulanselesai}})
+    .sort({ createdAt: -1 })
     .then( keuangan => {
       res.render('admin/laporan/daftarkeuangan', {
         route: '/daftar',
