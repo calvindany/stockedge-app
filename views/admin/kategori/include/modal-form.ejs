@@ -1,13 +1,5 @@
 <!-- Modal for edit data -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-bs-backdrop="static"
-  style="color: black"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" style="color: black">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -23,12 +15,7 @@
         <form method="POST" action="/kategori/tambah" name="modal-form" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="kategori" class="form-label">Nama Kategori</label>
-            <input
-              type="text"
-              class="form-control"
-              id="kategori"
-              name="kategori"
-            />
+            <input type="text" class="form-control" id="kategori" name="kategori"/>
           </div>
           <div class="mb-3">
             <label for="formFile" class="form-label">Gambar</label>
@@ -39,6 +26,8 @@
             </div>
           </div>
           <input type="hidden" name="idupdatedkategori" />
+          <input type="hidden" value="" name="publicUrl" id="publicUrl">
+          <input type="hidden" value="Web Asset" name="destination">
           <div class="modal-footer">
             <!-- Gunakan button ini jika dibutuhkan -->
             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->

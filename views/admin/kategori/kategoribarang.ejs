@@ -64,6 +64,8 @@
                         </button>
                           <form action="/kategori/delete" method="POST">
                             <input type="hidden" value="<%= kategori[i]._id %>" name="idkategorifordeleted">
+                            <input type="hidden" value="<%= kategori[i].image %>" name="publicUrl">
+                            <input type="hidden" value="Web Asset" name="destination">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                           </form>
                       </td>
@@ -83,15 +85,18 @@
       </script>
       <script>
         function editData(idkategori, kategori, image) {
+          // console.log(image)
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = idkategori;
           const newnamabarang = document.getElementsByName('kategori')[0].value = kategori;
 
           if(image) {
-            const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="/images/${image}">`;
+            const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="${image}">`;
+            const publicUrl = document.getElementById('publicUrl').value = image;
           }
 
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/kategori/edit/' + idkategori);
         }
+        
         function tambahData() {
           const idupdatedbarang = document.getElementsByName('idupdatedkategori')[0].value = '';
           const newnamabarang = document.getElementsByName('kategori')[0].value = '';

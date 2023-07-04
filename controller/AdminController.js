@@ -93,21 +93,9 @@ exports.postBarang = (req, res, next) => {
     modal: modal,
   });
 
-  if(req.file){
-    newbarang.image = req.file.filename;
-    sharp(path.join(__dirname, '../public/images/') + newbarang.image)
-    .resize(400, 400)
-    .toFile(path.join(__dirname, '../public/images/') + 'temp_' + newbarang.image, (err, info) => {
-      if(err) {
-        console.log(err);
-      }
-
-      //Hapus gambar sebelum di resize
-      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + newbarang.image)
-
-      //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-      fileHelper.renameFile(newbarang.image);
-    });
+  if(!req.file.cloudStorageError){
+    newbarang.image = req.file.cloudStoragePublicUrl;
+    // console.log(newbarang.image);
   }
 
   req.flash('success', 'Barang berhasil disimpan');
@@ -121,11 +109,6 @@ exports.postEditBarang = (req, res, next) => {
   const newstok = req.body.stok;
   const newharga = req.body.harga;
   const newmodal = req.body.modal;
-  let image;
-
-  if(req.file){
-    image = req.file.filename;
-  }
 
   Barang.findOne({ _id: idupdatedbarang }).then((barang) => {
     barang.namabarang = newnamabarang;
@@ -133,43 +116,10 @@ exports.postEditBarang = (req, res, next) => {
     barang.harga = newharga;
     barang.modal = newmodal;
 
-    if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image) && image) {
-      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
-      barang.image = image;
-
-      sharp(path.join(__dirname, '../public/images/') + barang.image)
-      .resize(400, 400)
-      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
-        if(err) {
-          console.log(err);
-        }
-
-        //Hapus gambar sebelum di resize
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
-
-        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-        fileHelper.renameFile(barang.image)
-      })
-    } else if (image) {
-      barang.image = image;
-
-      sharp(path.join(__dirname, '../public/images/') + barang.image)
-      .resize(800, 600)
-      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
-        if(err) {
-          console.log(err);
-        }
-
-        //Hapus gambar sebelum di resize
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
-
-        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-        fileHelper.renameFile(barang.image)
-      })
-    } else if (barang.image){
-      barang.image = barang.image;
+    if(req.file.cloudStoragePublicUrl){
+      barang.image = req.file.cloudStoragePublicUrl;
     } else {
-      barang.image = 'null';
+      barang.image = barang.image;
     }
 
     barang.save();
@@ -188,13 +138,9 @@ exports.postDeleteBarang = (req, res, next) => {
   const idbarang = req.body.idbarangfordeleted;
   Barang.findOne({ _id: idbarang })
   .then( barang => {
-    try {
-      if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image)) {
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
-      }
-    } catch (err) {
-      req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
-      return res.redirect("/barang");
+    // console.log(req.succesDelete)
+    if(!req.succesDelete){
+      console.log('Gagal menghapus foto');
     }
     return Barang.findOneAndDelete({ _id: idbarang })
   })
@@ -663,28 +609,15 @@ exports.postTambahKategoriBarang = (req, res, next) => {
     const kategori = req.body.kategori;
     let image;
   
-    if(req.file){
-      image = req.file.filename;
-    }
-  
     const kategoribaru = new Kategori({
       kategori: kategori,
       image: image,
     })
-  
-    sharp(path.join(__dirname, '../public/images/') + kategoribaru.image)
-      .resize(400, 400)
-      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategoribaru.image, (err, info) => {
-        if(err) {
-          console.log(err);
-        }
-  
-        //Hapus gambar sebelum di resize
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategoribaru.image)
-  
-        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-        fileHelper.renameFile(kategoribaru.image)
-      })
+    console.log(req.file.cloudStoragePublicUrl)
+    if(!req.file.cloudStoragePublicUrl){
+      console.log('gagal')
+    }
+    kategoribaru.image = req.file.cloudStoragePublicUrl;
     
     req.flash('success', 'Kategori berhasil disimpan');
     kategoribaru.save()
@@ -700,58 +633,22 @@ exports.postTambahKategoriBarang = (req, res, next) => {
 exports.postEditKategoriBarang = (req, res, next) => {
   const idkategori = req.params.idkategori;
   const namakategori = req.body.kategori;
-  let image;
-
-  if(req.file){
-    image = req.file.filename;
-  }
+  let image = null;
 
   Kategori.findOne({ _id: idkategori })
   .then( kategori => {
+    
     kategori.kategori = namakategori;
-
-    if (fs.existsSync(path.join(__dirname, '../public/images/') + kategori.image) && image) {
-      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
-      kategori.image = image;
-
-      sharp(path.join(__dirname, '../public/images/') + kategori.image)
-      .resize(400, 400)
-      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategori.image, (err, info) => {
-        if(err) {
-          console.log(err);
-        }
-
-        //Hapus gambar sebelum di resize
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
-
-        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-        fileHelper.renameFile(kategori.image)
-      })
-    } else if (image) {
-      kategori.image = image;
-
-      sharp(path.join(__dirname, '../public/images/') + kategori.image)
-      .resize(400, 400)
-      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + kategori.image, (err, info) => {
-        if(err) {
-          console.log(err);
-        }
-
-        //Hapus gambar sebelum di resize
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
-
-        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
-        fileHelper.renameFile(kategori.image)
-      })
-    } else if (kategori.image){
-      kategori.image = kategori.image;
+    
+    if(req.file.cloudStoragePublicUrl){
+      kategori.image = req.file.cloudStoragePublicUrl;
     } else {
-      kategori.image = 'null';
+      kategori.image = kategori.image;
     }
 
     kategori.save();
-    req.flash('success', 'Kategori berhasil diedit');
 
+    req.flash('success', 'Kategori berhasil diedit');
     return res.redirect("/kategori");
   })
   .catch( err => {
@@ -765,14 +662,10 @@ exports.postHapusKategoriBarang = (req, res, next) => {
   const idkategori = req.body.idkategorifordeleted
   Kategori.findOne({ _id: idkategori })
   .then( kategori => {
-    try {
-      if (fs.existsSync(path.join(__dirname, '../public/images/') + kategori.image)) {
-        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + kategori.image)
-        return Kategori.findOneAndDelete({ _id: idkategori })
-      }
-    } catch (err) {
-      return res.redirect("/kategori");
+    if(!req.succesDelete){
+      console.log('Gagal menghapus foto');
     }
+    return Kategori.findOneAndDelete({ _id: idkategori })
   })
   .then( result => {
     req.flash('success', 'Kategori berhasil dihapus');

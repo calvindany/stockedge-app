@@ -3,6 +3,7 @@ const express = require("express");
 const AdminController = require("../controller/AdminController");
 
 const AuthCheck = require("../util/auth");
+const ImgUpload = require("../util/imgUpload");
 
 const router = express.Router();
 
@@ -10,11 +11,11 @@ router.get("/dashboard", AuthCheck.authCheckAdmin,  AdminController.getDashboard
 
 router.get("/barang", AuthCheck.authCheckAdmin, AdminController.getBarang);
 
-router.post("/barang", AuthCheck.authCheckAdmin, AdminController.postBarang);
+router.post("/barang", AuthCheck.authCheckAdmin, ImgUpload.uploadToGcsWebAsset, AdminController.postBarang);
 
-router.post("/barang/:idbarang", AuthCheck.authCheckAdmin, AdminController.postEditBarang);
+router.post("/barang/:idbarang", AuthCheck.authCheckAdmin, ImgUpload.editToGcsWebAsset, AdminController.postEditBarang);
 
-router.post("/deletebarang", AuthCheck.authCheckAdmin, AdminController.postDeleteBarang);
+router.post("/deletebarang", AuthCheck.authCheckAdmin, ImgUpload.deleteToGcsWebAsset, AdminController.postDeleteBarang);
 
 router.get("/transaksi", AuthCheck.authCheckAdmin, AdminController.getTransaksi);
 
@@ -50,11 +51,11 @@ router.post("/transaksi/masukbarang/hapus", AuthCheck.authCheckAdmin, AdminContr
 
 router.get("/kategori", AuthCheck.authCheckAdmin, AdminController.getKategoriBarang);
 
-router.post("/kategori/tambah", AuthCheck.authCheckAdmin, AdminController.postTambahKategoriBarang);
+router.post("/kategori/tambah", AuthCheck.authCheckAdmin, ImgUpload.uploadToGcsWebAsset, AdminController.postTambahKategoriBarang);
 
-router.post("/kategori/edit/:idkategori", AuthCheck.authCheckAdmin, AdminController.postEditKategoriBarang);
+router.post("/kategori/edit/:idkategori", AuthCheck.authCheckAdmin, ImgUpload.editToGcsWebAsset, AdminController.postEditKategoriBarang);
 
-router.post("/kategori/delete", AuthCheck.authCheckAdmin, AdminController.postHapusKategoriBarang);
+router.post("/kategori/delete", AuthCheck.authCheckAdmin, ImgUpload.deleteToGcsWebAsset, AdminController.postHapusKategoriBarang);
 
 router.get("/karyawan", AuthCheck.authCheckAdmin, AdminController.getKaryawan);
 

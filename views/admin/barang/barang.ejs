@@ -80,6 +80,8 @@
                         </button>
                           <form action="/deletebarang" method="POST">
                             <input type="hidden" value="<%= barang[i]._id %>" name="idbarangfordeleted">
+                            <input type="hidden" value="<%= barang[i].image %>" name="publicUrl">
+                            <input type="hidden" value="Web Asset" name="destination">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                           </form>
                       </td>
@@ -107,8 +109,9 @@
           const newharga = document.getElementsByName('harga')[0].value = harga;
           const newmodal = document.getElementsByName('modal')[0].value = modal;
 
-          const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="/images/${image}">`;
+          const addGambarElement = document.getElementById('urlgambar').innerHTML = `<img style="max-width:18rem" src="${image}">`;
 
+          const publicUrl = document.getElementById('publicUrl').value = image;
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang/' + idbarang);
         }
         function tambahData() {

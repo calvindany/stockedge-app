@@ -1,0 +1,55 @@
+Barang.findOne({ _id: idupdatedbarang }).then((barang) => {
+    barang.namabarang = newnamabarang;
+    barang.stok = newstok;
+    barang.harga = newharga;
+    barang.modal = newmodal;
+
+    if (fs.existsSync(path.join(__dirname, '../public/images/') + barang.image) && image) {
+      fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+      barang.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + barang.image)
+      .resize(400, 400)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(barang.image)
+      })
+    } else if (image) {
+      barang.image = image;
+
+      sharp(path.join(__dirname, '../public/images/') + barang.image)
+      .resize(800, 600)
+      .toFile(path.join(__dirname, '../public/images/') + 'temp_' + barang.image, (err, info) => {
+        if(err) {
+          console.log(err);
+        }
+
+        //Hapus gambar sebelum di resize
+        fileHelper.deleteFile(path.join(__dirname, '../public/images/') + barang.image)
+
+        //Menganti nama gambar yang sudah diresze ke nama awal (tanpa temp_)
+        fileHelper.renameFile(barang.image)
+      })
+    } else if (barang.image){
+      barang.image = barang.image;
+    } else {
+      barang.image = 'null';
+    }
+
+    barang.save();
+    req.flash('success', 'Barang berhasil diedit');
+
+    return res.redirect("/barang");
+  })
+  .catch( err => {
+    console.log(err);
+    req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
+    return res.redirect('/barang');
+  });

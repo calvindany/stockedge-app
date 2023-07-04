@@ -23,13 +23,7 @@
         <form method="POST" action="/barang" name="modal-form" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="namabarang" class="form-label">Nama Barang</label>
-            <input
-              type="text"
-              class="form-control"
-              id="namabarang"
-              name="namabarang"
-              aria-describedby="barangHelp"
-            />
+            <input type="text" class="form-control" id="namabarang" name="namabarang" aria-describedby="barangHelp"/>
             <div id="barangHelp" class="form-text">
               Jika ada ukuran, masukkan didalam field ini. Contoh : Peralon 3"
             </div>
@@ -64,6 +58,8 @@
             </div>
           </div>
           <input type="hidden" name="idupdatedbarang" />
+          <input type="hidden" value="" name="publicUrl" id="publicUrl">
+          <input type="hidden" value="Web Asset" name="destination">
           <div class="modal-footer">
             <!-- Gunakan button ini jika dibutuhkan -->
             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
