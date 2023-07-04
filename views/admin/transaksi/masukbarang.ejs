@@ -103,14 +103,15 @@
                             });
                             '<% } %>'
                           </script>
+                          <button class="btn btn-primary %>" onclick="addDataToModal('<%= i %>','<%= barangmasuk[i].tanggal %>', '<%= barangmasuk[i].total %>', false)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="bi bi-file-text"></i> Detail
+                          </button>
                           <a class="btn btn-primary <%= (barangmasuk[i].status == 'Lunas') ? 'disabled' : '' %>" href="/transaksi/masukbarang/edit/<%= barangmasuk[i]._id %>"><i
                             class="bi bi-pencil-square"></i> Edit</a>
-                          <% if(barangmasuk[i].status == 'Lunas') { %>
-                            <form action="/transaksi/masukbarang/bayar" method="POST">
-                              <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
-                              <button class="btn btn-success" type="submit"><i class="bi bi-cash-stack"></i> Bayar</button>
-                            </form>
-                          <% } %>
+                          <form action="/transaksi/masukbarang/bayar" method="POST">
+                            <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
+                            <button class="btn btn-success" type="submit"><i class="bi bi-cash-stack"></i> Bayar</button>
+                          </form>
                           <form action="/transaksi/masukbarang/hapus" method="POST">
                             <input type="hidden" name="idbarangmasuk" value="<%= barangmasuk[i]._id %>">
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
