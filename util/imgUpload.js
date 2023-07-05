@@ -8,7 +8,7 @@ const pathKey = path.resolve('./service-account.json');
 const cloudStorage = new Storage({
     projectId: 'stockedge-app',
     keyFilename: pathKey
-})
+});
 
 // TODO: Tambahkan nama bucket yang digunakan
 const bucketName = 'image-asset-stockedge-app';
