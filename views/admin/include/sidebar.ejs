@@ -1,174 +1,172 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 min-vh-100 custom-sidebar" style="width: 280px">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-    <svg class="bi me-2" width="40" height="32">
-      <use xlink:href="#bootstrap"></use>
-    </svg>
-    <span class="fs-4">TB. INDO MAJU</span>
-  </a>
-  <hr />
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item mb-3">
-      <a href="/dashboard" class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>">
-        <i class="bi bi-speedometer2"></i>
-        Dashboard
-      </a>
-    </li>
-    <li class="nav-item mb-3">
-      <a
-        class="nav-link text-white d-flex justify-content-between align-items-center <%= (route == '/barang' || route == '/kategori') ? 'active' : '' %> mb-1"
-        data-bs-toggle="collapse"
-        href="#collapse1"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-        onclick="rotateArrow(0)"
-      > 
-        <div class="">
-          <i class="bi bi-bricks"></i>
-          Inventori
-        </div>
-        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
-      </a>
-      <div class="collapse <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
-        <ul class="list-group list-group-flush">
-          <a href="/barang" class="list-group-item rounded mb-1 <%= (route === '/barang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> List Barang
-          </a>
-          <a href="/kategori" class="list-group-item rounded mb-1 <%= (route === '/kategori') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> Kategori Barang
-          </a>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item mb-3">
-      <a
-        class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'active' : '' %> mb-1"
-        data-bs-toggle="collapse"
-        href="#collapse2"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-        onclick="rotateArrow(1)"
-      > 
-        <div class="">
-          <i class="bi bi-bag"></i>
-          Transaksi
-        </div>
-        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
-      </a>
-      <div class="collapse <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
-        <ul class="list-group list-group-flush">
-          <a href="/transaksi" class="list-group-item rounded mb-1 <%= (route === '/transaksi') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> Order
-          </a>
-          <a href="/transaksi/masukbarang" class="list-group-item rounded mb-1 <%= (route === '/masukbarang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> Barang Masuk
-          </a>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item mb-3">
-      <a
-      href="/karyawan"
-      class="nav-link text-white <%= (route == '/karyawan') ? 'active' : '' %>"
-      >
-      <i class="bi bi-person"></i>
-      Karyawan
-      </a>
-    </li>
-    <li class="nav-item mb-3">
-      <a
-        class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/laporan' || route == '/daftar') ? 'active' : '' %> mb-1"
-        data-bs-toggle="collapse"
-        href="#collapse3"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-        onclick="rotateArrow(2)"
-      > 
-        <div class="">
-          <i class="bi bi-file-earmark-check"></i>
-          Laporan Keuangan
-        </div>
-        <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
-      </a>
-      <div class="collapse <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
-        <ul class="list-group list-group-flush">
-          <a href="/daftarkeuangan" class="list-group-item rounded mb-1 <%= (route === '/daftar') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> Keuangan
-          </a>
-          <!-- <a href="#" class="list-group-item dropdown-item-custom rounded mb-1 <%= (route === '') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
-            <i class="bi bi-circle"></i> Pemasukan
-          </a> -->
-        </ul>
-      </div>
-    </li>
-  </ul>
-  <hr />
-  <div class="dropdown">
-    <a
-      href="#"
-      class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-      id="dropdownUser1"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      <img
-        src="https://github.com/mdo.png"
-        alt=""
-        width="32"
-        height="32"
-        class="rounded-circle me-2"
-      />
-      <strong>mdo</strong>
+<div class="d-flex flex-column flex-shrink-0 p-3 custom-sidebar" id="sidebar" style="min-height: 100vh; min-width: 30vh; position: fixed; z-index: 99;">
+  <div id="sidebar-content">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-4">TB. INDO MAJU</span>
     </a>
-    <ul
-      class="dropdown-menu dropdown-menu-dark text-small shadow"
-      aria-labelledby="dropdownUser1"
-    >
-      <li>
-        <a
-          class="dropdown-item"
-          href="#"
-          id="option"
-          onclick="changeChartType()"
-          >New project...</a
-        >
+    <hr />
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item mb-3">
+        <a href="/dashboard" class="nav-link text-white <%= (route == '/dashboard') ? 'active' : '' %>">
+          <i class="bi bi-speedometer2"></i>
+          Dashboard
+        </a>
       </li>
-      <li>
+      <li class="nav-item mb-3">
         <a
-          class="dropdown-item"
-          href="#"
-          id="option"
-          onclick="changeChartType()"
-          >Settings</a
-        >
+          class="nav-link text-white d-flex justify-content-between align-items-center <%= (route == '/barang' || route == '/kategori') ? 'active' : '' %> mb-1"
+          data-bs-toggle="collapse"
+          href="#collapse1"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          onclick="rotateArrow(0)"
+        > 
+          <div class="">
+            <i class="bi bi-bricks"></i>
+            Inventori
+          </div>
+          <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/barang' || route == '/kategori') ? 'collapse-icon-rotate' : '' %>"></i>
+        </a>
+        <div class="collapse <%= (route === '/barang' || route === '/kategori') ? 'show' : '' %>" id="collapse1">
+          <ul class="list-group list-group-flush">
+            <a href="/barang" class="list-group-item rounded mb-1 <%= (route === '/barang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> List Barang
+            </a>
+            <a href="/kategori" class="list-group-item rounded mb-1 <%= (route === '/kategori') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> Kategori Barang
+            </a>
+          </ul>
+        </div>
       </li>
-      <li>
+      <li class="nav-item mb-3">
         <a
-          class="dropdown-item"
-          href="#"
-          id="option"
-          onclick="changeChartType()"
-          >Profile</a
-        >
+          class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/transaksi' || route == '/masukbarang') ? 'active' : '' %> mb-1"
+          data-bs-toggle="collapse"
+          href="#collapse2"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          onclick="rotateArrow(1)"
+        > 
+          <div class="">
+            <i class="bi bi-bag"></i>
+            Transaksi
+          </div>
+          <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/ordermasuk' || route == '/masukbarang') ? 'collapse-icon-rotate' : '' %>"></i>
+        </a>
+        <div class="collapse <%= (route === '/transaksi' || route === '/masukbarang') ? 'show' : '' %>" id="collapse2">
+          <ul class="list-group list-group-flush">
+            <a href="/transaksi" class="list-group-item rounded mb-1 <%= (route === '/transaksi') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> Order
+            </a>
+            <a href="/transaksi/masukbarang" class="list-group-item rounded mb-1 <%= (route === '/masukbarang') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> Barang Masuk
+            </a>
+          </ul>
+        </div>
       </li>
-      <li>
-        <hr class="dropdown-divider" />
-      </li>
-      <li>
+      <li class="nav-item mb-3">
         <a
-          class="dropdown-item"
-          href="#"
-          id="option"
-          onclick="changeChartType()"
-          >Sign out</a
+        href="/karyawan"
+        class="nav-link text-white <%= (route == '/karyawan') ? 'active' : '' %>"
         >
+        <i class="bi bi-person"></i>
+        Karyawan
+        </a>
+      </li>
+      <li class="nav-item mb-3">
+        <a
+          class="nav-link text-white d-flex align-items-center justify-content-between <%= (route == '/laporan' || route == '/daftar') ? 'active' : '' %> mb-1"
+          data-bs-toggle="collapse"
+          href="#collapse3"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          onclick="rotateArrow(2)"
+        > 
+          <div class="">
+            <i class="bi bi-file-earmark-check"></i>
+            Laporan Keuangan
+          </div>
+          <i class="d-flex align-items-center text-end bi bi-chevron-down dropdown-arrow <%= (route == '/laporan' || route == '/daftar') ? 'collapse-icon-rotate' : '' %>"></i>
+        </a>
+        <div class="collapse <%= (route == '/laporan' || route == '/daftar') ? 'show' : '' %>" id="collapse3">
+          <ul class="list-group list-group-flush">
+            <a href="/daftarkeuangan" class="list-group-item rounded mb-1 <%= (route === '/daftar') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> Keuangan
+            </a>
+            <!-- <a href="#" class="list-group-item dropdown-item-custom rounded mb-1 <%= (route === '') ? 'dropdown-item-custom-active' : 'dropdown-item-custom' %>">
+              <i class="bi bi-circle"></i> Pemasukan
+            </a> -->
+          </ul>
+        </div>
       </li>
     </ul>
+    <hr />
+    <div class="dropdown">
+      <a
+        href="#"
+        class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+        id="dropdownUser1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          src="https://github.com/mdo.png"
+          alt=""
+          width="32"
+          height="32"
+          class="rounded-circle me-2"
+        />
+        <strong>mdo</strong>
+      </a>
+      <ul
+        class="dropdown-menu dropdown-menu-dark text-small shadow"
+        aria-labelledby="dropdownUser1"
+      >
+        <li>
+          <a
+            class="dropdown-item"
+            href="#"
+            id="option"
+            onclick="changeChartType()"
+            >New project...</a
+          >
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            href="#"
+            id="option"
+            onclick="changeChartType()"
+            >Settings</a
+          >
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            href="#"
+            id="option"
+            onclick="changeChartType()"
+            >Profile</a
+          >
+        </li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            href="#"
+            id="option"
+            onclick="changeChartType()"
+            >Sign out</a
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
-
 <script>
   function rotateArrow(index) {
     const dropdownArrow = document.getElementsByClassName('dropdown-arrow')[index];
@@ -179,4 +177,20 @@
     }
     // console.log(dropdownArrow);
   }
+</script>
+<script>
+  // function handleWindowWhenResize() {
+  //     let element = document.getElementById('sidebar-content');
+  //     let width = element.offsetWidth;
+  //     let spaceLeft = element.offsetLeft;
+
+  //     let windowWidth = window.innerWidth;
+
+  //     let sidebar = document.getElementById('sidebar')
+
+  //     sidebar.style.minWidth = width + spaceLeft + 'px';
+  // }
+
+  window.addEventListener('load', handleWindowWhenResize);
+  window.addEventListener('resize', handleWindowWhenResize);
 </script>

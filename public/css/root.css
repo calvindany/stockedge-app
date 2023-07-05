@@ -33,6 +33,10 @@ body {
     color: var(--user-color-template-2) !important;
 }
 
+#right-content {
+    padding-left: 30vh;
+}
+
 /* #totalKeranjang .card .card-header {
     background-color: var(--user-color-template-1) !important;
     color: var(--user-color-template-2) !important;
