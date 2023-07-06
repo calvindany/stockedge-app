@@ -17,6 +17,7 @@ const bucket = cloudStorage.bucket(bucketName)
 function getPublicUrlInvoiceAsset(filename) {
     return 'https://storage.googleapis.com/' + bucketName + '/invoice-asset/' + filename;
 }
+
 function getPublicUrlWebAsset(filename) {
     return 'https://storage.googleapis.com/' + bucketName + '/web-asset/' + filename;
 }
