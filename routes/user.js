@@ -2,6 +2,7 @@ const express = require('express');
 
 const UserController = require('../controller/UserContoller');
 const AuthCheck = require('../util/auth');
+const ImgUpload = require("../util/imgUpload");
 
 const router = express.Router();
 
@@ -21,6 +22,6 @@ router.post('/keranjang/pesan', AuthCheck.authCheckUser, UserController.postPesa
 
 router.get('/invoice', AuthCheck.authCheckUser, UserController.getInvoice);
 
-router.post('/invoice/buktibayar/tambah', AuthCheck.authCheckUser, UserController.postBuktiPembayaran);
+router.post('/invoice/buktibayar/tambah', AuthCheck.authCheckUser, ImgUpload.uploadToGcsInvoiceAsset, UserController.postBuktiPembayaran);
 
 module.exports = router;

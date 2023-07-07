@@ -56,8 +56,8 @@ exports.uploadToGcsWebAsset = (req, res, next) => {
 exports.uploadToGcsInvoiceAsset = (req, res, next) => {
     if (!req.file) return next();
 
-    const gcsname = Date.now() + req.file.mimetype + req.file.orginalname;
-    const file = bucket.file('web-asset/' + gcsname);
+    const gcsname = Date.now() + '.' + req.file.mimetype.split('/')[1];
+    const file = bucket.file('invoice-asset/' + gcsname);
 
     sharp(req.file.buffer)
     .resize(400, 400)

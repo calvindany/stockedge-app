@@ -376,34 +376,22 @@ exports.postBuktiPembayaran = (req, res, next) => {
     if(req.file){
         Transaksi.findOne({ _id: idinvoice })
         .then( transaksi => {
-            if(transaksi.buktibayar && fs.existsSync(path.join(__dirname, '../public/images/buktibayar/') + transaksi.buktibayar)){
-                // Hapus gambar invoice kalau exist (buat jaga jaga aja)
-                fileHelper.deleteFile(path.join(__dirname, '../public/images/buktibayar/') + transaksi.buktibayar)
-            }
 
-            let imageFileName = req.file.filename;
+            if(req.file.cloudStoragePublicUrl){
+                transaksi.status = 'Menunggu Validasi';
+                transaksi.buktibayar = req.file.cloudStoragePublicUrl;
+                req.flash('success', 'Bukti pembayaran berhasil disimpan');
+                transaksi.save();
+            } else {
+                req.flash('failed', 'Bukti pembayaran gagal disimpan');
+            }    
 
-            transaksi.status = 'Menunggu Validasi';
-            transaksi.buktibayar = 'invoice_' + imageFileName;
-            sharp(path.join(__dirname, '../public/images/') + imageFileName)
-            .resize(400, 400)
-            .toFile(path.join(__dirname, '../public/images/buktibayar/') + 'invoice_' + imageFileName, (err, info) => {
-                if(err) {
-                    console.log(err);
-                }
-
-                //Hapus gambar sebelum di resize
-                fileHelper.deleteFile(path.join(__dirname, '../public/images/') + imageFileName)
-            });
-
-            req.flash('success', 'Bukti pembayaran berhasil disimpan');
-            transaksi.save();
             
             return res.redirect("/invoice");
         })
         .catch (err => {
             console.log(err)
-            req.flash('failed', 'Bukti pembayaran gagal disimpan');
+            req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
             return res.redirect('/invoice')
         })
     }
