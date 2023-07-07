@@ -254,10 +254,14 @@ exports.getKeranjang = (req, res, next) => {
             // dan menyimpannya di array barangDalamKeranjang.
             user.keranjang.map( bk => {
                 let index = barang.findIndex( b => {
+                    // console.log(b._id, bk.idbarang)
                     return b._id == bk.idbarang;
                 });
-
-                gambarBarangDalamKeranjang.push(barang[index].image);
+                // console.log(index)
+                if(index > 0){
+                    gambarBarangDalamKeranjang.push(barang[index].image);
+                }
+                // console.log(gambarBarangDalamKeranjang)
             })
 
             res.render('user/keranjang', {
