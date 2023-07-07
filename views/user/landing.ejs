@@ -27,7 +27,7 @@
         <div class="list-produk d-flex justify-content-between my-4">
           <% for(let i = 0; i < barang.length; i++) { %>
             <div class="card" style="width: 18rem; padding: 0;">
-              <img src="/images/<%= barang[i].image %>" class="card-img-top" alt="...">
+              <img src="<%= barang[i].image %>" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"><%= barang[i].namabarang %></h5>
                     <p class="card-text">Stok: <%= barang[i].stok %></p>
@@ -80,7 +80,7 @@
           <% for(let i = 0; i < kategori.length; i++) { %>
             <a href="/produk?kategori=<%= kategori[i].kategori %>" style="color: black; text-decoration: none;">
               <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
-                <img src="/images/<%= kategori[i].image %>" class="card-img-top" alt="<%= kategori[i].image %>" height="90%">
+                <img src="<%= kategori[i].image %>" class="card-img-top" alt="<%= kategori[i].image %>" height="90%">
                 <p class="card-title mt-  2"><%= kategori[i].kategori %></p>
               </div>
             </a>

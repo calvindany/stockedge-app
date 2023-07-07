@@ -35,7 +35,7 @@
                         <td><%= invoice[i].status %></td>
                         <td>
                             <% if(invoice[i].buktibayar) { %>
-                                <a href="/images/buktibayar/<%= invoice[i].buktibayar %>" target="_blank">Bukti Bayar <%= i + 1 %></a>
+                                <a href="<%= invoice[i].buktibayar %>" target="_blank">Bukti Bayar <%= i + 1 %></a>
                             <% } else { %>
                                 <button type="button" onclick="addDataToInputImageModal('<%= invoice[i]._id %>')" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#buktiBayarModal">
                                     Upload Bukti

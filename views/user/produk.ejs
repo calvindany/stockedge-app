@@ -54,7 +54,7 @@
       <div class="container d-flex <%= (barang.length < 5) ? 'justify-content-start' : 'justify-content-start' %> row p-4" style="gap: 20px;">
         <% for(let i = 0; i < barang.length; i++) { %>
             <div class="card" style="width: 18rem; padding: 0;">
-                <img src="/images/<%= barang[i].image %>" style="max-width: 100% !important;" class="card-img-top" alt="...">
+                <img src="<%= barang[i].image %>" style="max-width: 100% !important;" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= barang[i].namabarang %></h5>
                     <p class="card-text"><%= barang[i].stok %></p>
@@ -155,7 +155,6 @@
                 const url = window.location.href;
                 const urlObject = new URL(url);
                 const params = new URLSearchParams(urlObject.search);
-                console.log('aa')
                 const namabarang = params.get('namabarang');
                 const kategori = params.get('category');
                 const page = params.get('page');
@@ -164,13 +163,13 @@
                 const element = document.getElementById('pagination-item'+paginationItem);
 
                 if(namabarang){
-                    element.setAttribute('href', `http://127.0.0.1:3000/produk?namabarang=${namabarang}&page=${paginationItem}`);
+                    element.setAttribute('href', `${urlObject.origin}/produk?namabarang=${namabarang}&page=${paginationItem}`);
                     // console.log(`http://127.0.0.1:3000/produk?namabarang=${namabarang}&page=${paginationItem}`)
                 } else if(kategori){
-                    element.setAttribute('href', `http://127.0.0.1:3000/produk?kategori=${kategori}&page=${paginationItem}`);
+                    element.setAttribute('href', `${urlObject.origin}/produk?kategori=${kategori}&page=${paginationItem}`);
                     // console.log('href', `http://127.0.0.1:3000/produk?kategori=${kategori}&page=${paginationItem}`);
                 } else {
-                    element.setAttribute('href', `http://127.0.0.1:3000/produk?page=${paginationItem}`);
+                    element.setAttribute('href', `${urlObject.origin}/produk?page=${paginationItem}`);
                     // console.log('href', `http://127.0.0.1:3000/produk?page=${paginationItem}`);
                 }
             }
