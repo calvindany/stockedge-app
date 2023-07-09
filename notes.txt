@@ -14,5 +14,7 @@ To Do :
 - Revisi untuk konfigurasi route Admin (Nanti aja bisa ini)
 - Tambah mode transaksi v
 - Tambah improvement di halaman masuk barang
+- Detail di transaksi blm bisa liat gambar (salah route)
+- 
 
 usecase activity, deployment
