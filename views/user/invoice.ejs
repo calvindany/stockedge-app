@@ -57,7 +57,11 @@
                                 });
                                 '<% } %>'
                             </script>
-                            <a href="#" class="btn btn-outline-success" onclick="addDataToModal('<%= i %>','<%= invoice[i].tanggal %>', '<%= invoice[i].total %>')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Details</a>
+                            <a  href="#" class="btn btn-outline-success" 
+                                onclick="addDataToModal('<%= i %>','<%= invoice[i].tanggal %>', '<%= invoice[i].total %>')" 
+                                data-bs-toggle="modal" data-bs-target="#detailModal">
+                                Details
+                            </a>
                         </td>
                     </tr>
                 <% } %>
@@ -88,7 +92,7 @@
             </div>
         </div>
         <!-- Modal untuk menampilkan detail invoice -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="detailModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
