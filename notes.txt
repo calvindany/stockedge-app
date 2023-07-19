@@ -15,6 +15,12 @@ To Do :
 - Tambah mode transaksi v
 - Tambah improvement di halaman masuk barang
 - Detail di transaksi blm bisa liat gambar (salah route)
-- 
+- usecase activity, deployment
 
-usecase activity, deployment
+[After Black Box Testing]
+1 belum ada notifikasi
+2. Belum ada validasi data di barang masuk + halaman order
+3. Dashboard tidak stay di dashboard + pop up detail ga muncul
+4. Blum ada valdasi data gambar
+5. Belum ada validasi data di registrasi
+6. Login blm ada validasi data kalau kurang submit
