@@ -115,15 +115,16 @@
         }
         function tambahData() {
           const modaltitle = document.getElementById('BarangModalForm').innerHTML = 'Tambah Data';
-          const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = '';
-          const newnamabarang = document.getElementsByName('namabarang')[0].value = '';
-          const newkategori = document.getElementsByName('kategori')[0].value = 'Pilih...';
-          const newstok = document.getElementsByName('stok')[0].value = '';
-          const newharga = document.getElementsByName('harga')[0].value = '';
-          const newmodal = document.getElementsByName('modal')[0].value = '';
-          const addGambarElement = document.getElementById('urlgambar').innerHTML = '';
+          const idupdatedbarang = document.getElementsByName('idupdatedbarang')[0].value = null;
+          const newnamabarang = document.getElementsByName('namabarang')[0].value = null;
+          const newkategori = document.getElementsByName('kategori')[0].value = null;
+          const newstok = document.getElementsByName('stok')[0].value = null;
+          const newharga = document.getElementsByName('harga')[0].value = null;
+          const newmodal = document.getElementsByName('modal')[0].value = nul;
+          const addGambarElement = document.getElementById('urlgambar').innerHTML = null;
 
           const formedit = document.getElementsByName('modal-form')[0].setAttribute('action', '/barang');
         }
       </script>
+      <script src="/js/formValidation.js"></script>
       <%- include('../include/footer') %>
