@@ -21,7 +21,7 @@
               <form
                 action="<% if (karyawan) { %>/karyawan/edit/<%= karyawan._id %><% } else { %>/karyawan/tambah<% } %>"
                 method="POST"
-                id="input-form">
+                id="forminput">
                 <div class="mb-3">
                   <label for="namakaryawan" class="form-label">Nama Karyawan</label>
                   <input type="text" class="form-control required-field" id="namakaryawan" name="namakaryawan" value="<%= (karyawan) ? karyawan.nama : '' %>" required>
