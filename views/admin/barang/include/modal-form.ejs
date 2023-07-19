@@ -19,46 +19,48 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="/barang" name="modal-form" enctype="multipart/form-data">
+        <form method="POST" id="forminput" action="/barang" name="modal-form" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="namabarang" class="form-label">Nama Barang</label>
-            <input type="text" class="form-control" id="namabarang" name="namabarang" aria-describedby="barangHelp"/>
+            <input type="text" class="form-control required-field" id="namabarang" name="namabarang" aria-describedby="barangHelp"/>
             <div id="barangHelp" class="form-text">
               Jika ada ukuran, masukkan didalam field ini. Contoh : Peralon 3"
             </div>
           </div>
           <div class="mb-3">
             <label for="kategori" class="form-label">Kategori Barang</label>
-            <select class="form-select" aria-label="Default select example" name="kategori" id="kategori">
-              <option selected>Pilih...</option>
+            <select class="form-select required-field" aria-label="Default select example" name="kategori" id="kategori">
+              <option value="" selected disabled>Pilih...</option>
               <% for(let i = 0; i < kategori.length; i++) { %>
-                <option value="<%= kategori[i].kategori %>"><%= kategori[i].kategori %></option>
+              <option value="<%= kategori[i].kategori %>">
+                <%= kategori[i].kategori %>
+              </option>
               <% } %>
             </select>
           </div>
           <div class="mb-3">
             <label for="stok" class="form-label">Stok</label>
-            <input type="number" class="form-control" id="stok" name="stok" />
+            <input type="number" class="form-control required-field" id="stok" name="stok" />
           </div>
           <div class="mb-3">
             <label for="harga" class="form-label">Harga</label>
-            <input type="number" class="form-control" id="harga" name="harga" />
+            <input type="number" class="form-control required-field" id="harga" name="harga" />
           </div>
           <div class="mb-3">
             <label for="modal" class="form-label">Modal</label>
-            <input type="number" class="form-control" id="modal" name="modal" />
+            <input type="number" class="form-control required-field" id="modal" name="modal" />
           </div>
           <div class="mb-3">
             <label for="formFile" class="form-label">Gambar</label>
-            <div id="urlgambar" class="d-flex justify-content-center w-100"></div>
-            <input class="form-control" type="file" id="formFile" name="image" aria-describedby="gambarHelp">
+            <div id="urlgambar"class="d-flex justify-content-center w-100"></div>
+            <input class="form-control" type="file" id="formFile" name="image" aria-describedby="gambarHelp"/>
             <div id="gambarHelp" class="form-text">
               Jika tidak ingin mengupdate gambar, biarkan kosong saja
             </div>
           </div>
           <input type="hidden" name="idupdatedbarang" />
-          <input type="hidden" value="" name="publicUrl" id="publicUrl">
-          <input type="hidden" value="Web Asset" name="destination">
+          <input type="hidden" value="" name="publicUrl" id="publicUrl" />
+          <input type="hidden" value="Web Asset" name="destination" />
           <div class="modal-footer">
             <!-- Gunakan button ini jika dibutuhkan -->
             <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
