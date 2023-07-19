@@ -9,16 +9,16 @@ exports.getLogin = (req, res, next) => {
     let messageUserProtectionRoute = req.flash('user-failed');
 
     let message = [];
-    if(messageLogin && messageLogin.length > 0){
+    if (messageLogin && messageLogin.length > 0) {
         message[0] = 'Failed';
         message[1] = messageLogin[0];
-    } else if(messageRegist && messageRegist.length > 0){
+    } else if (messageRegist && messageRegist.length > 0) {
         message[0] = 'Success';
         message[1] = messageRegist[0];
-    } else if(messageAdminProtectionRoute && messageAdminProtectionRoute.length > 0){
+    } else if (messageAdminProtectionRoute && messageAdminProtectionRoute.length > 0) {
         message[0] = 'Failed';
         message[1] = messageAdminProtectionRoute[0];
-    } else if(messageUserProtectionRoute && messageUserProtectionRoute.length > 0){
+    } else if (messageUserProtectionRoute && messageUserProtectionRoute.length > 0) {
         message[0] = 'Failed';
         message[1] = messageUserProtectionRoute[0];
     } else {
@@ -33,31 +33,31 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    
-    User.findOne({email : email})
-    .then ( user => {
-        if(!user){
-            req.flash('login-failed', 'Login gagal, email atau password salah!');
-            return res.redirect('/auth/login')
-        }
-        return bcrypt
-        .compare( password, user.password)
-        .then( result => {
-            if(result){
-                const jwtToken = jwt.sign({ 
-                    iduser: user._id,
-                    username: user.username,
-                    email: user.email,
-                }, process.env.JWT_SECRET);
-                res.cookie('jwt', jwtToken)
 
-                res.redirect('/')
-            } else {
+    User.findOne({ email: email })
+        .then(user => {
+            if (!user) {
                 req.flash('login-failed', 'Login gagal, email atau password salah!');
                 return res.redirect('/auth/login')
             }
+            return bcrypt
+                .compare(password, user.password)
+                .then(result => {
+                    if (result) {
+                        const jwtToken = jwt.sign({
+                            iduser: user._id,
+                            username: user.username,
+                            email: user.email,
+                        }, process.env.JWT_SECRET);
+                        res.cookie('jwt', jwtToken)
+
+                        res.redirect('/')
+                    } else {
+                        req.flash('login-failed', 'Login gagal, email atau password salah!');
+                        return res.redirect('/auth/login')
+                    }
+                })
         })
-    }) 
 }
 
 exports.getRegister = (req, res, next) => {
@@ -71,20 +71,21 @@ exports.postRegister = (req, res, next) => {
     const notelp = req.body.notelp;
 
     bcrypt.hash(password, 12)
-    .then( hashedpassword => {
-        const newUser = new User({
-            username: name,
-            email: email,
-            notelp: notelp,
-            password: hashedpassword,
+        .then(hashedpassword => {
+            const newUser = new User({
+                username: name,
+                email: email,
+                role: 'user',
+                notelp: notelp,
+                password: hashedpassword,
+            })
+
+            newUser.save();
+
+            req.flash('regist-success', 'Registrasi berhasil, silahkan login');
+
+            return res.redirect('/auth/login');
         })
-
-        newUser.save();
-
-        req.flash('regist-success', 'Registrasi berhasil, silahkan login');
-
-        return res.redirect('/auth/login');
-    })
 }
 
 exports.postLogout = (req, res, next) => {
