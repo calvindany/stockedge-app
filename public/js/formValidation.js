@@ -4,7 +4,7 @@ function formValidation() {
     event.preventDefault();
 
     const getAllRequiredFields = document.querySelectorAll('.required-field');
-    console.log(getAllRequiredFields);
+    // console.log(getAllRequiredFields);
     for(let i = 0; i < getAllRequiredFields.length; i++){
         if(!getAllRequiredFields[i].value){
             // console.log(getAllRequiredFields[i]);
