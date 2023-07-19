@@ -1,4 +1,4 @@
-document.getElementById('forminput').addEventListener('submit', formValidation());
+document.getElementById('forminput').addEventListener('submit', formValidation);
 
 function formValidation() {
     event.preventDefault();
