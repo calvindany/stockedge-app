@@ -606,22 +606,21 @@ exports.getKategoriBarang = (req, res, next) => {
 exports.postTambahKategoriBarang = (req, res, next) => {
   try {
     const kategori = req.body.kategori;
-    let image;
 
     const kategoribaru = new Kategori({
       kategori: kategori,
-      image: image,
     })
-    console.log(req.file.cloudStoragePublicUrl)
-    if (!req.file.cloudStoragePublicUrl) {
-      console.log('gagal')
+    // console.log(req.file.cloudStoragePublicUrl)
+    if (req.file && !req.file.cloudStorageError) {
+      // console.log('gagal')
+      kategoribaru.image = req.file.cloudStoragePublicUrl;
     }
-    kategoribaru.image = req.file.cloudStoragePublicUrl;
 
     req.flash('success', 'Kategori berhasil disimpan');
     kategoribaru.save()
 
     return res.redirect('/kategori')
+
   } catch (err) {
     console.log(err);
     req.flash('failed', 'Ada yang salah, silahkan hubungi developer');
@@ -639,10 +638,8 @@ exports.postEditKategoriBarang = (req, res, next) => {
 
       kategori.kategori = namakategori;
 
-      if (req.file.cloudStoragePublicUrl) {
+      if (req.file && !req.file.cloudStorageError) {
         kategori.image = req.file.cloudStoragePublicUrl;
-      } else {
-        kategori.image = kategori.image;
       }
 
       kategori.save();
