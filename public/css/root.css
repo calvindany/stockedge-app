@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root {
-    --user-color-template-1:  #091540;
+    --user-color-template-1: #091540;
     --user-color-template-2: #F8F7F9;
 }
 
@@ -11,8 +11,9 @@ body {
     background-color: var(--user-color-template-2);
 }
 
-.bg-navigation{
+.bg-navigation {
     background-color: var(--user-color-template-1);
+    /* background-color: white; */
     color: var(--user-color-template-2) !important;
 }
 
@@ -20,7 +21,7 @@ body {
     color: var(--user-color-template-2) !important;
 }
 
-.nav-link{
+.nav-link {
     color: var(--user-color-template-2) !important;
 }
 
@@ -29,7 +30,7 @@ body {
     color: var(--user-color-template-2) !important;
 }
 
-.toast-header button i{
+.toast-header button i {
     color: var(--user-color-template-2) !important;
 }
 
@@ -37,7 +38,22 @@ body {
     padding-left: 30vh;
 }
 
-/* #totalKeranjang .card .card-header {
-    background-color: var(--user-color-template-1) !important;
-    color: var(--user-color-template-2) !important;
-} */
+@media (max-width: 525px) {
+    .navbar-toggler .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    .navbar-toggler {
+        border: 1px solid white !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .navbar-toggler .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    .navbar-toggler {
+        border: 1px solid white !important;
+    }
+}

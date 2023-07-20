@@ -69,11 +69,6 @@
 }
 
 @media (max-width: 525px) {
-
-    /* .step {
-        display: block !important;
-    } */
-
     .border-half {
         justify-content: center !important;
     }
@@ -87,11 +82,21 @@
         margin-top: 20px;
     }
 
+    .jumbotron-custom {
+        margin-bottom: 20px !important;
+    }
 }
 
 @media (max-width: 1000px) {
+    .border-half {
+        justify-content: center !important;
+    }
+
     .tentang-kami .content .text-center {
         margin-top: 20px;
     }
 
+    .jumbotron-custom {
+        margin-bottom: 30px !important;
+    }
 }

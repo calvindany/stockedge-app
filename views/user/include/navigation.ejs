@@ -5,19 +5,19 @@
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto" style="gap: 20px;">
         <% if(isLoggedIn) { %>
           <li class="nav-item">
             <!-- <a class="nav-link" href="/produk">Keranjang</a> -->
-            <a class="position-relative nav-link" href="/keranjang">
+            <a class="position-relative nav-link keranjang" href="/keranjang">
               <!-- Keranjang (Text)-->
               <i class="bi bi-cart2"></i>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
