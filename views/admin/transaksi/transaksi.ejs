@@ -190,7 +190,7 @@
             const totalInvoice = document.getElementById('totalInvoice');
             let findIndex = 0;
             tanggalInvoice.innerHTML = `Tanggal Pembelian : ${tanggal}`
-            buktiBayarInvoice.innerHTML = (buktiBayarInvoice == '') ? 'Bukti Pembayaran : Belum ada transaksi' : `Bukti Pembayaran : <a href="/images/buktibayar/${buktibayar}" target="_blank">Bukti Bayar</a>`;
+            buktiBayarInvoice.innerHTML = (buktiBayarInvoice == '') ? 'Bukti Pembayaran : Belum ada transaksi' : `Bukti Pembayaran : <a href="${buktibayar}" target="_blank">Bukti Bayar</a>`;
             tableBody.innerHTML = '';
             
             console.log(daftarInvoice);
