@@ -17,7 +17,7 @@
 
 .dropdown-item-custom:hover {
   background-color: #ebecece8 !important;
-  color: #53585D  !important;
+  color: #53585D !important;
 }
 
 .dropdown-item-custom-active {
@@ -28,7 +28,7 @@
 }
 
 .dropdown-arrow {
-  transition:.5s;
+  transition: .5s;
 }
 
 .collapse-icon-rotate {

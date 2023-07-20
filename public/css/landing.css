@@ -85,6 +85,10 @@
     .jumbotron-custom {
         margin-bottom: 20px !important;
     }
+
+    .list-kategori {
+        justify-content: start !important;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -98,5 +102,9 @@
 
     .jumbotron-custom {
         margin-bottom: 30px !important;
+    }
+
+    .list-kategori {
+        justify-content: start !important;
     }
 }
