@@ -1,0 +1,15 @@
+@import "./root.css";
+
+@media (max-width: 525px) {
+    .daftar-produk {
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .daftar-produk {
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
