@@ -5,7 +5,7 @@
     --user-color-template-2: #F8F7F9;
 */
 
-.border-half{
+.border-half {
     position: relative;
 }
 
@@ -14,7 +14,7 @@
     color: var(--user-color-template-2);
 }
 
-.border-half::before{
+.border-half::before {
     content: '';
     display: block;
     position: absolute;
@@ -23,17 +23,17 @@
     border-bottom: 1px solid skyblue;
 }
 
-.image-about-me{
+.image-about-me {
     max-width: 100%;
 }
 
-.kategori-card{
+.kategori-card {
     cursor: pointer;
     transition: transform .2s;
     text-decoration: none;
 }
 
-.kategori-card:hover{
+.kategori-card:hover {
     transform: scale(1.2);
     z-index: 99;
 }
@@ -42,7 +42,7 @@
     border: none;
 }
 
-.tata-cara-pemesanan{
+.tata-cara-pemesanan {
     color: var(--user-color-template-2);
 }
 
@@ -66,4 +66,32 @@
 
 .invoice-tbody {
     color: var(--user-color-template-1);
+}
+
+@media (max-width: 525px) {
+
+    /* .step {
+        display: block !important;
+    } */
+
+    .border-half {
+        justify-content: center !important;
+    }
+
+    .tentang-kami .content {
+        display: block !important;
+        /* background-color: blue; */
+    }
+
+    .tentang-kami .content .text-center {
+        margin-top: 20px;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .tentang-kami .content .text-center {
+        margin-top: 20px;
+    }
+
 }

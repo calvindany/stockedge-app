@@ -24,9 +24,9 @@
         <div class="d-flex border-half">
           <p class="fs-4">PRODUK YANG KAMI JUAL</p>
         </div>
-        <div class="list-produk d-flex justify-content-between my-4">
+        <div class="list-produk my-4 overflow-x-auto d-flex">
           <% for(let i = 0; i < barang.length; i++) { %>
-            <div class="card" style="width: 18rem; padding: 0;">
+            <div class="card col-8 col-sm-8 col-md-5 col-lg-3 col-xl-3 ms-3" style="padding: 0;">
               <img src="<%= barang[i].image %>" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title"><%= barang[i].namabarang %></h5>
@@ -76,7 +76,7 @@
         <div class="d-flex justify-content-center border-half">
           <p class="fs-4">KATEGORI BARANG</p>
         </div>
-        <div class="list-kategori d-flex justify-content-center my-4" style="gap: 20px;">
+        <div class="list-kategori d-flex justify-content-center align-items-center overflow-x-auto my-4" style="height: 15rem ;gap: 20px;">
           <% for(let i = 0; i < kategori.length; i++) { %>
             <a href="/produk?kategori=<%= kategori[i].kategori %>" style="color: black; text-decoration: none;">
               <div class="card d-flex flex-column justify-content-between text-center kategori-card" style="width: 10rem;">
@@ -93,11 +93,11 @@
         <div class="d-flex border-half justify-content-end">
           <p class="fs-4 ">TENTANG KAMI</p>
         </div>
-        <div class="content d-flex my-4 align-items-center justify-content-between">
-          <div class="col-5">
+        <div class="content d-block d-lg-flex my-4 align-items-center justify-content-between">
+          <div class="col-12 col-sm-12 col-lg-5">
             <img src="/asset/image-landing.png" class="image-about-me">
           </div>
-          <div class="text-center col-6">
+          <div class="text-center col-12 col-sm-12 col-lg-6">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex voluptatem dolor minima numquam consequuntur, quia nisi nemo voluptatibus tempore eligendi architecto deserunt praesentium temporibus. Cum perspiciatis similique cumque magnam, praesentium veritatis doloribus consequatur fugiat nemo quis alias voluptas tempore inventore nisi, officiis repellendus laboriosam necessitatibus saepe porro maiores qui eligendi?
           </div>
         </div>
@@ -108,38 +108,38 @@
         <div class="d-flex justify-content-center border-half mb-4">
           <p class="fs-4 ">TATA CARA PEMESANAN</p>
         </div>
-        <div class="step d-flex justify-content-between mt-4">
-          <div class="card borderless d-flex align-items-center p-4">
+        <div class="step d-flex justify-content-between overflow-x-auto mt-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-search"></i></div>
             <div class="card-body">
               <h5 class="card-title">Cari Barang</h5>
             </div>
           </div>
-          <div class="card borderless d-flex align-items-center p-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-bag"></i></div>
             <div class="card-body">
               <h5 class="card-title">Beli Barang</h5>
             </div>
           </div>
-          <div class="card borderless d-flex align-items-center p-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-credit-card"></i></div>
             <div class="card-body">
               <h5 class="card-title">Pembayaran</h5>
             </div>
           </div>
-          <div class="card borderless d-flex align-items-center p-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-telephone-inbound"></i></div>
             <div class="card-body text-center">
               <h5 class="card-title">Upload Bukti Bayar<br>Pada Invoice</h5>
             </div>
           </div>
-          <div class="card borderless d-flex align-items-center p-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-truck"></i></div>
             <div class="card-body text-center">
               <h5 class="card-title">Konfirmasi Pembayaran<br>oleh Admin</h5>
             </div>
           </div>
-          <div class="card borderless d-flex align-items-center p-4">
+          <div class="card borderless d-flex align-items-center p-4 col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2">
             <div class="circle d-flex align-items-center justify-content-center fs-4"><i class="bi bi-truck"></i></div>
             <div class="card-body text-center">
               <h5 class="card-title">Pengiriman<br>Barang</h5>
