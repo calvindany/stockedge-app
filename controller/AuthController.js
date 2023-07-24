@@ -1,6 +1,7 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const sendMail = require('../util/sendMail');
 
 exports.getLogin = (req, res, next) => {
     let messageLogin = req.flash('login-failed');
@@ -76,12 +77,13 @@ exports.postRegister = (req, res, next) => {
                 username: name,
                 email: email,
                 role: 'user',
+                active: false,
                 notelp: notelp,
                 password: hashedpassword,
             })
 
             newUser.save();
-
+            sendMail.sendMail(email, token);
             req.flash('regist-success', 'Registrasi berhasil, silahkan login');
 
             return res.redirect('/auth/login');
