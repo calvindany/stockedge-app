@@ -6,7 +6,6 @@ exports.sendMail = (destination, url) => {
         auth: {
             user: "indomaju.material@gmail.com",
             pass: process.env.EMAIL_PASS,
-            // pass: 'obknkibqisfnrgdx',
         }
     })
 
