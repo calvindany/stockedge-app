@@ -1,7 +1,10 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
 const sendMail = require('../util/sendMail');
+const user = require('../model/user');
 
 exports.getLogin = (req, res, next) => {
     let messageLogin = req.flash('login-failed');
@@ -39,7 +42,10 @@ exports.postLogin = (req, res, next) => {
         .then(user => {
             if (!user) {
                 req.flash('login-failed', 'Login gagal, email atau password salah!');
-                return res.redirect('/auth/login')
+                return res.redirect('/auth/login');
+            } else if (user.active == false) {
+                req.flash('login-failed', 'Silahkan aktivasi terlebih dahulu akun anda');
+                return res.redirect('/auth/login');
             }
             return bcrypt
                 .compare(password, user.password)
@@ -70,6 +76,7 @@ exports.postRegister = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const notelp = req.body.notelp;
+    const key = crypto.randomBytes(32).toString('hex');
 
     bcrypt.hash(password, 12)
         .then(hashedpassword => {
@@ -80,11 +87,14 @@ exports.postRegister = (req, res, next) => {
                 active: false,
                 notelp: notelp,
                 password: hashedpassword,
-            })
+                activationToken: key,
+            });
+
+            const redirectUrl = process.env.BASE_URL_EMAIL || `http://localhost:3000/auth/email-confirmation?email=${email}&activationToken=${key}`;
+            sendMail.sendMail(email, redirectUrl);
 
             newUser.save();
-            sendMail.sendMail(email, token);
-            req.flash('regist-success', 'Registrasi berhasil, silahkan login');
+            req.flash('regist-success', 'Silahkan aktivasi akun anda melalui email yang kami kirimkan');
 
             return res.redirect('/auth/login');
         })
@@ -94,4 +104,28 @@ exports.postLogout = (req, res, next) => {
     res.clearCookie('jwt');
 
     res.redirect('/');
+}
+
+exports.postEmailConfirmation = (req, res, next) => {
+    const email = req.query.email;
+    const activationToken = req.query.activationToken;
+
+    User.findOne({ email: email })
+        .then(user => {
+            console.log(user)
+            console.log(activationToken);
+            console.log(user.activationToken);
+            if (user.activationToken == activationToken) {
+                user.active = true;
+                user.activationToken = null;
+
+                req.flash('regist-success', 'Activasi sukses, silahkan login');
+
+                console.log('masik')
+                user.save();
+                return res.redirect('/auth/login');
+            }
+            req.flash('regist-success', 'Aktivasi gagal, pastikan email anda sudah benar');
+            return res.redirect('/auth/login');
+        })
 }
