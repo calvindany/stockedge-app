@@ -11,6 +11,8 @@ router.get('/registrasi', AuthController.getRegister);
 
 router.post('/registrasi', AuthController.postRegister);
 
+router.post('/email-confirmation', AuthController.postEmailConfirmation);
+
 router.post('/logout', AuthController.postLogout);
 
 module.exports = router;

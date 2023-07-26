@@ -24,6 +24,13 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  active: {
+    type: Boolean,
+    require: true,
+  },
+  activationToken: {
+    type: String,
+  },
   keranjang: [
     {
       idbarang: {
@@ -43,6 +50,6 @@ const userSchema = new Schema({
       }
     }
   ]
-}, {collection: 'user'});
+}, { collection: 'user' });
 
 module.exports = mongoose.model("user", userSchema);

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center !important;
+        }
+        .container{
+            width: 30rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Confirmation</h1>
+        <p>This url can only be used once and will expired in  1 hours</p>
+        <a href="localhost:3000/auth/email-confirmation">Confirm Email</a>
+    </div>
+</body>
+</html>
