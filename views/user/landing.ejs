@@ -24,7 +24,7 @@
         <div class="d-flex border-half">
           <p class="fs-4">PRODUK YANG KAMI JUAL</p>
         </div>
-        <div class="list-produk my-4 overflow-x-auto d-flex">
+        <div class="list-produk my-4 d-flex">
           <% for(let i = 0; i < barang.length; i++) { %>
             <div class="card col-8 col-sm-8 col-md-5 col-lg-3 col-xl-3 ms-3" style="padding: 0;">
               <img src="<%= barang[i].image %>" class="card-img-top" alt="...">
@@ -35,7 +35,6 @@
                     <div class="d-flex" style="gap: 5px;">
                       <button href="#" onclick="changeModalRoute('Tambah', '<%= barang[i]._id %>')" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Tambah</button>
                         <button href="#" onclick="changeModalRoute('Pesan', '<%= barang[i]._id %>')" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#jumlahModal">Pesan</button>
-
                         <!-- Modal -->
                         <div class="modal fade" id="jumlahModal" tabindex="-1" aria-labelledby="jumlahModalLabel" aria-hidden="true">
                             <div class="modal-dialog">

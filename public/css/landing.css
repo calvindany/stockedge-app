@@ -6,105 +6,115 @@
 */
 
 .border-half {
-    position: relative;
+  position: relative;
 }
 
 .bg-jumbotron {
-    background-color: var(--user-color-template-1) !important;
-    color: var(--user-color-template-2);
+  background-color: var(--user-color-template-1) !important;
+  color: var(--user-color-template-2);
 }
 
 .border-half::before {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    width: 50%;
-    border-bottom: 1px solid skyblue;
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  border-bottom: 1px solid skyblue;
 }
 
 .image-about-me {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .kategori-card {
-    cursor: pointer;
-    transition: transform .2s;
-    text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
 }
 
 .kategori-card:hover {
-    transform: scale(1.2);
-    z-index: 99;
+  transform: scale(1.2);
+  z-index: 99;
 }
 
 .borderless {
-    border: none;
+  border: none;
 }
 
 .tata-cara-pemesanan {
-    color: var(--user-color-template-2);
+  color: var(--user-color-template-2);
 }
 
 .tata-cara-pemesanan .card {
-    background-color: transparent;
-    color: var(--user-color-template-2);
+  background-color: transparent;
+  color: var(--user-color-template-2);
 }
 
 .circle {
-    width: 10vh;
-    height: 10vh;
-    background-color: skyblue;
-    border-radius: 50%;
-    font-size: large;
+  width: 10vh;
+  height: 10vh;
+  background-color: skyblue;
+  border-radius: 50%;
+  font-size: large;
 }
 
 .invoice-thead {
-    background-color: var(--user-color-template-1);
-    color: var(--user-color-template-2);
+  background-color: var(--user-color-template-1);
+  color: var(--user-color-template-2);
 }
 
 .invoice-tbody {
-    color: var(--user-color-template-1);
+  color: var(--user-color-template-1);
 }
 
 @media (max-width: 525px) {
-    .border-half {
-        justify-content: center !important;
-    }
+  .border-half {
+    justify-content: center !important;
+  }
 
-    .tentang-kami .content {
-        display: block !important;
-        /* background-color: blue; */
-    }
+  .tentang-kami .content {
+    display: block !important;
+    /* background-color: blue; */
+  }
 
-    .tentang-kami .content .text-center {
-        margin-top: 20px;
-    }
+  .tentang-kami .content .text-center {
+    margin-top: 20px;
+  }
 
-    .jumbotron-custom {
-        margin-bottom: 20px !important;
-    }
+  .jumbotron-custom {
+    margin-bottom: 20px !important;
+  }
 
-    .list-kategori {
-        justify-content: start !important;
-    }
+  .list-kategori {
+    justify-content: start !important;
+  }
+
+  .list-produk {
+    overflow-x: auto;
+  }
 }
 
 @media (max-width: 1000px) {
-    .border-half {
-        justify-content: center !important;
-    }
+  .border-half {
+    justify-content: center !important;
+  }
 
-    .tentang-kami .content .text-center {
-        margin-top: 20px;
-    }
+  .tentang-kami .content .text-center {
+    margin-top: 20px;
+  }
 
-    .jumbotron-custom {
-        margin-bottom: 30px !important;
-    }
+  .jumbotron-custom {
+    margin-bottom: 30px !important;
+  }
 
-    .list-kategori {
-        justify-content: start !important;
-    }
+  .list-kategori {
+    justify-content: start !important;
+  }
+}
+
+@media (max-width: 1500px) {
+  .list-produk {
+    overflow-x: auto;
+  }
 }
