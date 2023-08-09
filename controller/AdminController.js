@@ -48,13 +48,13 @@ exports.getDashboard = (req, res, next) => {
 
 exports.getBarang = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -127,7 +127,7 @@ exports.postEditBarang = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/barang");
     });
 };
@@ -147,7 +147,7 @@ exports.postDeleteBarang = (req, res, next) => {
       return res.redirect("/barang");
     })
     .catch((err) => {
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       console.log(err);
       return res.redirect("/barang");
     });
@@ -155,13 +155,13 @@ exports.postDeleteBarang = (req, res, next) => {
 
 exports.getTransaksi = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -180,13 +180,13 @@ exports.getTransaksi = (req, res, next) => {
 
 exports.getTambahTransaksi = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -234,7 +234,7 @@ exports.postTambahTransaksi = (req, res, next) => {
       return res.redirect("/transaksi/edit/" + transaksibaru._id);
     })
     .catch((err) => {
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       // console.log(err);
       return res.redirect("/transaksi/tambah");
     });
@@ -242,13 +242,13 @@ exports.postTambahTransaksi = (req, res, next) => {
 
 exports.getEditTransaksi = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -275,36 +275,34 @@ exports.postEditTransaksi = (req, res, next) => {
   const jumlah = req.body.jumlah;
   const harga = req.body.hargavalue;
 
-  Transaksi.findOne({ _id: idtransaksi })
-    .then((transaksi) => {
-      transaksi.namapembeli = namapembeli;
-      transaksi.tanggal = tanggal;
-      transaksi
-        .tambahBarang({ idbarangpilihan, jumlah, harga })
-        .then(() => {
-          Barang.findOne({ _id: idbarangpilihan })
-            .then((barang) => {
-              barang.stok -= jumlah;
-              barang.save();
-            })
-            .catch((err) => console.log(err));
-          return transaksi.hitungKeuntungan();
-        })
-        .catch((err) => {
-          // console.log(err)
-          req.flash("failed", "Ada yang salah, silahkan hubungi developer");
-          return res.redirect("/transaksi/edit/" + idtransaksi);
-        });
-    })
-    .then(() => {
-      req.flash("success", "Berhasil menambahkan barang");
-      return res.redirect("/transaksi/edit/" + idtransaksi);
-    })
-    .catch((err) => {
-      // console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
-      return res.redirect("/transaksi/edit/" + idtransaksi);
-    });
+  if (!namapembeli || !tanggal || !idbarangpilihan || !jumlah || !harga) {
+    req.flash("error", "Silahkan pilih dahulu barangnya baru tambah");
+    return res.redirect("/transaksi/edit/" + idtransaksi);
+  }
+
+  // Transaksi.findOne({ _id: idtransaksi })
+  //   .then((transaksi) => {
+  //     transaksi.namapembeli = namapembeli;
+  //     transaksi.tanggal = tanggal;
+  //     transaksi.tambahBarang({ idbarangpilihan, jumlah, harga }).then(() => {
+  //       Barang.findOne({ _id: idbarangpilihan })
+  //         .then((barang) => {
+  //           barang.stok -= jumlah;
+  //           barang.save();
+  //         })
+  //         .catch((err) => console.log(err));
+  //       return transaksi.hitungKeuntungan();
+  //     });
+  //   })
+  //   .then(() => {
+  //     req.flash("success", "Berhasil menambahkan barang");
+  //     return res.redirect("/transaksi/edit/" + idtransaksi);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     req.flash("error", "Ada yang salah, silahkan hubungi developer");
+  //     return res.redirect("/transaksi/edit/" + idtransaksi);
+  //   });
 };
 
 exports.postHapusBarangdiCart = (req, res, next) => {
@@ -320,7 +318,7 @@ exports.postHapusBarangdiCart = (req, res, next) => {
       return res.redirect("/transaksi/edit/" + idtransaksi);
     })
     .catch((err) => {
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       // console.log(err)
       return res.redirect("/transaksi/edit/" + idtransaksi);
     });
@@ -348,7 +346,7 @@ exports.postLunasOrderMasuk = (req, res, next) => {
     })
     .catch((err) => {
       // console.log(err)
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/transaksi");
     });
 };
@@ -362,20 +360,20 @@ exports.postHapusTransaksi = (req, res, next) => {
     })
     .catch((err) => {
       // console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/transaksi");
     });
 };
 
 exports.getMasukBarang = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -435,7 +433,7 @@ exports.postTambahMasukBarang = (req, res, next) => {
           })
           .catch((err) => console.log(err));
       } else {
-        req.flash("failed", "Gagal menambahkan barang");
+        req.flash("error", "Gagal menambahkan barang");
         return res.redirect(
           "/transaksi/masukbarang/edit/" + barangmasukbaru._id
         );
@@ -443,7 +441,7 @@ exports.postTambahMasukBarang = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Gagal menambahkan barang");
+      req.flash("error", "Gagal menambahkan barang");
       return res.redirect("/transaksi/masukbarang/edit/" + barangmasukbaru._id);
     });
 };
@@ -451,13 +449,13 @@ exports.postTambahMasukBarang = (req, res, next) => {
 exports.getEditMasukBarang = (req, res, next) => {
   const idbarangmasuk = req.params.idbarangmasuk;
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -504,7 +502,7 @@ exports.postEditMasukBarang = async (req, res, next) => {
         })
         .catch((err) => {
           console.log(err);
-          req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+          req.flash("error", "Ada yang salah, silahkan hubungi developer");
           return res.redirect("/transaksi/masukbarang/edit/" + barangmasuk._id);
         });
     })
@@ -541,7 +539,7 @@ exports.postHapusMasukBarang = (req, res, next) => {
       return res.redirect("/transaksi/masukbarang");
     })
     .catch((err) => {
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       console.log(err);
     });
 };
@@ -568,20 +566,20 @@ exports.postBayarMasukBarang = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/transaksi/masukbarang");
     });
 };
 
 exports.getKategoriBarang = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -618,7 +616,7 @@ exports.postTambahKategoriBarang = (req, res, next) => {
     return res.redirect("/kategori");
   } catch (err) {
     console.log(err);
-    req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+    req.flash("error", "Ada yang salah, silahkan hubungi developer");
     return res.redirect("/kategori");
   }
 };
@@ -643,7 +641,7 @@ exports.postEditKategoriBarang = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/kategori");
     });
 };
@@ -663,20 +661,20 @@ exports.postHapusKategoriBarang = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
       return res.redirect("/kategori");
     });
 };
 
 exports.getKaryawan = (req, res, next) => {
   let messageSuccess = req.flash("success");
-  let messageFailed = req.flash("failed");
+  let messageError = req.flash("error");
   let message = [];
 
   if (messageSuccess.length > 0) {
     (message[0] = "success"), (message[1] = messageSuccess[0]);
-  } else if (messageFailed.length > 0) {
-    (message[0] = "failed"), (message[1] = messageFailed[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
   } else {
     message = null;
   }
@@ -802,15 +800,15 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
           req.flash("success", "Gaji karyawan telah terdaftar");
         } catch (err) {
           console.log(err);
-          req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+          req.flash("error", "Ada yang salah, silahkan hubungi developer");
         }
       } else {
-        req.flash("failed", "Karyawan telah digaji bulan ini");
+        req.flash("error", "Karyawan telah digaji bulan ini");
       }
     })
     .catch((err) => {
       console.log(err);
-      req.flash("failed", "Ada yang salah, silahkan hubungi developer");
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
     });
 
   return res.redirect("/karyawan");
