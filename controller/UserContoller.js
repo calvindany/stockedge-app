@@ -292,14 +292,21 @@ exports.postEditStokDalamKeranjang = (req, res, next) => {
   User.findOne({ _id: req.user.iduser }).then((user) => {
     let newKeranjang = [...user.keranjang];
 
-    const index = newKeranjang.findIndex((barang) => {
-      return barang.idbarang == idbarang;
-    });
-    // console.log(newKeranjang[index])
-    newKeranjang[index].jumlah = newJumlah;
-    newKeranjang[index].subtotal = newKeranjang[index].harga * newJumlah;
-
-    user.save();
+    if (newJumlah > 0) {
+      const index = newKeranjang.findIndex((barang) => {
+        return barang.idbarang == idbarang;
+      });
+      // console.log(newKeranjang[index])
+      newKeranjang[index].jumlah = newJumlah;
+      newKeranjang[index].subtotal = newKeranjang[index].harga * newJumlah;
+      user.save();
+    } else {
+      const arr = newKeranjang.filter((barang) => {
+        return barang.idbarang != idbarang;
+      });
+      user.keranjang = arr;
+      user.save();
+    }
     return res.redirect("/keranjang");
   });
 };
