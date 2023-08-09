@@ -280,29 +280,29 @@ exports.postEditTransaksi = (req, res, next) => {
     return res.redirect("/transaksi/edit/" + idtransaksi);
   }
 
-  // Transaksi.findOne({ _id: idtransaksi })
-  //   .then((transaksi) => {
-  //     transaksi.namapembeli = namapembeli;
-  //     transaksi.tanggal = tanggal;
-  //     transaksi.tambahBarang({ idbarangpilihan, jumlah, harga }).then(() => {
-  //       Barang.findOne({ _id: idbarangpilihan })
-  //         .then((barang) => {
-  //           barang.stok -= jumlah;
-  //           barang.save();
-  //         })
-  //         .catch((err) => console.log(err));
-  //       return transaksi.hitungKeuntungan();
-  //     });
-  //   })
-  //   .then(() => {
-  //     req.flash("success", "Berhasil menambahkan barang");
-  //     return res.redirect("/transaksi/edit/" + idtransaksi);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     req.flash("error", "Ada yang salah, silahkan hubungi developer");
-  //     return res.redirect("/transaksi/edit/" + idtransaksi);
-  //   });
+  Transaksi.findOne({ _id: idtransaksi })
+    .then((transaksi) => {
+      transaksi.namapembeli = namapembeli;
+      transaksi.tanggal = tanggal;
+      transaksi.tambahBarang({ idbarangpilihan, jumlah, harga }).then(() => {
+        Barang.findOne({ _id: idbarangpilihan })
+          .then((barang) => {
+            barang.stok -= jumlah;
+            barang.save();
+          })
+          .catch((err) => console.log(err));
+        return transaksi.hitungKeuntungan();
+      });
+    })
+    .then(() => {
+      req.flash("success", "Berhasil menambahkan barang");
+      return res.redirect("/transaksi/edit/" + idtransaksi);
+    })
+    .catch((err) => {
+      console.log(err);
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
+      return res.redirect("/transaksi/edit/" + idtransaksi);
+    });
 };
 
 exports.postHapusBarangdiCart = (req, res, next) => {

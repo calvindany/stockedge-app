@@ -52,7 +52,7 @@
                     <select name="status" id="statustransaksi" class="form-select" aria-label="Default select example">
                       <option value="Draft">Draft</option>
                       <option value="Belum Bayar">Belum Bayar</option>
-                      <option value="Menunggu Validasi">Belum Bayar</option>
+                      <option value="Menunggu Validasi">Menunggu Validasi</option>
                     </select>
                   </div>
                 </div>
@@ -169,12 +169,17 @@
                     Total : Rp. <%= (transaksi) ? transaksi.total : "0" %>
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
         </main>
       </div>
+      <script>
+        const dateValue = document.getElementById('tanggal');
+        if(dateValue.value.trim() == ''){
+          dateValue.valueAsDate = new Date();
+        }
+      </script>
       <script>
         $(document).ready(function () {
           $('table.display').DataTable();
@@ -203,5 +208,6 @@
           }
         }
       </script>
+      
       <script src="/js/transaction.js"></script>
       <%- include('../include/footer') %>

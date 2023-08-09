@@ -178,6 +178,12 @@
         </main>
       </div>
       <script>
+        const dateValue = document.getElementById('tanggal');
+        if(dateValue.value.trim() == ''){
+          dateValue.valueAsDate = new Date();
+        }
+      </script>
+      <script>
         $(document).ready(function () {
           $('table.display').DataTable();
         });
