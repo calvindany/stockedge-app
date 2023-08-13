@@ -134,14 +134,15 @@
           // console.log(riwayatKeuangan)
         '<% } %>'
       </script>
-
       <script>
         // console.log(riwayatKeuangan)
         generateChart(riwayatKeuangan);
       </script>
       <script>
         $(document).ready(function () {
-          $('table.display').DataTable();
+          $('table.display').DataTable({
+            "order": []
+          });
         });
       </script>
       <%- include('../include/footer') %>

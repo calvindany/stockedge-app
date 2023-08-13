@@ -17,29 +17,32 @@ exports.getDashboard = (req, res, next) => {
   let keluaranHarian = {};
 
   Transaksi.find()
+    .sort({ createdAt: -1 })
     .limit(5)
     .then((transaksi) => {
-      RiwayatKeuangan.findOne({ tahun: "2023" }).then((riwayat) => {
-        // console.log(riwayat.getKeuntunganHariIni())
-        riwayat
-          .getKeuntunganHariIni(date)
-          .then((keuntungan) => {
-            keuntunganHarian = keuntungan;
-            return riwayat.getKeluaranHariIni(date);
-          })
-          .then((keluaran) => {
-            return (keluaranHarian = keluaran);
-          })
-          .then((result) => {
-            return res.render("admin/dashboard/dashboard2", {
-              route: "/dashboard",
-              transaksi: transaksi,
-              keuntunganHarian: keuntunganHarian,
-              keluaranHarian: keluaranHarian,
-              riwayatKeuangan: riwayat,
+      RiwayatKeuangan.findOne({ tahun: new Date().getFullYear() }).then(
+        (riwayat) => {
+          // console.log(riwayat.getKeuntunganHariIni())
+          riwayat
+            .getKeuntunganHariIni(date)
+            .then((keuntungan) => {
+              keuntunganHarian = keuntungan;
+              return riwayat.getKeluaranHariIni(date);
+            })
+            .then((keluaran) => {
+              return (keluaranHarian = keluaran);
+            })
+            .then((result) => {
+              return res.render("admin/dashboard/dashboard2", {
+                route: "/dashboard",
+                transaksi: transaksi,
+                keuntunganHarian: keuntunganHarian,
+                keluaranHarian: keluaranHarian,
+                riwayatKeuangan: riwayat,
+              });
             });
-          });
-      });
+        }
+      );
     })
     .catch((err) => {
       console.log(err);

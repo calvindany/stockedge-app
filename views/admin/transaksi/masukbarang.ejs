@@ -225,16 +225,8 @@
       </script>
       <script>
         $(document).ready(function () {
-          $('table.display').DataTable();
-        });
-      </script>
-      <script>
-        $(document).ready(function () {
-          $("#caribarang").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tabelbarang tr").filter(function () {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-            });
+          $('table.display').DataTable({
+            "order": []
           });
         });
       </script>
