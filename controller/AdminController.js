@@ -500,7 +500,7 @@ exports.postEditMasukBarang = async (req, res, next) => {
           if (result) {
             Barang.findOne({ _id: idbarangpilihan })
               .then((barang) => {
-                barang.stok += jumlah;
+                barang.stok += parseInt(jumlah);
                 return barang.save();
               })
               .catch((err) => console.log(err));
@@ -826,6 +826,18 @@ exports.postBayarGajiKaryawan = (req, res, next) => {
 };
 
 exports.getLaporanKeuangan = (req, res, next) => {
+  let messageSuccess = req.flash("success");
+  let messageError = req.flash("error");
+  let message = [];
+
+  if (messageSuccess.length > 0) {
+    (message[0] = "success"), (message[1] = messageSuccess[0]);
+  } else if (messageError.length > 0) {
+    (message[0] = "error"), (message[1] = messageError[0]);
+  } else {
+    message = null;
+  }
+
   const bulanmulai = req.query.bulanmulai + "-01";
   const bulanselesai = req.query.bulanselesai + "-31";
   if (req.query.bulanmulai || req.query.bulanselesai) {
@@ -838,6 +850,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
           keuangan: keuangan,
           bulanmulai: req.query.bulanmulai,
           bulanselesai: req.query.bulanselesai,
+          message: message,
         });
       })
       .catch((err) => console.log(err));
@@ -850,6 +863,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
           keuangan: keuangan,
           bulanmulai: null,
           bulanselesai: null,
+          message: message,
         });
       })
       .catch((err) => console.log(err));
@@ -878,6 +892,7 @@ exports.postTambahDatfarKeuangan = (req, res, next) => {
   });
 
   keuanganbaru.save();
+  req.flash("success", "Data keuangan berhasil ditambahkan");
   return res.redirect("/daftarkeuangan");
 };
 
@@ -909,16 +924,24 @@ exports.postEditDaftarKeuangan = (req, res, next) => {
       return keuangan.save();
     })
     .then((res) => {
+      req.flash("success", "Data keuangan berhasil di edit");
       return res.redirect("/daftarbarang");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
+      return res.redirect("/daftarkeuangan");
+    });
 };
 
 exports.postHapusDaftarKeuangan = (req, res, next) => {
   const iddaftarkeuangan = req.body.iddaftarkeuangan;
   Keuangan.findByIdAndDelete(iddaftarkeuangan)
     .then((result) => {
+      req.flash("success", "Data keuangan berhasil dihapus");
       return res.redirect("/daftarkeuangan");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      req.flash("error", "Ada yang salah, silahkan hubungi developer");
+      return res.redirect("/daftarkeuangan");
+    });
 };

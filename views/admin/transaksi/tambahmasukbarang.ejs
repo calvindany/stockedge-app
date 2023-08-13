@@ -156,7 +156,7 @@
                           </td>
                           <td class="d-flex justify-content-center">
                             <form class="" action="/transaksi/masukbarang/edit/hapusbarang" method="POST">
-                              <input name="idbarang" value="<%= barangmasuk.barang[i]._id %>" type="hidden">
+                              <input name="idbarang" value="<%= barangmasuk.barang[i].idbarang %>" type="hidden">
                               <input name="idbarangmasuk" value="<%= barangmasuk._id %>" type="hidden">
                               <button class="btn btn-danger me-2 d-flex" role="button" type="submit">
                                 <i class="bi bi-trash-fill"></i> Hapus

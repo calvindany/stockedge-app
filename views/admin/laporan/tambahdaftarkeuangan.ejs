@@ -19,7 +19,7 @@
           <div class="form w-100" style="padding-left: 3vh; padding-right: 3vh;">
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
-                action="<% if (keuangan) { %>/daftarkeuangan/edit/<% } else { %>/daftarkeuangan/tambah<%= keuangan._id %><% } %> "
+                action="<% if (keuangan) { %>/daftarkeuangan/edit/<%= keuangan._id %><% } else { %>/daftarkeuangan/tambah/<%= keuangan._id %><% } %> "
                 method="POST" id="forminput">
                 <div class="mb-3">
                   <label for="tanggal" class="form-label">Tanggal</label>

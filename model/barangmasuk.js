@@ -88,22 +88,29 @@ barangMasukSchema.methods.tambahBarang = function (selectedbarang) {
         this.total = hitungtotal(this.barang);
         this.save();
 
-        resolve(true)
+        resolve(true);
       })
       .catch((err) => {
-        console.log(err); 
-        reject(false)
+        console.log(err);
+        reject(false);
       });
   });
 };
 
 barangMasukSchema.methods.hapusBarang = function (idbarang) {
   let barangtemp = [...this.barang];
-
-  let newbarang = barangtemp.filter((barang) => {
-    return barang._id != idbarang;
+  let indexDeletedBarang = barangtemp.findIndex((barang) => {
+    return barang.idbarang == idbarang;
   });
 
+  Barang.findOne({ _id: idbarang }).then((barang) => {
+    barang.stok -= barangtemp[indexDeletedBarang].jumlah;
+    barang.save();
+  });
+
+  let newbarang = barangtemp.filter((barang) => {
+    return barang.idbarang != idbarang;
+  });
   this.barang = newbarang;
   this.total = hitungtotal(this.barang);
 
