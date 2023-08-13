@@ -78,7 +78,7 @@ exports.getProduk = (req, res, next) => {
         jumlahData = barang.length;
         return Barang.find(properties)
           .select("namabarang stok harga image")
-          .limit(8)
+          .limit(15)
           .skip((page - 1) * 8);
       })
       .then((barang) => {
@@ -107,7 +107,7 @@ exports.getProduk = (req, res, next) => {
         jumlahData = barang.length;
         return Barang.find(properties)
           .select("namabarang stok harga image")
-          .limit(8)
+          .limit(15)
           .skip((page - 1) * 8);
       })
       .then((barang) => {
@@ -131,7 +131,7 @@ exports.getProduk = (req, res, next) => {
 
         return Barang.find()
           .select("namabarang stok harga image")
-          .limit(8)
+          .limit(15)
           .skip((page - 1) * 8);
       })
       .then((barang) => {
