@@ -31,6 +31,7 @@ exports.getLanding = (req, res, next) => {
         .select("namabarang stok harga image")
         .then((barang) => {
           res.render("user/landing", {
+            pagename: "Beranda",
             barang: barang,
             kategori: kategori,
             isLoggedIn: req.isLoggedIn,
@@ -88,6 +89,7 @@ exports.getProduk = (req, res, next) => {
       .then((barang) => {
         Kategori.find().then((kategori) => {
           return res.render("user/produk", {
+            pagename: "Produk",
             barang: barang,
             kategori: kategori,
             banyakData: jumlahData,
@@ -116,6 +118,7 @@ exports.getProduk = (req, res, next) => {
       .then((barang) => {
         Kategori.find().then((kategori) => {
           return res.render("user/produk", {
+            pagename: "Produk",
             barang: barang,
             kategori: kategori,
             banyakData: jumlahData,
@@ -140,6 +143,7 @@ exports.getProduk = (req, res, next) => {
         Kategori.find().then((kategori) => {
           // console.log(req.isLoggedIn)
           return res.render("user/produk", {
+            pagename: "Produk",
             barang: barang,
             kategori: kategori,
             banyakData: jumlahData,
@@ -272,6 +276,7 @@ exports.getKeranjang = (req, res, next) => {
         });
 
         res.render("user/keranjang", {
+          pagename: "Keranjang",
           keranjang: user.keranjang,
           gambarBarang: gambarBarangDalamKeranjang,
           totalBarang: totalBarang,
@@ -370,6 +375,7 @@ exports.getInvoice = (req, res, next) => {
       Transaksi.find({ iduser: user._id })
         .then((transaksi) => {
           return res.render("user/invoice", {
+            pagename: "Invoice",
             invoice: transaksi,
             isLoggedIn: req.isLoggedIn,
             isAdmin: req.isAdmin,
