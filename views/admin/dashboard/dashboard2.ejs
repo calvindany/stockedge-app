@@ -100,7 +100,6 @@
                           style="font-size: 15px; color: white;"><%= transaksi[i].status %></span>
                       </td>
                       <td class="d-flex" style="gap: 20px;">
-                        <button class="btn btn-primary">Detail</button>
                         <form action="/transaksi/bayar" method="POST">
                           <input type="hidden" name="idtransaksi" value="<%= transaksi[i]._id %>">
                           <button class="btn btn-success <%= (transaksi[i].status == 'Lunas') ? 'disabled' : '' %>" type="submit"><i class="bi bi-cash-stack"></i> Lunas</button>

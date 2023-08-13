@@ -35,23 +35,24 @@
             <div class="border rounded-3 p-4 mb-4" style="background-color: white;">
               <form
                 action="<% if(barangmasuk) { %>/transaksi/masukbarang/edit/<%= barangmasuk._id %><% } else { %>/transaksi/masukbarang/tambah <% } %>"
+                id="forminput"
                 method="POST">
                 <div class="mb-3 col-8">
                   <label for="namasupplier" class="form-label">Nama Supplier</label>
-                  <input type="text" class="form-control" id="namasupplier" name="namasupplier"
-                    aria-describedby="pembeliHelp" value="<% if(barangmasuk) { %><%= barangmasuk.namasupplier %><% } %>">
+                  <input type="text" class="form-control required-field" id="namasupplier" name="namasupplier"
+                    aria-describedby="pembeliHelp" value="<% if(barangmasuk) { %><%= barangmasuk.namasupplier %><% } %>" required>
                   <div id="pembeliHelp" class="form-text">Sementara masukan nama supplier secara manual</div>
                 </div>
                 <div class="mb-3 d-flex justify-content-start" style="gap: 50px;">
                   <div class="col-2">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal"
+                    <input type="date" class="form-control required-field" id="tanggal" name="tanggal"
                       value="<% if(barangmasuk) { %><%= barangmasuk.tanggal %><% } %>">
                   </div>
                   <div class="col-3">
                     <label for="status" class="form-label">Status Transaksi</label>
                     <br>
-                    <select name="status" id="statustransaksi" class="form-select" aria-label="Default select example">
+                    <select name="status" id="statustransaksi" class="form-select required-field" aria-label="Default select example">
                       <option value="Draft" selected>Draft</option>
                       <option value="Belum Bayar">Belum Bayar</option>
                     </select>
@@ -64,29 +65,29 @@
                   <div class="left-panel col-3">
                     <div class="mb-3">
                       <label for="namabarang" class="form-label">Nama Barang</label>
-                      <input type="text" class="form-control" id="namabarang" name="namabarang" disabled required>
+                      <input type="text" class="form-control required-field" id="namabarang" name="namabarang" disabled required>
                       <input type="hidden" id="idbarang" name="idbarang" required>
                     </div>
                     <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="editnamabarang">
+                      <input type="checkbox" class="form-check-input required-field" id="editnamabarang">
                       <label class="form-check-label" for="editnamabarang">Barang baru?</label>
                     </div>
                     <div class="mb-3 d-flex" style="gap:20px">
                       <div class="col-3">
                         <label for="jumlah" class="form-label">Jumlah</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah" required>
+                        <input type="number" class="form-control required-field" id="jumlah" name="jumlah" required>
                       </div>
                       <div>
                         <label for="harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="hargafield" name="hargafield" disabled required>
-                        <input type="hidden" id="hargavalue" name="hargavalue" value="">
+                        <input type="number" class="form-control required-field" id="hargafield" name="hargafield" disabled required>
+                        <input type="hidden" id="hargavalue" class="required-field" name="hargavalue" value="">
                       </div>
                     </div>
                     <div class="mb-3">
                       <label for="subtotal" class="form-label">Sub Total</label>
-                      <input type="number" class="form-control" id="subtotal" name="subtotal" disabled required>
+                      <input type="number" class="form-control required-field" id="subtotal" name="subtotal" disabled required>
                     </div>
-                    <button id="buttontambah" type="submit" class="btn btn-primary">Tambah</button>
+                    <button id="buttontambah" onclick="formValidation()" class="btn btn-primary">Tambah</button>
                   </div>
 
                   <div class="right-panel border rounded p-4 col-8">
@@ -217,4 +218,5 @@
         }
       </script>
       <script src="/js/masukbarang.js"></script>
+      <script src="/js/formValidation.js"></script>
       <%- include('../include/footer') %>
