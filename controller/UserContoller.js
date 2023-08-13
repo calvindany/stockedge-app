@@ -79,7 +79,7 @@ exports.getProduk = (req, res, next) => {
         return Barang.find(properties)
           .select("namabarang stok harga image")
           .limit(15)
-          .skip((page - 1) * 8);
+          .skip((page - 1) * 15);
       })
       .then((barang) => {
         Kategori.find().then((kategori) => {
@@ -108,7 +108,7 @@ exports.getProduk = (req, res, next) => {
         return Barang.find(properties)
           .select("namabarang stok harga image")
           .limit(15)
-          .skip((page - 1) * 8);
+          .skip((page - 1) * 15);
       })
       .then((barang) => {
         Kategori.find().then((kategori) => {
@@ -132,7 +132,7 @@ exports.getProduk = (req, res, next) => {
         return Barang.find()
           .select("namabarang stok harga image")
           .limit(15)
-          .skip((page - 1) * 8);
+          .skip((page - 1) * 15);
       })
       .then((barang) => {
         Kategori.find().then((kategori) => {
