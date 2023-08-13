@@ -35,6 +35,7 @@ exports.getDashboard = (req, res, next) => {
             .then((result) => {
               return res.render("admin/dashboard/dashboard2", {
                 route: "/dashboard",
+                pagename: "Admin - Dasboard",
                 transaksi: transaksi,
                 keuntunganHarian: keuntunganHarian,
                 keluaranHarian: keluaranHarian,
@@ -67,8 +68,8 @@ exports.getBarang = (req, res, next) => {
       Barang.find()
         .then((barang) => {
           res.render("admin/barang/barang", {
-            title: "Inventaris Barang",
             route: "/barang",
+            pagename: "Admin - Inventaris Barang",
             barang: barang,
             kategori: kategori,
             message: message,
@@ -174,6 +175,7 @@ exports.getTransaksi = (req, res, next) => {
     .then((transaksi) => {
       res.render("admin/transaksi/transaksi", {
         route: "/transaksi",
+        pagename: "Admin - Order",
         transaksi: transaksi,
         message: message,
       });
@@ -197,6 +199,7 @@ exports.getTambahTransaksi = (req, res, next) => {
   Barang.find().then((barang) => {
     res.render("admin/transaksi/tambahtransaksi", {
       route: "/transaksi/tambah",
+      pagename: "Admin - Tambah Order",
       barang: barang,
       transaksi: null,
       message: message,
@@ -261,6 +264,7 @@ exports.getEditTransaksi = (req, res, next) => {
     Barang.find().then((barang) => {
       res.render("admin/transaksi/tambahtransaksi", {
         route: "/transaksi",
+        pagename: "Admin - Edit Order",
         transaksi: transaksi,
         barang: barang,
         message: message,
@@ -386,6 +390,7 @@ exports.getMasukBarang = (req, res, next) => {
     .then((barangmasuk) => {
       res.render("admin/transaksi/masukbarang", {
         route: "/masukbarang",
+        pagename: "Admin - Barang Masuk",
         barangmasuk: barangmasuk,
         message: message,
       });
@@ -397,6 +402,7 @@ exports.getTambahMasukBarang = (req, res, next) => {
     .then((barang) => {
       res.render("admin/transaksi/tambahmasukbarang", {
         route: "masukbarang",
+        pagename: "Admin - Tambah Masuk Barang",
         barangmasuk: null,
         barang: barang,
         message: null,
@@ -468,6 +474,7 @@ exports.getEditMasukBarang = (req, res, next) => {
       .then((barang) => {
         res.render("admin/transaksi/tambahmasukbarang", {
           route: "/barangmasuk",
+          pagename: "Admin - Edit Barang Masuk",
           barangmasuk: barangmasuk,
           barang: barang,
           message: message,
@@ -592,6 +599,7 @@ exports.getKategoriBarang = (req, res, next) => {
       res.render("admin/kategori/kategoribarang", {
         kategori: kategori,
         route: "/kategori",
+        pagename: "Admin - Kategori Barang",
         message: message,
       });
     })
@@ -687,6 +695,7 @@ exports.getKaryawan = (req, res, next) => {
       res.render("admin/karyawan/karyawan", {
         karyawan: karyawan,
         route: "/karyawan",
+        pagename: "Admin - Karyawan",
         message: message,
       });
     })
@@ -696,6 +705,7 @@ exports.getKaryawan = (req, res, next) => {
 exports.getTambahKaryawan = (req, res, next) => {
   res.render("admin/karyawan/tambahkaryawan", {
     route: "/karyawan",
+    pagename: "Admin - Tambah Karyawan",
     karyawan: null,
   });
 };
@@ -727,6 +737,7 @@ exports.getEditKaryawan = (req, res, next) => {
   Karyawan.findOne({ _id: idkaryawan }).then((karyawan) => {
     return res.render("admin/karyawan/tambahkaryawan", {
       route: "/karyawan",
+      pagename: "Admin - Tambah Karyawan",
       karyawan: karyawan,
     });
   });
@@ -826,6 +837,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
       .then((keuangan) => {
         res.render("admin/laporan/daftarkeuangan", {
           route: "/daftar",
+          pagename: "Admin - Daftar Keuangan",
           keuangan: keuangan,
           bulanmulai: req.query.bulanmulai,
           bulanselesai: req.query.bulanselesai,
@@ -837,6 +849,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
       .then((keuangan) => {
         res.render("admin/laporan/daftarkeuangan", {
           route: "/daftar",
+          pagename: "Admin - Daftar Keuangan",
           keuangan: keuangan,
           bulanmulai: null,
           bulanselesai: null,
@@ -849,6 +862,7 @@ exports.getLaporanKeuangan = (req, res, next) => {
 exports.getTambahDaftarKeuangan = (req, res, next) => {
   return res.render("admin/laporan/tambahdaftarkeuangan", {
     route: "laporan",
+    pagename: "Admin - Tambah Daftar Keuangan",
     keuangan: false,
   });
 };
@@ -875,6 +889,7 @@ exports.getEditDaftarKeuangan = (req, res, next) => {
   Keuangan.findOne({ _id: iddaftar }).then((keuangan) => {
     res.render("admin/laporan/tambahdaftarkeuangan", {
       route: "/daftarkeuangan",
+      pagename: "Admin - Edit Daftar Keuangan",
       keuangan: keuangan,
     });
   });
