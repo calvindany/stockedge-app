@@ -2,11 +2,6 @@ const Barang = require("../model/barang");
 const User = require("../model/user");
 const Kategori = require("../model/kategori");
 const Transaksi = require("../model/transaction");
-const fileHelper = require("../util/fileDelete");
-
-const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
 
 exports.getLanding = (req, res, next) => {
   let totalKeranjang = null;

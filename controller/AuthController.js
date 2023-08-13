@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
 const sendMail = require("../util/sendMail");
-const user = require("../model/user");
 
 exports.getLogin = (req, res, next) => {
   let messageLogin = req.flash("login-failed");

@@ -1,5 +1,3 @@
-const fs = require("fs");
-const path = require("path");
 const Barang = require("../model/barang");
 const Transaksi = require("../model/transaction");
 const Kategori = require("../model/kategori");
@@ -7,9 +5,6 @@ const Karyawan = require("../model/karyawan");
 const Keuangan = require("../model/keuangan");
 const RiwayatKeuangan = require("../model/riwayatKeuangan");
 const BarangMasuk = require("../model/barangmasuk");
-
-const fileHelper = require("../util/fileDelete");
-const sharp = require("sharp");
 
 exports.getDashboard = (req, res, next) => {
   const date = new Date();
