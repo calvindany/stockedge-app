@@ -1,19 +1,19 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 exports.sendMail = (destination, url) => {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: "indomaju.material@gmail.com",
-            pass: process.env.EMAIL_PASS,
-        }
-    })
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "indomaju.material@gmail.com",
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
-    const mailOptions = {
-        from: "indomaju.material@gmail.com",
-        to: destination,
-        subject: "Indo Maju | New Account Verification",
-        html: `
+  const mailOptions = {
+    from: "indomaju.material@gmail.com",
+    to: destination,
+    subject: "Indo Maju | New Account Verification",
+    html: `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -31,7 +31,8 @@ exports.sendMail = (destination, url) => {
                     }
                     button{
                         padding: 10px;
-                        background-color: blue;
+                        border-radius: 10px;
+                        background-color: #D1E7DD;
                     }
                 </style>
             </head>
@@ -46,11 +47,11 @@ exports.sendMail = (destination, url) => {
             </body>
             </html>
         `,
-    }
+  };
 
-    transporter.sendMail(mailOptions, function (err, info) {
-        if (err) {
-            console.log(err);
-        }
-    })
-}
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+    }
+  });
+};
